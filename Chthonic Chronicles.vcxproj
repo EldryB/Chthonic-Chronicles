@@ -136,6 +136,12 @@
     <ClCompile Include="char.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="settings.cpp" />
+    <ClCompile Include="stage.cpp" />
+    <ClCompile Include="stateStack.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stage.hpp" />
+    <ClInclude Include="stateStack.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
