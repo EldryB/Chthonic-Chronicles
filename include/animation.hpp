@@ -15,3 +15,11 @@ struct Attack_animation
 {
 	std::vector<sf::Texture> AttackAnimation;
 };
+
+enum class Look
+{
+	look_up,
+	look_down,
+	look_left,
+	look_right
+};
