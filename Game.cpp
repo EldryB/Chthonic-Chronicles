@@ -25,7 +25,7 @@ void Game::initKeys()
 void Game::initStates()
 {
     this->states.push(new MainMenuState(this->window, &this->supportedKeys));
-    //this->states.push(new GameState(this->window, &this->supportedKeys));
+    this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
 Game::Game()
@@ -33,6 +33,7 @@ Game::Game()
     this->initWindow();
     this->initKeys();
     this->initStates();
+
 }
 
 Game::~Game()
@@ -91,14 +92,21 @@ void Game::update()
 
 void Game::render()
 {
-    this->window->clear();
+    
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
+    this->renderSprite.setScale(this->scaleFactors);
+
+
+
+    this->renderTexture.clear(sf::Color::Black);
 
     //render items
     if (!this->states.empty())
     {
         this->states.top()->render();
     }
-
+    this->renderTexture.display();
+    this->window->draw(this->renderSprite);
     this->window->display();
 }
 

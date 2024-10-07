@@ -13,6 +13,10 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	: State(_window, _supportedKeys)
 {
 	this->initKeybinds();
+
+	this->texture.loadFromFile("assets/textures/mainStage.png");
+	this->textures["mainStage"] = this->texture;
+	this->background.setTexture(this->textures["mainStage"]);
 }
 
 GameState::~GameState()
@@ -61,5 +65,6 @@ void GameState::render(sf::RenderTarget* target)
 		target = this->window;
 	}
 
+	target->draw(this->background);
 	this->player.render(target);
 }

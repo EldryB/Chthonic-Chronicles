@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameState.hpp"
+#include "Button.hpp"
 
 class MainMenuState :
     public State
@@ -16,8 +17,6 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    sf::Sprite background;
-    sf::Texture texture;
 
     void initKeybinds();
 };

@@ -22,8 +22,10 @@ protected:
 	std::unordered_map<std::string, sf::Keyboard::Key>* supportedKeys;
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;
 	bool quit;
+	sf::Sprite background;
+	sf::Texture texture;
 
-	std::vector<sf::Texture> textures;
+	std::unordered_map<std::string, sf::Texture> textures;
 
 	virtual void initKeybinds() = 0;
 

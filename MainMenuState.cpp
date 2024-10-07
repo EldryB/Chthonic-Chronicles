@@ -6,8 +6,6 @@ void MainMenuState::initKeybinds()
 	this->keybinds["MOVE_UP"] = this->supportedKeys->at("Up");
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("Down");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
-
-	//WS Up Down Enter
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
@@ -16,7 +14,8 @@ MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::
 	this->initKeybinds();
 
 	this->texture.loadFromFile("assets/textures/start.png");
-	this->background.setTexture(this->texture);
+	this->textures["Background"] = this->texture;
+	this->background.setTexture(this->textures["Background"]);
 }
 
 MainMenuState::~MainMenuState()
