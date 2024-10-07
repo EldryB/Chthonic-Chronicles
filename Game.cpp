@@ -92,21 +92,14 @@ void Game::update()
 
 void Game::render()
 {
-    
-    this->renderSprite.setTexture(this->renderTexture.getTexture());
-    this->renderSprite.setScale(this->scaleFactors);
-
-
-
-    this->renderTexture.clear(sf::Color::Black);
+    this->window->clear();
 
     //render items
     if (!this->states.empty())
     {
         this->states.top()->render();
     }
-    this->renderTexture.display();
-    this->window->draw(this->renderSprite);
+
     this->window->display();
 }
 
