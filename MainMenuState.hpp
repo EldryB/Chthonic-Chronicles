@@ -17,7 +17,9 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-
+    sf::Font font;
+    
+    void initFonts();
     void initKeybinds();
 };
 

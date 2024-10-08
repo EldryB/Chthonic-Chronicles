@@ -1,5 +1,13 @@
 #include "MainMenuState.hpp"
 
+void MainMenuState::initFonts()
+{
+	if (!this->font.loadFromFile("assets/Mario-Kart-DS.ttf"))
+	{
+		throw("COULD NOT LOAD FONT");
+	}
+}
+
 void MainMenuState::initKeybinds()
 {
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
@@ -11,6 +19,7 @@ void MainMenuState::initKeybinds()
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
 	: State(_window, _supportedKeys)
 {
+	this->initFonts();
 	this->initKeybinds();
 
 	this->texture.loadFromFile("assets/textures/start.png");
@@ -37,9 +46,8 @@ void MainMenuState::updateInput(const float& _dt)
 
 void MainMenuState::update(const float& _dt)
 {
+	this->updateMousePositions();
 	this->updateInput(_dt);
-
-
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
