@@ -2,7 +2,7 @@
 
 void MainMenuState::initFonts()
 {
-	if (!this->font.loadFromFile("assets/Mario-Kart-DS.ttf"))
+	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
 	{
 		throw("COULD NOT LOAD FONT");
 	}
@@ -22,14 +22,19 @@ MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::
 	this->initFonts();
 	this->initKeybinds();
 
+	this->texture.loadFromFile("assets/textures/mainMenuButton.png");
+	this->textures["MainMenuButton"] = this->texture;
+	this->gameStateBtn = new Button(100, 400, this->textures["MainMenuButton"], &this->font, "New Game");
+
 	this->texture.loadFromFile("assets/textures/start.png");
 	this->textures["Background"] = this->texture;
 	this->background.setTexture(this->textures["Background"]);
+	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 MainMenuState::~MainMenuState()
 {
-
+	delete this->gameStateBtn;
 }
 
 void MainMenuState::endState()
@@ -48,6 +53,8 @@ void MainMenuState::update(const float& _dt)
 {
 	this->updateMousePositions();
 	this->updateInput(_dt);
+
+	this->gameStateBtn->update(this->mousePosView);
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
@@ -58,4 +65,6 @@ void MainMenuState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->background);
+
+	this->gameStateBtn->render(target);
 }

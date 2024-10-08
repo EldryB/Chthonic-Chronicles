@@ -18,6 +18,7 @@ public:
 
 private:
     sf::Font font;
+    Button* gameStateBtn;
     
     void initFonts();
     void initKeybinds();

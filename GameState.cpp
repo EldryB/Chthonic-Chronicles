@@ -61,6 +61,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->texture.loadFromFile("assets/textures/mainStage.png");
 	this->textures["mainStage"] = this->texture;
 	this->background.setTexture(this->textures["mainStage"]);
+	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 GameState::~GameState()

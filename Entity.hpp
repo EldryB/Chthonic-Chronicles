@@ -9,7 +9,7 @@ public:
 
 	Entity(float _x, float _y, float _width, float _height) noexcept;
 
-	Entity(float _x, float _y, float _width, float _height, sf::Sprite _sprite) noexcept;
+	Entity(float _x, float _y, float _width, float _height, sf::Texture _texture, std::string _name) noexcept;
 
 	Entity(const Entity&) = delete;
 

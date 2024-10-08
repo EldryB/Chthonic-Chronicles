@@ -8,7 +8,7 @@ Entity::Entity()
 	this->height = Settings::ENTITY_HEIGHT;
 	this->texture.loadFromFile("assets/textures/right2.png");
 	this->sprite.setTexture(texture);
-	this->setName(" ");
+	this->setName("Entity");
 	this->sprite.setPosition(x, y);
 	this->movementSpeed = Settings::MOVEMENT_SPEED;
 }
@@ -18,14 +18,15 @@ Entity::Entity(float _x, float _y, float _width, float _height) noexcept
 {
 	this->texture.loadFromFile("assets/textures/right2.png");
 	this->sprite.setTexture(texture);
-	this->setName(" ");
+	this->setName("Entity");
 	this->sprite.setPosition(x, y);
 	this->movementSpeed = Settings::MOVEMENT_SPEED;
 }
 
-Entity::Entity(float _x, float _y, float _width, float _height, sf::Sprite _sprite) noexcept
-	: x{ _x }, y{ _y }, width{ _width }, height{ _height }, sprite{ _sprite }
+Entity::Entity(float _x, float _y, float _width, float _height, sf::Texture _texture, std::string _name) noexcept
+	: x{ _x }, y{ _y }, width{ _width }, height{ _height }, texture{ _texture }, name {_name}
 {
+	this->sprite.setTexture(texture);
 	this->sprite.setPosition(x, y);
 	this->movementSpeed = Settings::MOVEMENT_SPEED;
 }

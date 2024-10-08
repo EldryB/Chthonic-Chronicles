@@ -6,7 +6,7 @@
 //Initializer functions
 void Game::initWindow()
 {
-    this->window = new sf::RenderWindow(sf::VideoMode(Settings::WINDOW_WIDTH, Settings::WINDOW_HEIGHT), "Chthonic Chronicles", sf::Style::Resize | sf::Style::Close | sf::Style::Titlebar);
+    this->window = new sf::RenderWindow(sf::VideoMode(Settings::WINDOW_WIDTH, Settings::WINDOW_HEIGHT), "Chthonic Chronicles", sf::Style::Close | sf::Style::Titlebar);
 }
 
 void Game::initKeys()
@@ -26,7 +26,7 @@ void Game::initKeys()
 void Game::initStates()
 {
     this->states.push(new MainMenuState(this->window, &this->supportedKeys));
-    this->states.push(new GameState(this->window, &this->supportedKeys));
+    //this->states.push(new GameState(this->window, &this->supportedKeys));
 }
 
 Game::Game()
