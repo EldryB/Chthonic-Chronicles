@@ -29,6 +29,10 @@ public:
 
 	virtual void animation(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame);
 
+	void setSprite(sf::Sprite& sprite);
+
+	void setPosition(float& _x, float& _y);
+
 protected:
 	float x;
 	float y;

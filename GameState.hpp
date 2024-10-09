@@ -26,5 +26,10 @@ private:
     void initTextures();
     void initBackground();
     void initCharacterFrames();
+    void limitMainBackground(sf::Sprite& spr);
+    float pos_x(sf::Sprite& spr);
+    float pos_y(sf::Sprite& spr);
+    void set_x(float _x, sf::Sprite& sprite);
+    void set_y(float _y, sf::Sprite& sprite);
 };
 

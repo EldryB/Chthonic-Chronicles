@@ -41,9 +41,19 @@ sf::Sprite Entity::get_sprite() noexcept
 	return this->sprite;
 }
 
+void Entity::setSprite(sf::Sprite& spr)
+{
+	this->sprite = spr;
+}
+
 void Entity::setName(std::string _name)
 {
 	this->name = _name;
+}
+
+void Entity::setPosition(float& _x, float& _y)
+{
+	this->sprite.setPosition(_x, _y);
 }
 
 void Entity::move(const float& _dt, const float dir_x, const float dir_y)

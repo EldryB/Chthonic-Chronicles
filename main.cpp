@@ -6,5 +6,5 @@ int main()
 
 	game.run();
 
-	return 0;
+	return EXIT_SUCCESS;
 }
