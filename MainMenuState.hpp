@@ -7,7 +7,7 @@ class MainMenuState :
     public State
 {
 public:
-    MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys);
+    MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
     virtual ~MainMenuState();
 
     void endState();

@@ -43,12 +43,10 @@ void GameState::initCharacterFrames()
 	this->texture.loadFromFile("assets/textures/back3.png");
 	this->animationEntity.BackAnimation.push_back(texture);
 
-
-	
 }
 
-GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
-	: State(_window, _supportedKeys)
+GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
+	: State(_window, _supportedKeys, _states)
 {
 	this->initCharacterFrames();
 	this->initKeybinds();

@@ -1,9 +1,10 @@
 #include "State.hpp"
 
-State::State(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
+State::State(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 {
 	this->window = _window;
 	this->supportedKeys = _supportedKeys;
+	this->states = _states;
 	this->quit = false;
 }
 

@@ -5,7 +5,7 @@
 class State
 {
 public:
-	State(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys);
+	State(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
 	virtual ~State();
 
 	const bool& getQuit() const;
@@ -19,6 +19,7 @@ public:
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;
 
 protected:
+	std::stack<State*>* states;
 	sf::RenderWindow* window;
 	std::unordered_map<std::string, sf::Keyboard::Key>* supportedKeys;
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;

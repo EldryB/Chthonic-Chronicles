@@ -27,8 +27,8 @@ void MainMenuState::initButtons()
 	this->buttons["GAME_STATE"] = new Button(100, 400, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
-	: State(_window, _supportedKeys)
+MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
+	: State(_window, _supportedKeys, _states)
 {
 	this->initFonts();
 	this->initKeybinds();
@@ -73,14 +73,16 @@ void MainMenuState::updateButtons()
 		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonIdle"]);
 		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color::White);
 	}
+	
 	if (this->buttons["GAME_STATE"]->isHover())
 	{
 		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonHover"]);
 		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color( 150, 104, 28 ));
 	}
+	
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
-		//this->states.push(new GameState(this->window, &this->supportedKeys));
+		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 	}
 
 }
