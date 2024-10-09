@@ -1,6 +1,7 @@
 #pragma once
 
 #include "State.hpp"
+#include "Animation.hpp"
 class GameState :
     public State
 {
@@ -16,7 +17,12 @@ public:
 
 private:
     Entity player;
+    Main_Animation animationEntity;
+    int currentFrame;
+    float timeSinceLastUpdate;
+    float timeBetweenUpdates;
 
     void initKeybinds();
+    void initCharacterFrames();
 };
 

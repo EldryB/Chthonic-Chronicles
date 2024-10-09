@@ -9,10 +9,54 @@ void GameState::initKeybinds()
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 }
 
+void GameState::initCharacterFrames()
+{
+	this->texture.loadFromFile("assets/textures/right1.png");
+	this->animationEntity.RightAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/right2.png");
+	this->animationEntity.RightAnimation.push_back(texture);
+	this->animationEntity.RightAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/right3.png");
+	this->animationEntity.RightAnimation.push_back(texture);
+
+	this->texture.loadFromFile("assets/textures/left1.png");
+	this->animationEntity.LeftAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/left2.png");
+	this->animationEntity.LeftAnimation.push_back(texture);
+	this->animationEntity.LeftAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/left3.png");
+	this->animationEntity.LeftAnimation.push_back(texture);
+
+	this->texture.loadFromFile("assets/textures/front1.png");
+	this->animationEntity.FrontAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/front2.png");
+	this->animationEntity.FrontAnimation.push_back(texture);
+	this->animationEntity.FrontAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/front3.png");
+	this->animationEntity.FrontAnimation.push_back(texture);
+
+	this->texture.loadFromFile("assets/textures/back1.png");
+	this->animationEntity.BackAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/back2.png");
+	this->animationEntity.BackAnimation.push_back(texture);
+	this->animationEntity.BackAnimation.push_back(texture);
+	this->texture.loadFromFile("assets/textures/back3.png");
+	this->animationEntity.BackAnimation.push_back(texture);
+
+
+	
+}
+
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
 	: State(_window, _supportedKeys)
 {
+	this->initCharacterFrames();
 	this->initKeybinds();
+
+	this->currentFrame = 0;
+	this->timeSinceLastUpdate = 0.0f;
+	this->timeBetweenUpdates = 0.08f;
+	
 
 	this->texture.loadFromFile("assets/textures/mainStage.png");
 	this->textures["mainStage"] = this->texture;
@@ -32,22 +76,27 @@ void GameState::endState()
 void GameState::updateInput(const float& _dt)
 {
 	this->checkForQuit();
+	timeSinceLastUpdate += _dt;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
 		this->player.move(_dt, -1.f, 0.f);
+		this->player.animation(timeSinceLastUpdate,timeBetweenUpdates, animationEntity.LeftAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
 		this->player.move(_dt, 1.f, 0.f);
+		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.RightAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
 		this->player.move(_dt, 0.f, -1.f);
+		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.BackAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
 		this->player.move(_dt, 0.f, 1.f);
+		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
 	}
 }
 

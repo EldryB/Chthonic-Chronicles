@@ -27,6 +27,8 @@ public:
 
 	virtual void render(sf::RenderTarget* target);
 
+	virtual void animation(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame);
+
 protected:
 	float x;
 	float y;

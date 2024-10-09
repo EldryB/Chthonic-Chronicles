@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Animation.hpp"
 
 //Static functions
 
