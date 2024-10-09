@@ -19,6 +19,8 @@ public:
 
 	sf::Sprite get_sprite() noexcept;
 
+	void setPosition(float _x, float _y);
+	
 	void setName(std::string _name);
 
 	virtual void move(const float& _dt, const float dir_x, const float dir_y);
@@ -31,16 +33,14 @@ public:
 
 	void setSprite(sf::Sprite& sprite);
 
-	void setPosition(float& _x, float& _y);
-
 protected:
 	float x;
 	float y;
 	float width;
 	float height;
 	float movementSpeed;
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Texture texture; //Change to pointer
+	sf::Sprite sprite; //Maybe change to pointer
 	std::string name;
 };
 

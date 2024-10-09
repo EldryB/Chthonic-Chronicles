@@ -12,49 +12,75 @@ void GameState::initKeybinds()
 void GameState::initTextures()
 {
 	this->texture.loadFromFile("assets/textures/mainStage.png");
-	this->textures["mainStage"] = this->texture;
+	this->textures["MainStage"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/right1.png");
+	this->textures["Right1"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/right2.png");
+	this->textures["Right2"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/right3.png");
+	this->textures["Right3"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/left1.png");
+	this->textures["Left1"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/left2.png");
+	this->textures["Left2"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/left3.png");
+	this->textures["Left3"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/front1.png");
+	this->textures["Front1"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/front2.png");
+	this->textures["Front2"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/front3.png");
+	this->textures["Front3"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/back1.png");
+	this->textures["Back1"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/back2.png");
+	this->textures["Back2"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/back3.png");
+	this->textures["Back3"] = this->texture;
 }
 
 void GameState::initBackground()
 {
-	this->background.setTexture(this->textures["mainStage"]);
+	this->background.setTexture(this->textures["MainStage"]);
 	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 void GameState::initCharacterFrames()
 {
-	this->texture.loadFromFile("assets/textures/right1.png");
-	this->animationEntity.RightAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/right2.png");
-	this->animationEntity.RightAnimation.push_back(texture);
-	this->animationEntity.RightAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/right3.png");
-	this->animationEntity.RightAnimation.push_back(texture);
+	this->animationEntity.RightAnimation.push_back(this->textures["Right1"]);
+	this->animationEntity.RightAnimation.push_back(this->textures["Right2"]);
+	this->animationEntity.RightAnimation.push_back(this->textures["Right2"]);
+	this->animationEntity.RightAnimation.push_back(this->textures["Right3"]);
 
-	this->texture.loadFromFile("assets/textures/left1.png");
-	this->animationEntity.LeftAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/left2.png");
-	this->animationEntity.LeftAnimation.push_back(texture);
-	this->animationEntity.LeftAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/left3.png");
-	this->animationEntity.LeftAnimation.push_back(texture);
+	
+	this->animationEntity.LeftAnimation.push_back(this->textures["Left1"]);
+	this->animationEntity.LeftAnimation.push_back(this->textures["Left2"]);
+	this->animationEntity.LeftAnimation.push_back(this->textures["Left2"]);
+	this->animationEntity.LeftAnimation.push_back(this->textures["Left3"]);
 
-	this->texture.loadFromFile("assets/textures/front1.png");
-	this->animationEntity.FrontAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/front2.png");
-	this->animationEntity.FrontAnimation.push_back(texture);
-	this->animationEntity.FrontAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/front3.png");
-	this->animationEntity.FrontAnimation.push_back(texture);
 
-	this->texture.loadFromFile("assets/textures/back1.png");
-	this->animationEntity.BackAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/back2.png");
-	this->animationEntity.BackAnimation.push_back(texture);
-	this->animationEntity.BackAnimation.push_back(texture);
-	this->texture.loadFromFile("assets/textures/back3.png");
-	this->animationEntity.BackAnimation.push_back(texture);
+	this->animationEntity.FrontAnimation.push_back(this->textures["Front1"]);
+	this->animationEntity.FrontAnimation.push_back(this->textures["Front2"]);
+	this->animationEntity.FrontAnimation.push_back(this->textures["Front2"]);
+	this->animationEntity.FrontAnimation.push_back(this->textures["Front3"]);
 
+
+	this->animationEntity.BackAnimation.push_back(this->textures["Back1"]);
+	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
+	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
+	this->animationEntity.BackAnimation.push_back(this->textures["Back3"]);
 }
 
 
@@ -344,7 +370,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 
 	float x = 200.f;
 	float y = 500.f;
-	this->player.setPosition(x,y);
+	this->player.setPosition(x, y);    
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
 	this->timeBetweenUpdates = 0.08f;
@@ -355,14 +381,8 @@ GameState::~GameState()
 
 }
 
-void GameState::endState()
-{
-	std::cout << "Ending GameState!" << "\n";
-}
-
 void GameState::updateInput(const float& _dt)
 {
-	this->checkForQuit();
 	timeSinceLastUpdate += _dt;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
@@ -385,9 +405,16 @@ void GameState::updateInput(const float& _dt)
 		this->player.move(_dt, 0.f, 1.f);
 		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
 	}
-	sf::Sprite spr = player.get_sprite();
-	limitMainBackground(spr);
-	player.setSprite(spr);
+	
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
+	{
+		this->endState();
+	}
+	
+	sf::Sprite spr = this->player.get_sprite();
+	this->limitMainBackground(spr);
+	this->player.setSprite(spr);
+	
 }
 
 void GameState::update(const float& _dt)

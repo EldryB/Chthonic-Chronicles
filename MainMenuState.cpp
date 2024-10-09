@@ -63,16 +63,9 @@ MainMenuState::~MainMenuState()
 	}
 }
 
-void MainMenuState::endState()
-{
-	std::cout << "Ending MainMenuState!" << "\n";
-}
-
 void MainMenuState::updateInput(const float& _dt)
 {
-	this->checkForQuit();
-
-
+	
 }
 
 void MainMenuState::updateButtons()

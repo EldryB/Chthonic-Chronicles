@@ -18,12 +18,9 @@ const bool& State::getQuit() const
 	return this->quit;
 }
 
-void State::checkForQuit()
+void State::endState()
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
-	{
-		this->quit = true;
-	}
+	this->quit = true;
 }
 
 void State::updateMousePositions()
@@ -31,4 +28,6 @@ void State::updateMousePositions()
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
 	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
+
+	std::cout << "Mouse = X: " << mousePosView.x << " Y: " << mousePosView.y << "\n";
 }

@@ -10,8 +10,6 @@ public:
     MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
     virtual ~MainMenuState();
 
-    void endState();
-
     void updateInput(const float& _dt);
     void updateButtons();
     void update(const float& _dt);

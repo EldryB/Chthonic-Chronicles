@@ -51,7 +51,7 @@ void Entity::setName(std::string _name)
 	this->name = _name;
 }
 
-void Entity::setPosition(float& _x, float& _y)
+void Entity::setPosition(float _x, float _y)
 {
 	this->sprite.setPosition(_x, _y);
 }
@@ -63,7 +63,7 @@ void Entity::move(const float& _dt, const float dir_x, const float dir_y)
 
 void Entity::update(const float& _dt)
 {
-
+	std::cout << "Entity = X: " << this->sprite.getPosition().x << " Y: " << this->sprite.getPosition().y << "\n";
 }
 
 void Entity::render(sf::RenderTarget* target)
