@@ -10,8 +10,6 @@ struct Main_Animation
 	std::vector<sf::Texture> BackAnimation;
 };
 
-
-
 struct Animation_enemy
 {
 	std::vector<sf::Texture> AttackAnimation;

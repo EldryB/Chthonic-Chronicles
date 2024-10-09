@@ -23,6 +23,8 @@ private:
     float timeBetweenUpdates;
 
     void initKeybinds();
+    void initTextures();
+    void initBackground();
     void initCharacterFrames();
 };
 

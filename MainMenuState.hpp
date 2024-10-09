@@ -23,6 +23,9 @@ private:
 
     std::unordered_map<std::string, Button*> buttons;
     
+    void initVariables();
+    void initTextures();
+    void initBackground();
     void initFonts();
     void initKeybinds();
     void initButtons();

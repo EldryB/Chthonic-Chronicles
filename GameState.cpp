@@ -9,6 +9,18 @@ void GameState::initKeybinds()
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 }
 
+void GameState::initTextures()
+{
+	this->texture.loadFromFile("assets/textures/mainStage.png");
+	this->textures["mainStage"] = this->texture;
+}
+
+void GameState::initBackground()
+{
+	this->background.setTexture(this->textures["mainStage"]);
+	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
+}
+
 void GameState::initCharacterFrames()
 {
 	this->texture.loadFromFile("assets/textures/right1.png");
@@ -48,18 +60,14 @@ void GameState::initCharacterFrames()
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initTextures();
+	this->initBackground();
 	this->initCharacterFrames();
 	this->initKeybinds();
 
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
 	this->timeBetweenUpdates = 0.08f;
-	
-
-	this->texture.loadFromFile("assets/textures/mainStage.png");
-	this->textures["mainStage"] = this->texture;
-	this->background.setTexture(this->textures["mainStage"]);
-	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 GameState::~GameState()

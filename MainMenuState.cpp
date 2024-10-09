@@ -1,5 +1,28 @@
 #include "MainMenuState.hpp"
 
+void MainMenuState::initVariables()
+{
+
+}
+
+void MainMenuState::initTextures()
+{
+	this->texture.loadFromFile("assets/textures/start.png");
+	this->textures["Background"] = this->texture;
+	
+	this->texture.loadFromFile("assets/textures/mainMenuButtonIdle.png");
+	this->textures["MainMenuButtonIdle"] = this->texture;
+
+	this->texture.loadFromFile("assets/textures/mainMenuButtonHover.png");
+	this->textures["MainMenuButtonHover"] = this->texture;
+}
+
+void MainMenuState::initBackground()
+{
+	this->background.setTexture(this->textures["Background"]);
+	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
+}
+
 void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
@@ -18,26 +41,18 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->texture.loadFromFile("assets/textures/mainMenuButtonIdle.png");
-	this->textures["MainMenuButtonIdle"] = this->texture;
-	this->texture.loadFromFile("assets/textures/mainMenuButtonHover.png");
-	this->textures["MainMenuButtonHover"] = this->texture;
-
-
 	this->buttons["GAME_STATE"] = new Button(100, 400, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initVariables();
+	this->initTextures();
+	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
-
-	this->texture.loadFromFile("assets/textures/start.png");
-	this->textures["Background"] = this->texture;
-	this->background.setTexture(this->textures["Background"]);
-	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 MainMenuState::~MainMenuState()
@@ -66,7 +81,6 @@ void MainMenuState::updateButtons()
 	{
 		it.second->update(this->mousePosView);
 	}
-
 	
 	if (this->buttons["GAME_STATE"]->isIdle())
 	{
