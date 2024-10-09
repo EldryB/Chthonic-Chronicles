@@ -16,15 +16,23 @@ void MainMenuState::initKeybinds()
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
 }
 
+void MainMenuState::initButtons()
+{
+	this->texture.loadFromFile("assets/textures/mainMenuButtonIdle.png");
+	this->textures["MainMenuButtonIdle"] = this->texture;
+	this->texture.loadFromFile("assets/textures/mainMenuButtonHover.png");
+	this->textures["MainMenuButtonHover"] = this->texture;
+
+
+	this->buttons["GAME_STATE"] = new Button(100, 400, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
+}
+
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys)
 	: State(_window, _supportedKeys)
 {
 	this->initFonts();
 	this->initKeybinds();
-
-	this->texture.loadFromFile("assets/textures/mainMenuButton.png");
-	this->textures["MainMenuButton"] = this->texture;
-	this->gameStateBtn = new Button(100, 400, this->textures["MainMenuButton"], &this->font, "New Game");
+	this->initButtons();
 
 	this->texture.loadFromFile("assets/textures/start.png");
 	this->textures["Background"] = this->texture;
@@ -34,7 +42,10 @@ MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::
 
 MainMenuState::~MainMenuState()
 {
-	delete this->gameStateBtn;
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
 }
 
 void MainMenuState::endState()
@@ -49,12 +60,44 @@ void MainMenuState::updateInput(const float& _dt)
 
 }
 
+void MainMenuState::updateButtons()
+{
+	for (auto &it : this->buttons)
+	{
+		it.second->update(this->mousePosView);
+	}
+
+	
+	if (this->buttons["GAME_STATE"]->isIdle())
+	{
+		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonIdle"]);
+		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color::White);
+	}
+	if (this->buttons["GAME_STATE"]->isHover())
+	{
+		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonHover"]);
+		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color( 150, 104, 28 ));
+	}
+	if (this->buttons["GAME_STATE"]->isPressed())
+	{
+		//this->states.push(new GameState(this->window, &this->supportedKeys));
+	}
+
+}
+
 void MainMenuState::update(const float& _dt)
 {
 	this->updateMousePositions();
 	this->updateInput(_dt);
+	this->updateButtons();
+}
 
-	this->gameStateBtn->update(this->mousePosView);
+void MainMenuState::renderButtons(sf::RenderTarget* target)
+{
+	for (auto& it : this->buttons)
+	{
+		it.second->render(target);
+	}
 }
 
 void MainMenuState::render(sf::RenderTarget* target)
@@ -66,5 +109,5 @@ void MainMenuState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 
-	this->gameStateBtn->render(target);
+	this->renderButtons(target);
 }

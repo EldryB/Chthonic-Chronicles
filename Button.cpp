@@ -21,7 +21,27 @@ Button::Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::s
 
 Button::~Button()
 {
+	
+}
 
+const bool Button::isIdle() const
+{
+	if (this->buttonState == ButtonStates::Idle)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+const bool Button::isHover() const
+{
+	if (this->buttonState == ButtonStates::Hover)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 const bool Button::isPressed() const
@@ -32,6 +52,16 @@ const bool Button::isPressed() const
 	}
 	
 	return false;
+}
+
+void Button::setTexture(const sf::Texture& _texture)
+{
+	this->sprite.setTexture(_texture);
+}
+
+void Button::setTextFillColor(const sf::Color& color)
+{
+	this->text.setFillColor(color);
 }
 
 void Button::update(const sf::Vector2f mousePos)
@@ -47,8 +77,6 @@ void Button::update(const sf::Vector2f mousePos)
 			this->buttonState = ButtonStates::Pressed;
 		}
 	}
-
-	//A different sprite for each state
 }
 
 void Button::render(sf::RenderTarget* target)

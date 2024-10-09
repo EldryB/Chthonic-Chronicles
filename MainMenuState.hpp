@@ -13,14 +13,18 @@ public:
     void endState();
 
     void updateInput(const float& _dt);
+    void updateButtons();
     void update(const float& _dt);
+    void renderButtons(sf::RenderTarget* target = nullptr);
     void render(sf::RenderTarget* target = nullptr);
 
 private:
     sf::Font font;
-    Button* gameStateBtn;
+
+    std::unordered_map<std::string, Button*> buttons;
     
     void initFonts();
     void initKeybinds();
+    void initButtons();
 };
 
