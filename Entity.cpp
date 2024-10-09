@@ -3,7 +3,7 @@
 Entity::Entity()
 {
 	this->x = 321.f;
-	this->y = 270.f;
+	this->y = 370.f;
 	this->width = Settings::ENTITY_WIDTH;
 	this->height = Settings::ENTITY_HEIGHT;
 	this->texture.loadFromFile("assets/textures/right2.png");
