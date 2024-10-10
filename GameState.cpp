@@ -115,30 +115,30 @@ void GameState::set_y(float _y, sf::Sprite& sprite)
 
 void GameState::limitMainBackground(sf::Sprite& sprite)
 {
-	if (pos_x(sprite) < 160)
+	if (pos_x(sprite) < 205)
 	{
-		set_x(160, sprite);
+		set_x(205, sprite);
 	}
-	if (pos_x(sprite) >= 160 && pos_x(sprite) < 230)
+	if (pos_x(sprite) >= 205 && pos_x(sprite) < 300)
 	{
-		if (pos_y(sprite) < 280)
+		if (pos_y(sprite) < 360)
 		{
-			set_y(280, sprite);
+			set_y(360, sprite);
 		}
 
-		else if (pos_y(sprite) > 325)
+		else if (pos_y(sprite) > 430)
 		{
-			set_y(325, sprite);
+			set_y(430, sprite);
 		}
 	}
 
-	if (pos_x(sprite) >= 230 && pos_x(sprite) <= 275)
+	if (pos_x(sprite) >= 300 && pos_x(sprite) <= 370)
 	{
-		int marca = 230;
-		int marca_y = 335;
-		if (pos_y(sprite) < 270)
+		int marca = 300;
+		int marca_y = 430;
+		if (pos_y(sprite) < 350)
 		{
-			set_y(270, sprite);
+			set_y(350, sprite);
 		}
 		//Parte de abajo con movilidad escalera
 		if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
@@ -205,133 +205,172 @@ void GameState::limitMainBackground(sf::Sprite& sprite)
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 40 && pos_x(sprite) <= marca + 45)
+		else if (pos_x(sprite) >= marca + 40 && pos_x(sprite) < marca + 45)
 		{
 			if (pos_y(sprite) > marca_y - 45)
 			{
 				set_y(marca_y - 45, sprite);
 			}
 		}
+
+		else if (pos_x(sprite) >= marca + 45 && pos_x(sprite) < marca + 50)
+		{
+			if (pos_y(sprite) > marca_y - 50)
+			{
+				set_y(marca_y - 50, sprite);
+			}
+		}
+
+		else if (pos_x(sprite) >= marca + 50 && pos_x(sprite) < marca + 55)
+		{
+			if (pos_y(sprite) > marca_y - 55)
+			{
+				set_y(marca_y - 55, sprite);
+			}
+		}
+
+		else if (pos_x(sprite) >= marca + 55 && pos_x(sprite) <= marca + 75)
+		{
+			if (pos_y(sprite) > marca_y - 60)
+			{
+				set_y(marca_y - 60, sprite);
+			}
+		}
+
 	}
 
-	if (pos_x(sprite) > 275 && pos_x(sprite) < 505)
+	if (pos_x(sprite) > 370 && pos_x(sprite) < 640)
 	{
-		if (pos_y(sprite) > 290)
+		if (pos_y(sprite) > 530)
 		{
-			set_y(290, sprite);
+			set_y(530, sprite);
 		}
 		//Parte de arriba del puente
-		if (pos_x(sprite) >= 365 && pos_x(sprite) < 470)
+		if (pos_x(sprite) >= 460 && pos_x(sprite) < 585)
 		{
 			{
-				if (pos_x(sprite) >= 365 + 0 && pos_x(sprite) < 365 + 5)
+				if (pos_y(sprite) > 370)
 				{
-					if (pos_y(sprite) < 265 - 5)
+					set_y(370, sprite);
+				}
+				int marca = 460;
+				int marca_y = 335;
+				if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
+				{
+					if (pos_y(sprite) < marca_y - 5)
 					{
-						set_y(265 - 5, sprite);
+						set_y(marca_y - 5, sprite);
 					}
 				}
 
-				else if (pos_x(sprite) >= 365 + 5 && pos_x(sprite) < 365 + 10)
+				else if (pos_x(sprite) >= marca + 5 && pos_x(sprite) < marca + 10)
 				{
-					if (pos_y(sprite) < 265 - 10)
+					if (pos_y(sprite) < marca_y - 10)
 					{
-						set_y(265 - 10, sprite);
+						set_y(marca_y - 10, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= 365 + 10 && pos_x(sprite) < 365 + 15)
+				else if (pos_x(sprite) >= marca + 10 && pos_x(sprite) < marca + 15)
 				{
-					if (pos_y(sprite) < 265 - 15)
+					if (pos_y(sprite) < marca_y - 15)
 					{
-						set_y(265 - 15, sprite);
+						set_y(marca_y - 15, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= 365 + 15 && pos_x(sprite) < 365 + 20)
+				else if (pos_x(sprite) >= marca + 15 && pos_x(sprite) < marca + 20)
 				{
-					if (pos_y(sprite) < 265 - 20)
+					if (pos_y(sprite) < marca_y - 20)
 					{
-						set_y(265 - 20, sprite);
+						set_y(marca_y - 20, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= 365 + 20 && pos_x(sprite) < 365 + 25)
+				else if (pos_x(sprite) >= marca + 20 && pos_x(sprite) < marca + 25)
 				{
-					if (pos_y(sprite) < 265 - 25)
+					if (pos_y(sprite) < marca_y - 25)
 					{
-						set_y(265 - 25, sprite);
+						set_y(marca_y - 25, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= 365 + 25 && pos_x(sprite) < 365 + 30)
+				else if (pos_x(sprite) >= marca + 25 && pos_x(sprite) < marca + 30)
 				{
-					if (pos_y(sprite) < 265 - 30)
+					if (pos_y(sprite) < marca_y - 30)
 					{
-						set_y(265 - 30, sprite);
+						set_y(marca_y - 30, sprite);
 					}
 				}
 				else
 				{
-					if (pos_y(sprite) < 265 - 35)
+					if (pos_y(sprite) < marca_y - 35)
 					{
-						set_y(265 - 35, sprite);
+						set_y(marca_y - 35, sprite);
 					}
 				}
 			}
 		}
 
-		else if (pos_x(sprite) >= 470 && pos_x(sprite) < 505)
+		else if (pos_x(sprite) >= 585 && pos_x(sprite) < 620)
 		{
-			if (pos_x(sprite) >= 470 + 0 && pos_x(sprite) < 470 + 5)
+			int marca = 585;
+			int marca_y = 335;
+
+			if (pos_y(sprite) > 370)
 			{
-				if (pos_y(sprite) < 265 - 35 + 5)
+				set_y(370, sprite);
+			}
+
+			if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
+			{
+				if (pos_y(sprite) < marca_y - 35)
 				{
-					set_y(265 - 35 + 5, sprite);
+					set_y(marca_y - 35, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 5 && pos_x(sprite) < 470 + 10)
+			else if (pos_x(sprite) >= marca + 5 && pos_x(sprite) < marca + 10)
 			{
-				if (pos_y(sprite) < 265 - 35 + 10)
+				if (pos_y(sprite) < marca_y - 35 + 10)
 				{
-					set_y(265 - 35 + 10, sprite);
+					set_y(marca_y - 35 + 10, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 10 && pos_x(sprite) < 470 + 15)
+			else if (pos_x(sprite) >= marca + 10 && pos_x(sprite) < marca + 15)
 			{
-				if (pos_y(sprite) < 265 - 35 + 15)
+				if (pos_y(sprite) < marca_y - 35 + 15)
 				{
-					set_y(265 - 35 + 15, sprite);
+					set_y(marca_y - 35 + 15, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 15 && pos_x(sprite) < 470 + 20)
+			else if (pos_x(sprite) >= marca + 15 && pos_x(sprite) < marca + 20)
 			{
-				if (pos_y(sprite) < 265 - 35 + 20)
+				if (pos_y(sprite) < marca_y - 35 + 20)
 				{
-					set_y(265 - 35 + 20, sprite);
+					set_y(marca_y - 35 + 20, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 20 && pos_x(sprite) < 470 + 25)
+			else if (pos_x(sprite) >= marca + 20 && pos_x(sprite) < marca + 25)
 			{
-				if (pos_y(sprite) < 265 - 35 + 25)
+				if (pos_y(sprite) < marca_y - 35 + 25)
 				{
-					set_y(265 - 35 + 25, sprite);
+					set_y(marca_y - 35 + 25, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 25 && pos_x(sprite) < 470 + 30)
+			else if (pos_x(sprite) >= marca + 25 && pos_x(sprite) < marca + 30)
 			{
-				if (pos_y(sprite) < 265 - 35 + 30)
+				if (pos_y(sprite) < marca_y - 35 + 30)
 				{
-					set_y(265 - 35 + 30, sprite);
+					set_y(marca_y - 35 + 30, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= 470 + 30 && pos_x(sprite) < 470 + 35)
+			else if (pos_x(sprite) >= marca + 30 && pos_x(sprite) < marca + 35)
 			{
-				if (pos_y(sprite) < 265 - 35 + 35)
+				if (pos_y(sprite) < marca_y - 35 + 35)
 				{
-					set_y(265 - 35 + 35, sprite);
+					set_y(marca_y - 35 + 35, sprite);
 				}
 			}
 		}
@@ -339,32 +378,32 @@ void GameState::limitMainBackground(sf::Sprite& sprite)
 
 		else
 		{
-			if (pos_y(sprite) < 265)
+			if (pos_y(sprite) < 340)
 			{
-				set_y(265, sprite);
+				set_y(340, sprite);
 			}
-			else if (pos_y(sprite) > 290)
+			else if (pos_y(sprite) > 370)
 			{
-				set_y(290, sprite);
+				set_y(370, sprite);
 			}
 		}
 	}
 
 
-	if (pos_x(sprite) >= 505 && pos_x(sprite) <= 572)
+	if (pos_x(sprite) >= 640 && pos_x(sprite) <= 786.0f)
 	{
-		if (pos_y(sprite) < 276)
+		if (pos_y(sprite) < 352)
 		{
-			set_y(276, sprite);
+			set_y(352, sprite);
 		}
-		else if (pos_y(sprite) > 290)
+		else if (pos_y(sprite) > 370)
 		{
-			set_y(290, sprite);
+			set_y(370, sprite);
 		}
 	}
-	if (pos_x(sprite) > 572)
+	if (pos_x(sprite) > 785)
 	{
-		set_x(572, sprite);
+		set_x(785, sprite);
 	}
 }
 
