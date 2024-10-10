@@ -39,8 +39,8 @@ protected:
 	float width;
 	float height;
 	float movementSpeed;
-	sf::Texture texture; //Change to pointer
-	sf::Sprite sprite; //Maybe change to pointer
+	sf::Texture texture; 
+	sf::Sprite sprite; 
 	std::string name;
 };
 
