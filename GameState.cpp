@@ -57,6 +57,14 @@ void GameState::initBackground()
 	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
+void GameState::initFonts()
+{
+	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
+	{
+		throw("COULD NOT LOAD FONT");
+	}
+}
+
 void GameState::initCharacterFrames()
 {
 	this->animationEntity.RightAnimation.push_back(this->textures["Right1"]);
@@ -84,12 +92,12 @@ void GameState::initCharacterFrames()
 }
 
 
-float GameState::pos_x(sf::Sprite& spr)
+float GameState::pos_x(sf::Sprite spr)
 {
 	return spr.getPosition().x;
 }
 
-float GameState::pos_y(sf::Sprite& spr)
+float GameState::pos_y(sf::Sprite spr)
 {
 	return spr.getPosition().y;
 }
@@ -365,6 +373,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 {
 	this->initTextures();
 	this->initBackground();
+	this->initFonts();
 	this->initCharacterFrames();
 	this->initKeybinds();
 
@@ -374,6 +383,10 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
 	this->timeBetweenUpdates = 0.08f;
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(20);
+	this->text.setFillColor(sf::Color::White);
+	text.setPosition(30, 30);
 }
 
 GameState::~GameState()
@@ -423,6 +436,8 @@ void GameState::update(const float& _dt)
 	this->updateInput(_dt);
 
 	this->player.update(_dt);
+	std::string textString = "Position: X = " + std::to_string(this->pos_x(this->player.get_sprite())) + ", Y = " + std::to_string(this->pos_y(this->player.get_sprite()));
+	text.setString(textString);
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -434,4 +449,5 @@ void GameState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 	this->player.render(target);
+	target->draw(this->text);
 }

@@ -19,14 +19,17 @@ private:
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
+    sf::Font font;
+    sf::Text text;
 
     void initKeybinds();
     void initTextures();
     void initBackground();
+    void initFonts();
     void initCharacterFrames();
     void limitMainBackground(sf::Sprite& spr);
-    float pos_x(sf::Sprite& spr);
-    float pos_y(sf::Sprite& spr);
+    float pos_x(sf::Sprite spr);
+    float pos_y(sf::Sprite spr);
     void set_x(float _x, sf::Sprite& sprite);
     void set_y(float _y, sf::Sprite& sprite);
 };
