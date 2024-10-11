@@ -1,5 +1,10 @@
 #include "GameState.hpp"
 
+void GameState::initVariables()
+{
+
+}
+
 void GameState::initKeybinds()
 {
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
@@ -92,285 +97,285 @@ void GameState::initCharacterFrames()
 }
 
 
-float GameState::pos_x(sf::Sprite spr)
+float GameState::getXPos(sf::Sprite spr)
 {
 	return spr.getPosition().x;
 }
 
-float GameState::pos_y(sf::Sprite spr)
+float GameState::getYPos(sf::Sprite spr)
 {
 	return spr.getPosition().y;
 }
 
-void GameState::set_x(float _x, sf::Sprite& sprite)
+void GameState::setXPos(float _x, sf::Sprite& sprite)
 {
 	float _y = sprite.getPosition().y;
 	sprite.setPosition(_x, _y);
 }
-void GameState::set_y(float _y, sf::Sprite& sprite)
+void GameState::setYPos(float _y, sf::Sprite& sprite)
 {
 	float _x = sprite.getPosition().x;
 	sprite.setPosition(_x, _y);
 }
 
-void GameState::limitMainBackground(sf::Sprite& sprite)
+void GameState::setMainStageLimits(sf::Sprite& sprite)
 {
-	if (pos_x(sprite) < 205)
+	if (getXPos(sprite) < 205)
 	{
-		set_x(205, sprite);
+		setXPos(205, sprite);
 	}
-	if (pos_x(sprite) >= 205 && pos_x(sprite) < 300)
+	if (getXPos(sprite) >= 205 && getXPos(sprite) < 300)
 	{
-		if (pos_y(sprite) < 360)
+		if (getYPos(sprite) < 360)
 		{
-			set_y(360, sprite);
+			setYPos(360, sprite);
 		}
 
-		else if (pos_y(sprite) > 430)
+		else if (getYPos(sprite) > 430)
 		{
-			set_y(430, sprite);
+			setYPos(430, sprite);
 		}
 	}
 
-	if (pos_x(sprite) >= 300 && pos_x(sprite) <= 370)
+	if (getXPos(sprite) >= 300 && getXPos(sprite) <= 370)
 	{
 		int marca = 300;
 		int marca_y = 430;
-		if (pos_y(sprite) < 350)
+		if (getYPos(sprite) < 350)
 		{
-			set_y(350, sprite);
+			setYPos(350, sprite);
 		}
 		//Parte de abajo con movilidad escalera
-		if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
+		if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
 		{
-			if (pos_y(sprite) > marca_y - 5)
+			if (getYPos(sprite) > marca_y - 5)
 			{
-				set_y(marca_y - 5, sprite);
+				setYPos(marca_y - 5, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 5 && pos_x(sprite) < marca + 10)
+		else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
 		{
-			if (pos_y(sprite) > marca_y - 10)
+			if (getYPos(sprite) > marca_y - 10)
 			{
-				set_y(marca_y - 10, sprite);
+				setYPos(marca_y - 10, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 10 && pos_x(sprite) < marca + 15)
+		else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
 		{
-			if (pos_y(sprite) > marca_y - 15)
+			if (getYPos(sprite) > marca_y - 15)
 			{
-				set_y(marca_y - 15, sprite);
+				setYPos(marca_y - 15, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 15 && pos_x(sprite) < marca + 20)
+		else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
 		{
-			if (pos_y(sprite) > marca_y - 20)
+			if (getYPos(sprite) > marca_y - 20)
 			{
-				set_y(marca_y - 20, sprite);
+				setYPos(marca_y - 20, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 20 && pos_x(sprite) < marca + 25)
+		else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
 		{
-			if (pos_y(sprite) > marca_y - 25)
+			if (getYPos(sprite) > marca_y - 25)
 			{
-				set_y(marca_y - 25, sprite);
+				setYPos(marca_y - 25, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 25 && pos_x(sprite) < marca + 30)
+		else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
 		{
-			if (pos_y(sprite) > marca_y - 30)
+			if (getYPos(sprite) > marca_y - 30)
 			{
-				set_y(marca_y - 30, sprite);
+				setYPos(marca_y - 30, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 30 && pos_x(sprite) < marca + 35)
+		else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
 		{
-			if (pos_y(sprite) > marca_y - 35)
+			if (getYPos(sprite) > marca_y - 35)
 			{
-				set_y(marca_y - 35, sprite);
+				setYPos(marca_y - 35, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 35 && pos_x(sprite) < marca + 40)
+		else if (getXPos(sprite) >= marca + 35 && getXPos(sprite) < marca + 40)
 		{
-			if (pos_y(sprite) > marca_y - 40)
+			if (getYPos(sprite) > marca_y - 40)
 			{
-				set_y(marca_y - 40, sprite);
+				setYPos(marca_y - 40, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 40 && pos_x(sprite) < marca + 45)
+		else if (getXPos(sprite) >= marca + 40 && getXPos(sprite) < marca + 45)
 		{
-			if (pos_y(sprite) > marca_y - 45)
+			if (getYPos(sprite) > marca_y - 45)
 			{
-				set_y(marca_y - 45, sprite);
+				setYPos(marca_y - 45, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 45 && pos_x(sprite) < marca + 50)
+		else if (getXPos(sprite) >= marca + 45 && getXPos(sprite) < marca + 50)
 		{
-			if (pos_y(sprite) > marca_y - 50)
+			if (getYPos(sprite) > marca_y - 50)
 			{
-				set_y(marca_y - 50, sprite);
+				setYPos(marca_y - 50, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 50 && pos_x(sprite) < marca + 55)
+		else if (getXPos(sprite) >= marca + 50 && getXPos(sprite) < marca + 55)
 		{
-			if (pos_y(sprite) > marca_y - 55)
+			if (getYPos(sprite) > marca_y - 55)
 			{
-				set_y(marca_y - 55, sprite);
+				setYPos(marca_y - 55, sprite);
 			}
 		}
 
-		else if (pos_x(sprite) >= marca + 55 && pos_x(sprite) <= marca + 75)
+		else if (getXPos(sprite) >= marca + 55 && getXPos(sprite) <= marca + 75)
 		{
-			if (pos_y(sprite) > marca_y - 60)
+			if (getYPos(sprite) > marca_y - 60)
 			{
-				set_y(marca_y - 60, sprite);
+				setYPos(marca_y - 60, sprite);
 			}
 		}
 
 	}
 
-	if (pos_x(sprite) > 370 && pos_x(sprite) < 640)
+	if (getXPos(sprite) > 370 && getXPos(sprite) < 640)
 	{
-		if (pos_y(sprite) > 530)
+		if (getYPos(sprite) > 530)
 		{
-			set_y(530, sprite);
+			setYPos(530, sprite);
 		}
 		//Parte de arriba del puente
-		if (pos_x(sprite) >= 460 && pos_x(sprite) < 585)
+		if (getXPos(sprite) >= 460 && getXPos(sprite) < 585)
 		{
 			{
-				if (pos_y(sprite) > 370)
+				if (getYPos(sprite) > 370)
 				{
-					set_y(370, sprite);
+					setYPos(370, sprite);
 				}
 				int marca = 460;
 				int marca_y = 335;
-				if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
+				if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
 				{
-					if (pos_y(sprite) < marca_y - 5)
+					if (getYPos(sprite) < marca_y - 5)
 					{
-						set_y(marca_y - 5, sprite);
+						setYPos(marca_y - 5, sprite);
 					}
 				}
 
-				else if (pos_x(sprite) >= marca + 5 && pos_x(sprite) < marca + 10)
+				else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
 				{
-					if (pos_y(sprite) < marca_y - 10)
+					if (getYPos(sprite) < marca_y - 10)
 					{
-						set_y(marca_y - 10, sprite);
+						setYPos(marca_y - 10, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= marca + 10 && pos_x(sprite) < marca + 15)
+				else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
 				{
-					if (pos_y(sprite) < marca_y - 15)
+					if (getYPos(sprite) < marca_y - 15)
 					{
-						set_y(marca_y - 15, sprite);
+						setYPos(marca_y - 15, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= marca + 15 && pos_x(sprite) < marca + 20)
+				else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
 				{
-					if (pos_y(sprite) < marca_y - 20)
+					if (getYPos(sprite) < marca_y - 20)
 					{
-						set_y(marca_y - 20, sprite);
+						setYPos(marca_y - 20, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= marca + 20 && pos_x(sprite) < marca + 25)
+				else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
 				{
-					if (pos_y(sprite) < marca_y - 25)
+					if (getYPos(sprite) < marca_y - 25)
 					{
-						set_y(marca_y - 25, sprite);
+						setYPos(marca_y - 25, sprite);
 					}
 				}
-				else if (pos_x(sprite) >= marca + 25 && pos_x(sprite) < marca + 30)
+				else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
 				{
-					if (pos_y(sprite) < marca_y - 30)
+					if (getYPos(sprite) < marca_y - 30)
 					{
-						set_y(marca_y - 30, sprite);
+						setYPos(marca_y - 30, sprite);
 					}
 				}
 				else
 				{
-					if (pos_y(sprite) < marca_y - 35)
+					if (getYPos(sprite) < marca_y - 35)
 					{
-						set_y(marca_y - 35, sprite);
+						setYPos(marca_y - 35, sprite);
 					}
 				}
 			}
 		}
 
-		else if (pos_x(sprite) >= 585 && pos_x(sprite) < 620)
+		else if (getXPos(sprite) >= 585 && getXPos(sprite) < 620)
 		{
 			int marca = 585;
 			int marca_y = 335;
 
-			if (pos_y(sprite) > 370)
+			if (getYPos(sprite) > 370)
 			{
-				set_y(370, sprite);
+				setYPos(370, sprite);
 			}
 
-			if (pos_x(sprite) >= marca + 0 && pos_x(sprite) < marca + 5)
+			if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
 			{
-				if (pos_y(sprite) < marca_y - 35)
+				if (getYPos(sprite) < marca_y - 35)
 				{
-					set_y(marca_y - 35, sprite);
+					setYPos(marca_y - 35, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 5 && pos_x(sprite) < marca + 10)
+			else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 10)
+				if (getYPos(sprite) < marca_y - 35 + 10)
 				{
-					set_y(marca_y - 35 + 10, sprite);
+					setYPos(marca_y - 35 + 10, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 10 && pos_x(sprite) < marca + 15)
+			else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 15)
+				if (getYPos(sprite) < marca_y - 35 + 15)
 				{
-					set_y(marca_y - 35 + 15, sprite);
+					setYPos(marca_y - 35 + 15, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 15 && pos_x(sprite) < marca + 20)
+			else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 20)
+				if (getYPos(sprite) < marca_y - 35 + 20)
 				{
-					set_y(marca_y - 35 + 20, sprite);
+					setYPos(marca_y - 35 + 20, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 20 && pos_x(sprite) < marca + 25)
+			else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 25)
+				if (getYPos(sprite) < marca_y - 35 + 25)
 				{
-					set_y(marca_y - 35 + 25, sprite);
+					setYPos(marca_y - 35 + 25, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 25 && pos_x(sprite) < marca + 30)
+			else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 30)
+				if (getYPos(sprite) < marca_y - 35 + 30)
 				{
-					set_y(marca_y - 35 + 30, sprite);
+					setYPos(marca_y - 35 + 30, sprite);
 				}
 			}
 
-			else if (pos_x(sprite) >= marca + 30 && pos_x(sprite) < marca + 35)
+			else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
 			{
-				if (pos_y(sprite) < marca_y - 35 + 35)
+				if (getYPos(sprite) < marca_y - 35 + 35)
 				{
-					set_y(marca_y - 35 + 35, sprite);
+					setYPos(marca_y - 35 + 35, sprite);
 				}
 			}
 		}
@@ -378,38 +383,39 @@ void GameState::limitMainBackground(sf::Sprite& sprite)
 
 		else
 		{
-			if (pos_y(sprite) < 340)
+			if (getYPos(sprite) < 340)
 			{
-				set_y(340, sprite);
+				setYPos(340, sprite);
 			}
-			else if (pos_y(sprite) > 370)
+			else if (getYPos(sprite) > 370)
 			{
-				set_y(370, sprite);
+				setYPos(370, sprite);
 			}
 		}
 	}
 
 
-	if (pos_x(sprite) >= 640 && pos_x(sprite) <= 786.0f)
+	if (getXPos(sprite) >= 640 && getXPos(sprite) <= 786.0f)
 	{
-		if (pos_y(sprite) < 352)
+		if (getYPos(sprite) < 352)
 		{
-			set_y(352, sprite);
+			setYPos(352, sprite);
 		}
-		else if (pos_y(sprite) > 370)
+		else if (getYPos(sprite) > 370)
 		{
-			set_y(370, sprite);
+			setYPos(370, sprite);
 		}
 	}
-	if (pos_x(sprite) > 785)
+	if (getXPos(sprite) > 785)
 	{
-		set_x(785, sprite);
+		setXPos(785, sprite);
 	}
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initVariables();
 	this->initTextures();
 	this->initBackground();
 	this->initFonts();
@@ -440,22 +446,22 @@ void GameState::updateInput(const float& _dt)
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
 		this->player.move(_dt, -1.f, 0.f);
-		this->player.animation(timeSinceLastUpdate,timeBetweenUpdates, animationEntity.LeftAnimation, currentFrame);
+		this->player.animate(timeSinceLastUpdate,timeBetweenUpdates, animationEntity.LeftAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
 		this->player.move(_dt, 1.f, 0.f);
-		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.RightAnimation, currentFrame);
+		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.RightAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
 		this->player.move(_dt, 0.f, -1.f);
-		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.BackAnimation, currentFrame);
+		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.BackAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
 		this->player.move(_dt, 0.f, 1.f);
-		this->player.animation(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
+		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
 	}
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
@@ -463,8 +469,8 @@ void GameState::updateInput(const float& _dt)
 		this->endState();
 	}
 	
-	sf::Sprite spr = this->player.get_sprite();
-	this->limitMainBackground(spr);
+	sf::Sprite spr = this->player.getSprite();
+	this->setMainStageLimits(spr);
 	this->player.setSprite(spr);
 	
 }
@@ -475,7 +481,7 @@ void GameState::update(const float& _dt)
 	this->updateInput(_dt);
 
 	this->player.update(_dt);
-	std::string textString = "Position: X = " + std::to_string(this->pos_x(this->player.get_sprite())) + ", Y = " + std::to_string(this->pos_y(this->player.get_sprite()));
+	std::string textString = "Position: X = " + std::to_string(this->getXPos(this->player.getSprite())) + ", Y = " + std::to_string(this->getYPos(this->player.getSprite()));
 	text.setString(textString);
 }
 

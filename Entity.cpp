@@ -36,7 +36,7 @@ Entity::~Entity()
 
 }
 
-sf::Sprite Entity::get_sprite() noexcept
+sf::Sprite Entity::getSprite() noexcept
 {
 	return this->sprite;
 }
@@ -71,7 +71,7 @@ void Entity::render(sf::RenderTarget* target)
 	target->draw(this->sprite);
 }
 
-void Entity::animation(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame)
+void Entity::animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame)
 {
 	if (timeSinceLastUpdate >= timeBetweenUpdates)
 	{

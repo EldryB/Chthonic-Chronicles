@@ -65,7 +65,10 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float& _dt)
 {
-	
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
+	{
+		this->endState();
+	}
 }
 
 void MainMenuState::updateButtons()

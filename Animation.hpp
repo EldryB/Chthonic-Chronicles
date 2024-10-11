@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-struct Main_Animation
+struct MainAnimation
 {
 	std::vector<sf::Texture> RightAnimation;
 	std::vector<sf::Texture> LeftAnimation;
@@ -10,7 +10,7 @@ struct Main_Animation
 	std::vector<sf::Texture> BackAnimation;
 };
 
-struct Animation_enemy
+struct EnemyAnimation
 {
 	std::vector<sf::Texture> AttackAnimation;
 };

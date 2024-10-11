@@ -17,7 +17,9 @@ public:
 
 	virtual ~Entity();
 
-	sf::Sprite get_sprite() noexcept;
+	sf::Sprite getSprite() noexcept;
+
+	void setSprite(sf::Sprite& sprite);
 
 	void setPosition(float _x, float _y);
 	
@@ -29,9 +31,7 @@ public:
 
 	virtual void render(sf::RenderTarget* target);
 
-	virtual void animation(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame);
-
-	void setSprite(sf::Sprite& sprite);
+	virtual void animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame);
 
 protected:
 	float x;
