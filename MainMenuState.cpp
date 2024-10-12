@@ -10,10 +10,10 @@ void MainMenuState::initTextures()
 	this->texture.loadFromFile("assets/textures/start.png");
 	this->textures["Background"] = this->texture;
 	
-	this->texture.loadFromFile("assets/textures/mainMenuButtonIdle.png");
+	this->texture.loadFromFile("assets/textures/MenuButtonIdle.png");
 	this->textures["MainMenuButtonIdle"] = this->texture;
 
-	this->texture.loadFromFile("assets/textures/mainMenuButtonHover.png");
+	this->texture.loadFromFile("assets/textures/MenuButtonHover.png");
 	this->textures["MainMenuButtonHover"] = this->texture;
 }
 
@@ -41,7 +41,7 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(100, 400, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
+	this->buttons["GAME_STATE"] = new Button(100.f, 400.f, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -65,10 +65,7 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
-	{
-		this->endState();
-	}
+	
 }
 
 void MainMenuState::updateButtons()

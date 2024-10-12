@@ -466,7 +466,7 @@ void GameState::updateInput(const float& _dt)
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
-		this->endState();
+		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
 	}
 	
 	sf::Sprite spr = this->player.getSprite();

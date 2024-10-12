@@ -7,20 +7,19 @@ void MenuState::initVariables()
 
 void MenuState::initTextures()
 {
-	this->texture.loadFromFile("assets/textures/start.png");
+	this->texture.loadFromFile("assets/textures/pause.png");
 	this->textures["Background"] = this->texture;
 
-	this->texture.loadFromFile("assets/textures/mainMenuButtonIdle.png");
-	this->textures["MainMenuButtonIdle"] = this->texture;
+	this->texture.loadFromFile("assets/textures/MenuButtonIdle.png");
+	this->textures["MenuButtonIdle"] = this->texture;
 
-	this->texture.loadFromFile("assets/textures/mainMenuButtonHover.png");
-	this->textures["MainMenuButtonHover"] = this->texture;
+	this->texture.loadFromFile("assets/textures/MenuButtonHover.png");
+	this->textures["MenuButtonHover"] = this->texture;
 }
 
 void MenuState::initBackground()
 {
 	this->background.setTexture(this->textures["Background"]);
-	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 void MenuState::initFonts()
@@ -41,7 +40,9 @@ void MenuState::initKeybinds()
 
 void MenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(100, 400, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
+	this->buttons["BACK_TO_THE_GAME"] = new Button(10.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "<- Back to\nthe game");
+	this->buttons["NO_SAVE_AND_QUIT"] = new Button(250.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "No save and\nquit");
+	this->buttons["SAVE_AND_QUIT"] = new Button(490.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "Save and\nquit");
 }
 
 MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -65,10 +66,7 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
-	{
-		this->endState();
-	}
+	
 }
 
 void MenuState::updateButtons()
@@ -76,23 +74,31 @@ void MenuState::updateButtons()
 	for (auto& it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
+
+		if (it.second->isIdle())
+		{
+			it.second->setTexture(this->textures["MenuButtonIdle"]);
+			it.second->setTextFillColor(sf::Color::White);
+		}
+
+		if (it.second->isHover())
+		{
+			it.second->setTexture(this->textures["MenuButtonHover"]);
+			it.second->setTextFillColor(sf::Color(150, 104, 28));
+		}
 	}
 
-	if (this->buttons["GAME_STATE"]->isIdle())
+	if (this->buttons["BACK_TO_THE_GAME"]->isPressed())
 	{
-		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonIdle"]);
-		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color::White);
+		this->states->pop();
 	}
-
-	if (this->buttons["GAME_STATE"]->isHover())
+	if (this->buttons["NO_SAVE_AND_QUIT"]->isPressed())
 	{
-		this->buttons["GAME_STATE"]->setTexture(this->textures["MainMenuButtonHover"]);
-		this->buttons["GAME_STATE"]->setTextFillColor(sf::Color(150, 104, 28));
+		this->states->pop();
 	}
-
-	if (this->buttons["GAME_STATE"]->isPressed())
+	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		this->states->pop();
 	}
 
 }

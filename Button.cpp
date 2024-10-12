@@ -10,7 +10,7 @@ Button::Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::s
 	this->font = _font;
 	this->text.setFont(*this->font);
 	this->text.setString(_text);
-	this->text.setCharacterSize(20);
+	this->text.setCharacterSize(18);
 	this->text.setFillColor(sf::Color::White);
 	this->text.setPosition(
 		this->sprite.getPosition().x + (this->sprite.getGlobalBounds().width / 2.f) - this->sprite.getGlobalBounds().width / 4.f,
