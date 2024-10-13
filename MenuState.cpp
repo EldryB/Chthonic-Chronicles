@@ -7,14 +7,20 @@ void MenuState::initVariables()
 
 void MenuState::initTextures()
 {
-	this->texture.loadFromFile("assets/textures/pause.png");
-	this->textures["Background"] = this->texture;
+	if (!this->textures["Background"].loadFromFile("assets/textures/pause.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_BACKGROUND_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/MenuButtonIdle.png");
-	this->textures["MenuButtonIdle"] = this->texture;
+	if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_MENU_BUTTON_IDLE_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/MenuButtonHover.png");
-	this->textures["MenuButtonHover"] = this->texture;
+	if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_MENU_BUTTON_HOVER_TEXTURE!";
+	}
 }
 
 void MenuState::initBackground()

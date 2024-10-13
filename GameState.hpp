@@ -19,8 +19,8 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    Entity player;
-    MainAnimation animationEntity;
+    Fighter* player;
+    MainAnimation animationFighter;
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
@@ -33,9 +33,10 @@ private:
     void initObjects();
     void initKeybinds();
     void initTextures();
+    void initFighters();
     void initBackground();
     void initFonts();
-    void initCharacterFrames();
+    void initFighterFrames();
     void setMainStageLimits(sf::Sprite& spr);
     void checkIntersect(float& lastx, float& lasty);
 };

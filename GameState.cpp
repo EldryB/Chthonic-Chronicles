@@ -16,47 +16,80 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	this->texture.loadFromFile("assets/textures/mainStage.png");
-	this->textures["MainStage"] = this->texture;
+	if (!this->textures["MainStage"].loadFromFile("assets/textures/mainStage.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/low_bridge_edge.png");
-	this->textures["LowBridge"] = this->texture;
+	if (!this->textures["LowBridge"].loadFromFile("assets/textures/low_bridge_edge.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_LOW_BRIDGE_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/right1.png");
-	this->textures["Right1"] = this->texture;
+	if (!this->textures["Right1"].loadFromFile("assets/textures/right1.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/right2.png");
-	this->textures["Right2"] = this->texture;
+	if (!this->textures["Right2"].loadFromFile("assets/textures/right2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/right3.png");
-	this->textures["Right3"] = this->texture;
+	if (!this->textures["Right3"].loadFromFile("assets/textures/right3.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/left1.png");
-	this->textures["Left1"] = this->texture;
+	if (!this->textures["Left1"].loadFromFile("assets/textures/left1.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/left2.png");
-	this->textures["Left2"] = this->texture;
+	if (!this->textures["Left2"].loadFromFile("assets/textures/left2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/left3.png");
-	this->textures["Left3"] = this->texture;
+	if (!this->textures["Left3"].loadFromFile("assets/textures/left3.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/front1.png");
-	this->textures["Front1"] = this->texture;
+	if (!this->textures["Front1"].loadFromFile("assets/textures/front1.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/front2.png");
-	this->textures["Front2"] = this->texture;
+	if (!this->textures["Front2"].loadFromFile("assets/textures/front2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/front3.png");
-	this->textures["Front3"] = this->texture;
+	if (!this->textures["Front3"].loadFromFile("assets/textures/front3.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/back1.png");
-	this->textures["Back1"] = this->texture;
+	if (!this->textures["Back1"].loadFromFile("assets/textures/back1.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/back2.png");
-	this->textures["Back2"] = this->texture;
+	if (!this->textures["Back2"].loadFromFile("assets/textures/back2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
 
-	this->texture.loadFromFile("assets/textures/back3.png");
-	this->textures["Back3"] = this->texture;
+	if (!this->textures["Back3"].loadFromFile("assets/textures/back3.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
+	}
+}
+
+void GameState::initFighters()
+{
+	this->player = new Fighter(200.f, 500.f, &this->textures["Right2"], "Player");
 }
 
 void GameState::initBackground()
@@ -73,30 +106,30 @@ void GameState::initFonts()
 	}
 }
 
-void GameState::initCharacterFrames()
+void GameState::initFighterFrames()
 {
-	this->animationEntity.RightAnimation.push_back(this->textures["Right1"]);
-	this->animationEntity.RightAnimation.push_back(this->textures["Right2"]);
-	this->animationEntity.RightAnimation.push_back(this->textures["Right2"]);
-	this->animationEntity.RightAnimation.push_back(this->textures["Right3"]);
+	this->animationFighter.RightAnimation.push_back(this->textures["Right1"]);
+	this->animationFighter.RightAnimation.push_back(this->textures["Right2"]);
+	this->animationFighter.RightAnimation.push_back(this->textures["Right2"]);
+	this->animationFighter.RightAnimation.push_back(this->textures["Right3"]);
 
 	
-	this->animationEntity.LeftAnimation.push_back(this->textures["Left1"]);
-	this->animationEntity.LeftAnimation.push_back(this->textures["Left2"]);
-	this->animationEntity.LeftAnimation.push_back(this->textures["Left2"]);
-	this->animationEntity.LeftAnimation.push_back(this->textures["Left3"]);
+	this->animationFighter.LeftAnimation.push_back(this->textures["Left1"]);
+	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
+	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
+	this->animationFighter.LeftAnimation.push_back(this->textures["Left3"]);
 
 
-	this->animationEntity.FrontAnimation.push_back(this->textures["Front1"]);
-	this->animationEntity.FrontAnimation.push_back(this->textures["Front2"]);
-	this->animationEntity.FrontAnimation.push_back(this->textures["Front2"]);
-	this->animationEntity.FrontAnimation.push_back(this->textures["Front3"]);
+	this->animationFighter.FrontAnimation.push_back(this->textures["Front1"]);
+	this->animationFighter.FrontAnimation.push_back(this->textures["Front2"]);
+	this->animationFighter.FrontAnimation.push_back(this->textures["Front2"]);
+	this->animationFighter.FrontAnimation.push_back(this->textures["Front3"]);
 
 
-	this->animationEntity.BackAnimation.push_back(this->textures["Back1"]);
-	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
-	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
-	this->animationEntity.BackAnimation.push_back(this->textures["Back3"]);
+	this->animationFighter.BackAnimation.push_back(this->textures["Back1"]);
+	this->animationFighter.BackAnimation.push_back(this->textures["Back2"]);
+	this->animationFighter.BackAnimation.push_back(this->textures["Back2"]);
+	this->animationFighter.BackAnimation.push_back(this->textures["Back3"]);
 }
 
 void GameState::initObjects()
@@ -429,16 +462,14 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 {
 	this->initVariables();
 	this->initTextures();
+	this->initFighters();
 	this->initBackground();
 	this->initFonts();
-	this->initCharacterFrames();
+	this->initFighterFrames();
 	this->initKeybinds();
+    
 	this->initObjects();
-
-
-	float x = 200.f;
-	float y = 300;
-	this->player.setPosition(x, y);    
+    
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
 	this->timeBetweenUpdates = 0.08f;
@@ -450,16 +481,16 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 
 GameState::~GameState()
 {
-
+	delete this->player;
 }
 
 void GameState::checkIntersect(float& lastx, float& lasty)
 {
 	for (auto item: this->objects)
 	{
-		if (this->player.getSprite().getGlobalBounds().intersects(item.getGlobalBounds()))
+		if (this->player->getSprite().getGlobalBounds().intersects(item.getGlobalBounds()))
 		{
-			player.setPosition(lastx, lasty);
+			this->player->setPosition(lastx, lasty);
 		}
 	}
 	
@@ -475,46 +506,54 @@ void GameState::updateInput(const float& _dt)
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
-		lastX = player.getSprite().getPosition().x;
-		lastY = player.getSprite().getPosition().y;
+		this->player->move(_dt, -1.f, 0.f);
+		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
+		lastX = this->player.getSprite().getPosition().x;
+		lastY = this->player.getSprite().getPosition().y;
 
 
-		this->player.move(_dt, -1.f, 0.f);
+		this->player->move(_dt, -1.f, 0.f);
 		//this->valla.move(-1.f * Settings::MOVEMENT_SPEED * _dt, 0.f * Settings::MOVEMENT_SPEED * _dt);
-		this->player.animate(timeSinceLastUpdate,timeBetweenUpdates, animationEntity.LeftAnimation, currentFrame);
+		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
-		lastX = player.getSprite().getPosition().x;
-		lastY = player.getSprite().getPosition().y;
+		this->player->move(_dt, 1.f, 0.f);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
+		lastX = this->player.getSprite().getPosition().x;
+		lastY = this->player.getSprite().getPosition().y;
 
 
-		this->player.move(_dt, 1.f, 0.f);
+		this->player->move(_dt, 1.f, 0.f);
 		//this->valla.move(1.f * Settings::MOVEMENT_SPEED * _dt, 0.f * Settings::MOVEMENT_SPEED * _dt);
-		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.RightAnimation, currentFrame);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
-		lastX = player.getSprite().getPosition().x;
-		lastY = player.getSprite().getPosition().y;
+		this->player->move(_dt, 0.f, -1.f);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
+		lastX = this->player.getSprite().getPosition().x;
+		lastY = this->player.getSprite().getPosition().y;
 
 
-		this->player.move(_dt, 0.f, -1.f);
+		this->player->move(_dt, 0.f, -1.f);
 		//this->valla.move(0.f * Settings::MOVEMENT_SPEED * _dt, -1.f * Settings::MOVEMENT_SPEED * _dt);
-		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.BackAnimation, currentFrame);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
-		lastX = player.getSprite().getPosition().x;
-		lastY = player.getSprite().getPosition().y;
+		this->player->move(_dt, 0.f, 1.f);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
+		lastX = this->player.getSprite().getPosition().x;
+		lastY = this->player.getSprite().getPosition().y;
 
 
-		this->player.move(_dt, 0.f, 1.f);
+		this->player->move(_dt, 0.f, 1.f);
 		//this->valla.move(0.f * Settings::MOVEMENT_SPEED * _dt, 1.f * Settings::MOVEMENT_SPEED * _dt);
-		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 		checkIntersect(lastX, lastY);
 	}
 
@@ -524,9 +563,10 @@ void GameState::updateInput(const float& _dt)
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
 	}
 	
-	sf::Sprite spr = this->player.getSprite();
+	sf::Sprite* spr = this->player->getSprite();
+	this->setMainStageLimits(*spr);
+	this->player->setSprite(spr);
 	//this->setMainStageLimits(spr);
-	this->player.setSprite(spr);
 	
 }
 
@@ -535,8 +575,8 @@ void GameState::update(const float& _dt)
 	this->updateMousePositions();
 	this->updateInput(_dt);
 
-	this->player.update(_dt);
-	std::string textString = "Position: X = " + std::to_string(this->getXPos(this->player.getSprite())) + ", Y = " + std::to_string(this->getYPos(this->player.getSprite()));
+	this->player->update(_dt);
+	std::string textString = "Position: X = " + std::to_string(this->getXPos(*this->player->getSprite())) + ", Y = " + std::to_string(this->getYPos(*this->player->getSprite()));
 	//std::string textString = "Position: X = " + std::to_string(this->getXPos(this->valla)) + ", Y = " + std::to_string(this->getYPos(this->valla));
 	text.setString(textString);
 }
@@ -549,12 +589,12 @@ void GameState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->background);
+	this->player->render(target);
 
 	for (auto item: this->objects)
 	{
 		target->draw(item);
 	}
 
-	this->player.render(target);
 	target->draw(this->text);
 }

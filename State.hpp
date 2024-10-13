@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity.hpp"
+#include "Fighter.hpp"
 
 class State
 {
@@ -24,7 +24,6 @@ protected:
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;
 	bool quit;
 	sf::Sprite background;
-	sf::Texture texture;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
