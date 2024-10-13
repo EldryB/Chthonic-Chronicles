@@ -9,17 +9,17 @@ void MenuState::initTextures()
 {
 	if (!this->textures["Background"].loadFromFile("assets/textures/pause.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_BACKGROUND_TEXTURE!";
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}
 
 	if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_MENU_BUTTON_IDLE_TEXTURE!";
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
 	}
 
 	if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_MENU_BUTTON_HOVER_TEXTURE!";
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
 	}
 }
 
@@ -32,7 +32,7 @@ void MenuState::initFonts()
 {
 	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
 	{
-		throw("COULD NOT LOAD FONT");
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_FONT";
 	}
 }
 
@@ -100,11 +100,11 @@ void MenuState::updateButtons()
 	}
 	if (this->buttons["NO_SAVE_AND_QUIT"]->isPressed())
 	{
-		this->states->pop();
+		
 	}
 	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
 	{
-		this->states->pop();
+		
 	}
 
 }

@@ -9,17 +9,17 @@ void MainMenuState::initTextures()
 {
 	if (!this->textures["Background"].loadFromFile("assets/textures/start.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_BACKGROUND_TEXTURE!";
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}
 	
 	if (!this->textures["MainMenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_MAIN_MENU_BUTTON_IDLE_TEXTURE!";
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_IDLE_TEXTURE!";
 	}
 
 	if (!this->textures["MainMenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
 	{
-		throw "ERROR::GAME_STATE::COULD_NOT_MAIN_MENU_BUTTON_HOVER_TEXTURE!";
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_HOVER_TEXTURE!";
 	}
 }
 
@@ -33,7 +33,7 @@ void MainMenuState::initFonts()
 {
 	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
 	{
-		throw("COULD NOT LOAD FONT");
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_FONT";
 	}
 }
 

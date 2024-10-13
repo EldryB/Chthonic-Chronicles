@@ -517,10 +517,7 @@ void GameState::updateInput(const float& _dt)
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
 	}
 	
-	sf::Sprite* spr = this->player->getSprite();
-	this->setMainStageLimits(*spr);
-	this->player->setSprite(spr);
-	
+	this->setMainStageLimits(*this->player->getSprite());
 }
 
 void GameState::update(const float& _dt)
