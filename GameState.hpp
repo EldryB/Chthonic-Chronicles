@@ -26,11 +26,8 @@ private:
     float timeBetweenUpdates;
     sf::Font font;
     sf::Text text;
-    std::vector<sf::Sprite> objects;
-    sf::Sprite limit;
 
     void initVariables();
-    void initObjects();
     void initKeybinds();
     void initTextures();
     void initFighters();
@@ -38,6 +35,5 @@ private:
     void initFonts();
     void initFighterFrames();
     void setMainStageLimits(sf::Sprite& spr);
-    void checkIntersect(float& lastx, float& lasty);
 };
 
