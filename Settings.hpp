@@ -18,7 +18,7 @@ struct Settings
 	static constexpr int VIRTUAL_HEIGHT{ 617 * 4 / 5 };
 	static constexpr float ENTITY_WIDTH{ 46.f };
 	static constexpr float ENTITY_HEIGHT{ 46.f };
-	static constexpr float MOVEMENT_SPEED{ 120.5f };
+	static constexpr float MOVEMENT_SPEED{ 160.5f };
 
 
 };

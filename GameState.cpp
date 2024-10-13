@@ -155,6 +155,10 @@ void GameState::setYPos(float _y, sf::Sprite& sprite)
 	sprite.setPosition(_x, _y);
 }
 
+
+
+
+
 void GameState::setMainStageLimits(sf::Sprite& sprite)
 {
 	if (getXPos(sprite) < 205)
@@ -449,6 +453,11 @@ void GameState::setMainStageLimits(sf::Sprite& sprite)
 	}
 }
 
+
+
+
+
+
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
@@ -485,17 +494,9 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, -1.f, 0.f);
 		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
-
-
-		this->player->move(_dt, -1.f, 0.f);
-		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
-		this->player->move(_dt, 1.f, 0.f);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
-
-
 		this->player->move(_dt, 1.f, 0.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 	}
@@ -503,17 +504,9 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, 0.f, -1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
-
-
-		this->player->move(_dt, 0.f, -1.f);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
-		this->player->move(_dt, 0.f, 1.f);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
-
-
 		this->player->move(_dt, 0.f, 1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 	}
