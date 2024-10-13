@@ -19,6 +19,9 @@ void GameState::initTextures()
 	this->texture.loadFromFile("assets/textures/mainStage.png");
 	this->textures["MainStage"] = this->texture;
 
+	this->texture.loadFromFile("assets/textures/low_bridge_edge.png");
+	this->textures["LowBridge"] = this->texture;
+
 	this->texture.loadFromFile("assets/textures/right1.png");
 	this->textures["Right1"] = this->texture;
 
@@ -94,6 +97,15 @@ void GameState::initCharacterFrames()
 	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
 	this->animationEntity.BackAnimation.push_back(this->textures["Back2"]);
 	this->animationEntity.BackAnimation.push_back(this->textures["Back3"]);
+}
+
+void GameState::initObjects()
+{
+	sf::Sprite spr;
+
+	spr.setTexture(this->textures["LowBridge"]);
+	spr.setPosition(403.4679f, 416.5802f);	
+	this->objects.push_back(spr);
 }
 
 
@@ -421,9 +433,11 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initCharacterFrames();
 	this->initKeybinds();
+	this->initObjects();
+
 
 	float x = 200.f;
-	float y = 500.f;
+	float y = 300;
 	this->player.setPosition(x, y);    
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
@@ -439,30 +453,71 @@ GameState::~GameState()
 
 }
 
+void GameState::checkIntersect(float& lastx, float& lasty)
+{
+	for (auto item: this->objects)
+	{
+		if (this->player.getSprite().getGlobalBounds().intersects(item.getGlobalBounds()))
+		{
+			player.setPosition(lastx, lasty);
+		}
+	}
+	
+}
+
 void GameState::updateInput(const float& _dt)
 {
 	timeSinceLastUpdate += _dt;
 
+	float lastX;
+	float lastY;
+
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
+		lastX = player.getSprite().getPosition().x;
+		lastY = player.getSprite().getPosition().y;
+
+
 		this->player.move(_dt, -1.f, 0.f);
+		//this->valla.move(-1.f * Settings::MOVEMENT_SPEED * _dt, 0.f * Settings::MOVEMENT_SPEED * _dt);
 		this->player.animate(timeSinceLastUpdate,timeBetweenUpdates, animationEntity.LeftAnimation, currentFrame);
+		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
+		lastX = player.getSprite().getPosition().x;
+		lastY = player.getSprite().getPosition().y;
+
+
 		this->player.move(_dt, 1.f, 0.f);
+		//this->valla.move(1.f * Settings::MOVEMENT_SPEED * _dt, 0.f * Settings::MOVEMENT_SPEED * _dt);
 		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.RightAnimation, currentFrame);
+		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
+		lastX = player.getSprite().getPosition().x;
+		lastY = player.getSprite().getPosition().y;
+
+
 		this->player.move(_dt, 0.f, -1.f);
+		//this->valla.move(0.f * Settings::MOVEMENT_SPEED * _dt, -1.f * Settings::MOVEMENT_SPEED * _dt);
 		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.BackAnimation, currentFrame);
+		checkIntersect(lastX, lastY);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
+		lastX = player.getSprite().getPosition().x;
+		lastY = player.getSprite().getPosition().y;
+
+
 		this->player.move(_dt, 0.f, 1.f);
+		//this->valla.move(0.f * Settings::MOVEMENT_SPEED * _dt, 1.f * Settings::MOVEMENT_SPEED * _dt);
 		this->player.animate(timeSinceLastUpdate, timeBetweenUpdates, animationEntity.FrontAnimation, currentFrame);
+		checkIntersect(lastX, lastY);
 	}
+
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
@@ -470,7 +525,7 @@ void GameState::updateInput(const float& _dt)
 	}
 	
 	sf::Sprite spr = this->player.getSprite();
-	this->setMainStageLimits(spr);
+	//this->setMainStageLimits(spr);
 	this->player.setSprite(spr);
 	
 }
@@ -482,6 +537,7 @@ void GameState::update(const float& _dt)
 
 	this->player.update(_dt);
 	std::string textString = "Position: X = " + std::to_string(this->getXPos(this->player.getSprite())) + ", Y = " + std::to_string(this->getYPos(this->player.getSprite()));
+	//std::string textString = "Position: X = " + std::to_string(this->getXPos(this->valla)) + ", Y = " + std::to_string(this->getYPos(this->valla));
 	text.setString(textString);
 }
 
@@ -493,6 +549,12 @@ void GameState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->background);
+
+	for (auto item: this->objects)
+	{
+		target->draw(item);
+	}
+
 	this->player.render(target);
 	target->draw(this->text);
 }

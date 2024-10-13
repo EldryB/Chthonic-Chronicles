@@ -26,13 +26,17 @@ private:
     float timeBetweenUpdates;
     sf::Font font;
     sf::Text text;
+    std::vector<sf::Sprite> objects;
+    sf::Sprite limit;
 
     void initVariables();
+    void initObjects();
     void initKeybinds();
     void initTextures();
     void initBackground();
     void initFonts();
     void initCharacterFrames();
     void setMainStageLimits(sf::Sprite& spr);
+    void checkIntersect(float& lastx, float& lasty);
 };
 

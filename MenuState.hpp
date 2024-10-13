@@ -18,7 +18,6 @@ public:
 
 private:
     sf::Font font;
-
     std::unordered_map<std::string, Button*> buttons;
 
     void initVariables();
