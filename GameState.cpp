@@ -488,7 +488,7 @@ void GameState::checkIntersect(float& lastx, float& lasty)
 {
 	for (auto item: this->objects)
 	{
-		if (this->player->getSprite().getGlobalBounds().intersects(item.getGlobalBounds()))
+		if (this->player->getSprite()->getGlobalBounds().intersects(item.getGlobalBounds()))
 		{
 			this->player->setPosition(lastx, lasty);
 		}
@@ -508,8 +508,8 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, -1.f, 0.f);
 		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
-		lastX = this->player.getSprite().getPosition().x;
-		lastY = this->player.getSprite().getPosition().y;
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
 
 
 		this->player->move(_dt, -1.f, 0.f);
@@ -521,8 +521,8 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, 1.f, 0.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
-		lastX = this->player.getSprite().getPosition().x;
-		lastY = this->player.getSprite().getPosition().y;
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
 
 
 		this->player->move(_dt, 1.f, 0.f);
@@ -534,8 +534,8 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, 0.f, -1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
-		lastX = this->player.getSprite().getPosition().x;
-		lastY = this->player.getSprite().getPosition().y;
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
 
 
 		this->player->move(_dt, 0.f, -1.f);
@@ -547,8 +547,8 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(_dt, 0.f, 1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
-		lastX = this->player.getSprite().getPosition().x;
-		lastY = this->player.getSprite().getPosition().y;
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
 
 
 		this->player->move(_dt, 0.f, 1.f);
