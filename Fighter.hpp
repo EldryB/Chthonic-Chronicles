@@ -5,7 +5,7 @@ class Fighter :
     public Entity
 {
 public: 
-    Fighter(float _x, float _y, sf::Texture* _texture, std::string _name);
+    Fighter(float _x, float _y, sf::Texture& _texture, std::string _name);
 
     virtual ~Fighter();
 

@@ -10,11 +10,14 @@ void Fighter::initComponents()
 	this->createMovementComponent(120.5f);
 }
 
-Fighter::Fighter(float _x, float _y, sf::Texture* _texture, std::string _name)
-	: Entity(_x, _y, _texture, _name)
+Fighter::Fighter(float _x, float _y, sf::Texture& _texture, std::string _name)
 {
 	this->initVariables();
 	this->initComponents();
+
+	this->setTexture(_texture);
+	this->setPosition(_x, _y);
+	this->name = _name;
 }
 
 Fighter::~Fighter()

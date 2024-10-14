@@ -36,7 +36,6 @@ sf::Sprite Entity::getSprite() noexcept
 
 void Entity::setTexture(sf::Texture& _texture)
 {
-	this->texture = &_texture;
 	this->sprite.setTexture(_texture);
 }
 

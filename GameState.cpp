@@ -89,7 +89,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(200.f, 500.f, &this->textures["Right2"], "Player");
+	this->player = new Fighter(200.f, 500.f, this->textures["Right2"], "Player");
 }
 
 void GameState::initBackground()
@@ -102,7 +102,7 @@ void GameState::initFonts()
 {
 	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
 	{
-		throw("COULD NOT LOAD FONT");
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
 }
 
@@ -517,7 +517,7 @@ void GameState::updateInput(const float& _dt)
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
 	}
 	
-	this->setMainStageLimits(*this->player->getSprite());
+	this->setMainStageLimits(this->player->getSprite());
 }
 
 void GameState::update(const float& _dt)
@@ -526,7 +526,7 @@ void GameState::update(const float& _dt)
 	this->updateInput(_dt);
 
 	this->player->update(_dt);
-	std::string textString = "Position: X = " + std::to_string(this->getXPos(*this->player->getSprite())) + ", Y = " + std::to_string(this->getYPos(*this->player->getSprite()));
+	std::string textString = "Position: X = " + std::to_string(this->getXPos(this->player->getSprite())) + ", Y = " + std::to_string(this->getYPos(this->player->getSprite()));
 	text.setString(textString);
 }
 
