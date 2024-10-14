@@ -89,7 +89,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(200.f, 500.f, this->textures["Right2"], "Player");
+	this->player = new Fighter(200.f, 370, this->textures["Right2"], "Player");
 }
 
 void GameState::initBackground()
@@ -134,329 +134,26 @@ void GameState::initFighterFrames()
 
 
 
-float GameState::getXPos(sf::Sprite spr)
+float GameState::getXPos(sf::Sprite* spr)
 {
-	return spr.getPosition().x;
+	return spr->getPosition().x;
 }
 
-float GameState::getYPos(sf::Sprite spr)
+float GameState::getYPos(sf::Sprite* spr)
 {
-	return spr.getPosition().y;
+	return spr->getPosition().y;
 }
 
-void GameState::setXPos(float _x, sf::Sprite& sprite)
+void GameState::setXPos(float _x, sf::Sprite* sprite)
 {
-	float _y = sprite.getPosition().y;
-	sprite.setPosition(_x, _y);
+	float _y = sprite->getPosition().y;
+	sprite->setPosition(_x, _y);
 }
-void GameState::setYPos(float _y, sf::Sprite& sprite)
+void GameState::setYPos(float _y, sf::Sprite* sprite)
 {
-	float _x = sprite.getPosition().x;
-	sprite.setPosition(_x, _y);
+	float _x = sprite->getPosition().x;
+	sprite->setPosition(_x, _y);
 }
-
-
-
-
-
-void GameState::setMainStageLimits(sf::Sprite& sprite)
-{
-	if (getXPos(sprite) < 205)
-	{
-		setXPos(205, sprite);
-	}
-	if (getXPos(sprite) >= 205 && getXPos(sprite) < 300)
-	{
-		if (getYPos(sprite) < 360)
-		{
-			setYPos(360, sprite);
-		}
-
-		else if (getYPos(sprite) > 430)
-		{
-			setYPos(430, sprite);
-		}
-	}
-
-	if (getXPos(sprite) >= 300 && getXPos(sprite) <= 370)
-	{
-		int marca = 300;
-		int marca_y = 430;
-		if (getYPos(sprite) < 350)
-		{
-			setYPos(350, sprite);
-		}
-		//Parte de abajo con movilidad escalera
-		if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
-		{
-			if (getYPos(sprite) > marca_y - 5)
-			{
-				setYPos(marca_y - 5, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
-		{
-			if (getYPos(sprite) > marca_y - 10)
-			{
-				setYPos(marca_y - 10, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
-		{
-			if (getYPos(sprite) > marca_y - 15)
-			{
-				setYPos(marca_y - 15, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
-		{
-			if (getYPos(sprite) > marca_y - 20)
-			{
-				setYPos(marca_y - 20, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
-		{
-			if (getYPos(sprite) > marca_y - 25)
-			{
-				setYPos(marca_y - 25, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
-		{
-			if (getYPos(sprite) > marca_y - 30)
-			{
-				setYPos(marca_y - 30, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
-		{
-			if (getYPos(sprite) > marca_y - 35)
-			{
-				setYPos(marca_y - 35, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 35 && getXPos(sprite) < marca + 40)
-		{
-			if (getYPos(sprite) > marca_y - 40)
-			{
-				setYPos(marca_y - 40, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 40 && getXPos(sprite) < marca + 45)
-		{
-			if (getYPos(sprite) > marca_y - 45)
-			{
-				setYPos(marca_y - 45, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 45 && getXPos(sprite) < marca + 50)
-		{
-			if (getYPos(sprite) > marca_y - 50)
-			{
-				setYPos(marca_y - 50, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 50 && getXPos(sprite) < marca + 55)
-		{
-			if (getYPos(sprite) > marca_y - 55)
-			{
-				setYPos(marca_y - 55, sprite);
-			}
-		}
-
-		else if (getXPos(sprite) >= marca + 55 && getXPos(sprite) <= marca + 75)
-		{
-			if (getYPos(sprite) > marca_y - 60)
-			{
-				setYPos(marca_y - 60, sprite);
-			}
-		}
-
-	}
-
-	if (getXPos(sprite) > 370 && getXPos(sprite) < 640)
-	{
-		if (getYPos(sprite) > 530)
-		{
-			setYPos(530, sprite);
-		}
-		//Parte de arriba del puente
-		if (getXPos(sprite) >= 460 && getXPos(sprite) < 585)
-		{
-			{
-				if (getYPos(sprite) > 370)
-				{
-					setYPos(370, sprite);
-				}
-				int marca = 460;
-				int marca_y = 335;
-				if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
-				{
-					if (getYPos(sprite) < marca_y - 5)
-					{
-						setYPos(marca_y - 5, sprite);
-					}
-				}
-
-				else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
-				{
-					if (getYPos(sprite) < marca_y - 10)
-					{
-						setYPos(marca_y - 10, sprite);
-					}
-				}
-				else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
-				{
-					if (getYPos(sprite) < marca_y - 15)
-					{
-						setYPos(marca_y - 15, sprite);
-					}
-				}
-				else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
-				{
-					if (getYPos(sprite) < marca_y - 20)
-					{
-						setYPos(marca_y - 20, sprite);
-					}
-				}
-				else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
-				{
-					if (getYPos(sprite) < marca_y - 25)
-					{
-						setYPos(marca_y - 25, sprite);
-					}
-				}
-				else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
-				{
-					if (getYPos(sprite) < marca_y - 30)
-					{
-						setYPos(marca_y - 30, sprite);
-					}
-				}
-				else
-				{
-					if (getYPos(sprite) < marca_y - 35)
-					{
-						setYPos(marca_y - 35, sprite);
-					}
-				}
-			}
-		}
-
-		else if (getXPos(sprite) >= 585 && getXPos(sprite) < 620)
-		{
-			int marca = 585;
-			int marca_y = 335;
-
-			if (getYPos(sprite) > 370)
-			{
-				setYPos(370, sprite);
-			}
-
-			if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
-			{
-				if (getYPos(sprite) < marca_y - 35)
-				{
-					setYPos(marca_y - 35, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 10)
-				{
-					setYPos(marca_y - 35 + 10, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 15)
-				{
-					setYPos(marca_y - 35 + 15, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 20)
-				{
-					setYPos(marca_y - 35 + 20, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 25)
-				{
-					setYPos(marca_y - 35 + 25, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 30)
-				{
-					setYPos(marca_y - 35 + 30, sprite);
-				}
-			}
-
-			else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
-			{
-				if (getYPos(sprite) < marca_y - 35 + 35)
-				{
-					setYPos(marca_y - 35 + 35, sprite);
-				}
-			}
-		}
-
-
-		else
-		{
-			if (getYPos(sprite) < 340)
-			{
-				setYPos(340, sprite);
-			}
-			else if (getYPos(sprite) > 370)
-			{
-				setYPos(370, sprite);
-			}
-		}
-	}
-
-
-	if (getXPos(sprite) >= 640 && getXPos(sprite) <= 786.0f)
-	{
-		if (getYPos(sprite) < 352)
-		{
-			setYPos(352, sprite);
-		}
-		else if (getYPos(sprite) > 370)
-		{
-			setYPos(370, sprite);
-		}
-	}
-	if (getXPos(sprite) > 785)
-	{
-		setXPos(785, sprite);
-	}
-}
-
-
-
-
-
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
@@ -468,7 +165,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initFighterFrames();
 	this->initKeybinds();
-    
     
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
@@ -488,36 +184,52 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	timeSinceLastUpdate += _dt;
-
+	float lastX;
+	float lastY;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
+
 		this->player->move(_dt, -1.f, 0.f);
-		this->player->animate(timeSinceLastUpdate,timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
+		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
+	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
+
 		this->player->move(_dt, 1.f, 0.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
+	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
+
 		this->player->move(_dt, 0.f, -1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
+	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
+		lastX = this->player->getSprite()->getPosition().x;
+		lastY = this->player->getSprite()->getPosition().y;
+
 		this->player->move(_dt, 0.f, 1.f);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 	}
 
-	
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
 	}
-	
-	this->setMainStageLimits(this->player->getSprite());
+
+
+	sf::Sprite* spr = this->player->getSprite();
+	this->setMainStageLimits(spr, lastX, lastY);
+	this->player->setSprite(spr);
 }
 
 void GameState::update(const float& _dt)
@@ -543,3 +255,355 @@ void GameState::render(sf::RenderTarget* target)
 
 	target->draw(this->text);
 }
+
+
+
+
+void GameState::setMainStageLimits(sf::Sprite* sprite, float& lastx, float& lasty)
+{
+	if (getXPos(sprite) < 170)
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+	if (getXPos(sprite) > 170 && getXPos(sprite) < 307 && getYPos(sprite) > 379)
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+	if (getXPos(sprite) >= 170 && getXPos(sprite) < 300)
+	{
+		if (getYPos(sprite) < 360)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+
+		else if (getYPos(sprite) > 430)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+	}
+	if (getXPos(sprite) >= 369 && getXPos(sprite) < 700)
+	{
+
+
+		if (getYPos(sprite) > 370)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+	}
+
+	if (getXPos(sprite) >= 300 && getXPos(sprite) <= 370)
+	{
+		int marca = 300;
+		int marca_y = 430;
+		if (getXPos(sprite) < 351)
+		{
+			if (getYPos(sprite) < 350)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+		//Parte de abajo con movilidad escalera
+		if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
+		{
+			if (getYPos(sprite) > marca_y - 5)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
+		{
+			if (getYPos(sprite) > marca_y - 10)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
+		{
+			if (getYPos(sprite) > marca_y - 15)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
+		{
+			if (getYPos(sprite) > marca_y - 20)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
+		{
+			if (getYPos(sprite) > marca_y - 25)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
+		{
+			if (getYPos(sprite) > marca_y - 30)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
+		{
+			if (getYPos(sprite) > marca_y - 35)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 35 && getXPos(sprite) < marca + 40)
+		{
+			if (getYPos(sprite) > marca_y - 40)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 40 && getXPos(sprite) < marca + 45)
+		{
+			if (getYPos(sprite) > marca_y - 45)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 45 && getXPos(sprite) < marca + 50)
+		{
+			if (getYPos(sprite) > marca_y - 50)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 50 && getXPos(sprite) < marca + 55)
+		{
+			if (getYPos(sprite) > marca_y - 55)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+		else if (getXPos(sprite) >= marca + 55 && getXPos(sprite) <= marca + 75)
+		{
+			if (getYPos(sprite) > marca_y - 60)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+
+	}
+
+	if (getXPos(sprite) > 370 && getXPos(sprite) < 640)
+	{
+		if (getYPos(sprite) > 530)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+		//Parte de arriba del puente
+		if (getXPos(sprite) >= 460 && getXPos(sprite) < 585)
+		{
+			{
+				if (getYPos(sprite) > 370)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+				int marca = 460;
+				int marca_y = 335;
+				if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
+				{
+					if (getYPos(sprite) < marca_y - 5)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+
+				else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
+				{
+					if (getYPos(sprite) < marca_y - 10)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+				else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
+				{
+					if (getYPos(sprite) < marca_y - 15)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+				else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
+				{
+					if (getYPos(sprite) < marca_y - 20)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+				else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
+				{
+					if (getYPos(sprite) < marca_y - 25)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+				else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
+				{
+					if (getYPos(sprite) < marca_y - 30)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+				else
+				{
+					if (getYPos(sprite) < marca_y - 35)
+					{
+						sprite->setPosition(lastx, lasty);
+					}
+				}
+			}
+		}
+
+		else if (getXPos(sprite) >= 585 && getXPos(sprite) < 620)
+		{
+			int marca = 585;
+			int marca_y = 335;
+
+			if (getYPos(sprite) > 370)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+
+			if (getXPos(sprite) >= marca + 0 && getXPos(sprite) < marca + 5)
+			{
+				if (getYPos(sprite) < marca_y - 35)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 5 && getXPos(sprite) < marca + 10)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 10)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 10 && getXPos(sprite) < marca + 15)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 15)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 15 && getXPos(sprite) < marca + 20)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 20)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 20 && getXPos(sprite) < marca + 25)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 25)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 25 && getXPos(sprite) < marca + 30)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 30)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+
+			else if (getXPos(sprite) >= marca + 30 && getXPos(sprite) < marca + 35)
+			{
+				if (getYPos(sprite) < marca_y - 35 + 35)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+		}
+
+
+		else
+		{
+			if (getXPos(sprite) > 400)
+			{
+				if (getYPos(sprite) < 340)
+				{
+					sprite->setPosition(lastx, lasty);
+				}
+			}
+			else if (getYPos(sprite) > 370)
+			{
+				sprite->setPosition(lastx, lasty);
+			}
+		}
+	}
+
+	if (getXPos(sprite) >= 330 && getXPos(sprite) <= 400 && getYPos(sprite) < 260)
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+
+	if (getXPos(sprite) > 640 && getXPos(sprite) < 660)
+	{
+		if (getYPos(sprite) < 340)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+		if (getYPos(sprite) > 370)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+	}
+
+	if (getXPos(sprite) >= 660)
+	{
+		if (getYPos(sprite) < 323)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+	}
+
+	if (getXPos(sprite) > 860 && (getYPos(sprite) > 322 && getYPos(sprite) <= 331))
+	{
+		if (getXPos(sprite) > 934)
+		{
+			sprite->setPosition(lastx, lasty);
+		}
+	}
+
+	if (getXPos(sprite) > 830 && (getYPos(sprite) > 350 && getYPos(sprite) <= 380))
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+
+	if (getXPos(sprite) >= 710 && (getYPos(sprite) >= 330 && getYPos(sprite) <= 350))
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+
+	if (getXPos(sprite) >= 660 && getXPos(sprite) <= 830 && (getYPos(sprite) > 370))
+	{
+		sprite->setPosition(lastx, lasty);
+	}
+
+
+}
+
+
+

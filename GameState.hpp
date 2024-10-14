@@ -10,13 +10,13 @@ public:
     
     virtual ~GameState();
 
-    float getXPos(sf::Sprite spr);
+    float getXPos(sf::Sprite* spr);
 
-    float getYPos(sf::Sprite spr);
+    float getYPos(sf::Sprite* spr);
 
-    void setXPos(float _x, sf::Sprite& sprite);
+    void setXPos(float _x, sf::Sprite* sprite);
 
-    void setYPos(float _y, sf::Sprite& sprite);
+    void setYPos(float _y, sf::Sprite* sprite);
     
     void updateInput(const float& _dt);
 
@@ -47,6 +47,6 @@ private:
 
     void initFighterFrames();
 
-    void setMainStageLimits(sf::Sprite& spr);
+    void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 };
 

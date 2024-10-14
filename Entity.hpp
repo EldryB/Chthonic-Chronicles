@@ -17,11 +17,11 @@ public:
 
 	virtual void createMovementComponent(const float _maxVelocity);
 
-	sf::Sprite getSprite() noexcept;
+	sf::Sprite* getSprite() noexcept;
 
-	virtual void setTexture(sf::Texture& _texture);
+	virtual void setTexture(const sf::Texture& _texture);
 	
-	virtual void setSprite(sf::Sprite sprite);
+	virtual void setSprite(sf::Sprite* sprite);
 
 	virtual void setPosition(const float _x, const float _y);
 	
@@ -39,7 +39,7 @@ private:
 	void initVariables();
 
 protected:
-	sf::Sprite sprite;
+	sf::Sprite* sprite = new sf::Sprite();
 	
 	sf::Vector2f position;
 	MovementComponent* movementComponent;

@@ -16,7 +16,7 @@ Entity::Entity(float _x, float _y, sf::Texture* _texture, std::string _name) noe
 	: position{_x, _y}, name{_name}
 {
 	this->setTexture(*_texture);
-	this->sprite.setPosition(this->position.x, this->position.y);
+	this->sprite->setPosition(this->position.x, this->position.y);
 }
 
 Entity::~Entity()
@@ -26,20 +26,20 @@ Entity::~Entity()
 
 void Entity::createMovementComponent(const float _maxVelocity)
 {
-	this->movementComponent = new MovementComponent(this->sprite, _maxVelocity);
+	this->movementComponent = new MovementComponent(*this->sprite, _maxVelocity);
 }
 
-sf::Sprite Entity::getSprite() noexcept
+sf::Sprite* Entity::getSprite() noexcept
 {
 	return this->sprite;
 }
 
-void Entity::setTexture(sf::Texture& _texture)
+void Entity::setTexture(const sf::Texture& _texture)
 {
-	this->sprite.setTexture(_texture);
+	sprite->setTexture(_texture);
 }
 
-void Entity::setSprite(sf::Sprite _sprite)
+void Entity::setSprite(sf::Sprite* _sprite)
 {
 	this->sprite = _sprite;
 }
@@ -51,7 +51,7 @@ void Entity::setName(std::string _name)
 
 void Entity::setPosition(const float _x, const float _y)
 {
-	this->sprite.setPosition(_x, _y);
+	this->sprite->setPosition(_x, _y);
 }
 
 void Entity::move(const float& _dt, const float dir_x, const float dir_y)
@@ -69,7 +69,7 @@ void Entity::update(const float& _dt)
 
 void Entity::render(sf::RenderTarget* target)
 {
-	target->draw(this->sprite);
+	target->draw(*this->sprite);
 }
 
 void Entity::animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame)
@@ -78,7 +78,7 @@ void Entity::animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std:
 	{
 		timeSinceLastUpdate = 0.0f;
 		currentFrame = (currentFrame + 1) % Myvector.size();
-		this->sprite.setTexture(Myvector[currentFrame]);
+		this->sprite->setTexture(Myvector[currentFrame]);
 	}
 }
 
