@@ -13,7 +13,7 @@ public:
 
 	void move(const float dir_x, const float dir_y, const float& _dt);
 
-	void update(const float& dt);
+	void update(const float& _dt);
 
 private:
 	sf::Sprite& sprite;

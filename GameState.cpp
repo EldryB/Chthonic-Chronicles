@@ -192,7 +192,7 @@ void GameState::updateInput(const float& _dt)
 		lastX = this->player->getSprite()->getPosition().x;
 		lastY = this->player->getSprite()->getPosition().y;
 
-		this->player->move(_dt, -1.f, 0.f);
+		this->player->move(-1.f, 0.f, _dt);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
@@ -200,7 +200,7 @@ void GameState::updateInput(const float& _dt)
 		lastX = this->player->getSprite()->getPosition().x;
 		lastY = this->player->getSprite()->getPosition().y;
 
-		this->player->move(_dt, 1.f, 0.f);
+		this->player->move(1.f, 0.f, _dt);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
@@ -208,7 +208,7 @@ void GameState::updateInput(const float& _dt)
 		lastX = this->player->getSprite()->getPosition().x;
 		lastY = this->player->getSprite()->getPosition().y;
 
-		this->player->move(_dt, 0.f, -1.f);
+		this->player->move(0.f, -1.f, _dt);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
@@ -216,7 +216,7 @@ void GameState::updateInput(const float& _dt)
 		lastX = this->player->getSprite()->getPosition().x;
 		lastY = this->player->getSprite()->getPosition().y;
 
-		this->player->move(_dt, 0.f, 1.f);
+		this->player->move(0.f, 1.f, _dt);
 		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 	}
 

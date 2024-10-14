@@ -24,7 +24,7 @@ void MovementComponent::move(const float dir_x, const float dir_y, const float& 
 	this->sprite.move(this->velocity * _dt);
 }
 
-void MovementComponent::update(const float& dt)
+void MovementComponent::update(const float& _dt)
 {
-
+	
 }
