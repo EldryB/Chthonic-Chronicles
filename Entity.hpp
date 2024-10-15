@@ -38,6 +38,10 @@ public:
 
 	virtual void animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame);
 
+	virtual std::string getName();
+
+	virtual void setAttributes(float _x, float _y, std::string _name);
+
 private:
 	void initVariables();
 

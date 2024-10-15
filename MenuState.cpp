@@ -51,7 +51,7 @@ void MenuState::initButtons()
 	this->buttons["SAVE_AND_QUIT"] = new Button(490.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "Save and\nquit");
 }
 
-MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
+MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initVariables();
@@ -60,6 +60,7 @@ MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+	this->player = _p;
 }
 
 MenuState::~MenuState()
@@ -72,7 +73,7 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
-	
+
 }
 
 void MenuState::updateButtons()
@@ -105,6 +106,8 @@ void MenuState::updateButtons()
 	}
 	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
 	{
+		this->states->pop();
+		this->dataManagement.savePlayerToFile(player, "player.json");
 		this->states->pop();
 	}
 

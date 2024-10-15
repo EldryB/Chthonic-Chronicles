@@ -2,6 +2,7 @@
 
 #include "GameState.hpp"
 #include "Button.hpp"
+#include "JsonManagement.hpp"
 
 class MainMenuState :
     public State
@@ -23,7 +24,7 @@ public:
 
 private:
     sf::Font font;
-
+    JsonManagement dataManagement;
     std::unordered_map<std::string, Button*> buttons;
     
     void initVariables();

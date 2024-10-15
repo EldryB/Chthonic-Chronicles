@@ -92,4 +92,17 @@ void Entity::animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std:
 	}
 }
 
+std::string Entity::getName()
+{
+	return this->name;
+}
+
+void Entity::setAttributes(float _x, float _y, std::string _name)
+{
+	this->setPosition(_x, _y);
+	this->setName(_name);
+}
+
+
+
 

@@ -140,6 +140,7 @@
     <ClInclude Include="Fighter.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="JsonManagement.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MenuState.hpp" />
     <ClInclude Include="MovementComponent.hpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="JsonManagement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MenuState.cpp" />

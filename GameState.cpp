@@ -180,6 +180,28 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	text.setPosition(30, 30);
 }
 
+GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
+	: State(_window, _supportedKeys, _states)
+{
+	this->initVariables();
+	this->initTextures();
+	this->initFighters();
+	this->initBackground();
+	this->initFonts();
+	this->initFighterFrames();
+	this->initKeybinds();
+
+	this->currentFrame = 0;
+	this->timeSinceLastUpdate = 0.0f;
+	this->timeBetweenUpdates = 0.08f;
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(20);
+	this->text.setFillColor(sf::Color::White);
+	text.setPosition(30, 30);
+	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
+}
+
+
 GameState::~GameState()
 {
 	delete this->player;
@@ -228,7 +250,7 @@ void GameState::updateInput(const float& _dt)
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
-		this->states->push(new MenuState(this->window, this->supportedKeys, this->states));
+		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
 	}
 
 

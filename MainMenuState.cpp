@@ -93,10 +93,17 @@ void MainMenuState::updateButtons()
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
 		}
 	}
-	
+
 	if (this->buttons["GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+	}
+
+	else if (this->buttons["LOAD_GAME_STATE"]->isPressed())
+	{
+		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
+		dataManagement.loadPlayerFromFile("C:\\Users\\Usuario\\source\\repos\\Chthonic-Chronicles\\player.json", loadedPlayer);
+		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
 	}
 
 }
