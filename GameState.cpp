@@ -265,7 +265,7 @@ void GameState::setMainStageLimits(sf::Sprite* sprite, float& lastx, float& last
 	{
 		sprite->setPosition(lastx, lasty);
 	}
-	if (getXPos(sprite) > 170 && getXPos(sprite) < 307 && getYPos(sprite) > 379)
+	if (getXPos(sprite) > 170 && getXPos(sprite) < 307 && getYPos(sprite) > 399)
 	{
 		sprite->setPosition(lastx, lasty);
 	}
