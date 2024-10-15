@@ -71,7 +71,10 @@ void Entity::move(const float dir_x, const float dir_y, const float& _dt)
 
 void Entity::update(const float& _dt)
 {
-
+	if (this->movementComponent)
+	{
+		this->movementComponent->update(_dt);
+	}
 }
 
 void Entity::render(sf::RenderTarget* target)

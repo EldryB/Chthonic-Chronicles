@@ -26,7 +26,7 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_LOW_BRIDGE_TEXTURE!";
 	}
 
-	if (!this->textures["PLAYER_LEFT"].loadFromFile("assets/textures/textureSheet.png"))
+	if (!this->textures["PLAYER_SHEET"].loadFromFile("assets/textures/Player/PLAYER_SHEET.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
 	}
@@ -94,7 +94,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
+	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player");
 }
 
 void GameState::initBackground()
