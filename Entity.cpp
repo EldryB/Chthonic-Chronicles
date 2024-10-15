@@ -26,9 +26,9 @@ Entity::~Entity()
 	delete this->animationComponent;
 }
 
-void Entity::createMovementComponent(const float _maxVelocity)
+void Entity::createMovementComponent(const float _maxVelocity, const float _aceleration, const float _deceleration)
 {
-	this->movementComponent = new MovementComponent(*this->sprite, _maxVelocity);
+	this->movementComponent = new MovementComponent(*this->sprite, _maxVelocity, _aceleration, _deceleration);
 }
 
 void Entity::createAnimationComponent(sf::Texture& texture_sheet)

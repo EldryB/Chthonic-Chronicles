@@ -17,7 +17,7 @@ Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _na
 	this->setPosition(_x, _y);
 	this->name = _name;
 
-	this->createMovementComponent(120.5f);
+	this->createMovementComponent(120.5f, 10.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->animationComponent->addAnimation("WALK_LEFT", 10.f, 0, 0, 3, 0, 46, 46);
@@ -35,7 +35,7 @@ void Fighter::update(const float& _dt)
 {
 	this->movementComponent->update(_dt);
 
-	/*switch (this->movementComponent->getLookingDirection())
+	switch (this->movementComponent->getLookingDirection())
 	{
 	case LookingDirections::Left:
 		this->animationComponent->play("WALK_LEFT", _dt);
@@ -51,7 +51,7 @@ void Fighter::update(const float& _dt)
 
 	default:
 		break;
-	}*/
+	}
 
-	this->animationComponent->play("WALK_RIGHT", _dt);
+	/*this->animationComponent->play("WALK_RIGHT", _dt);*/
 }

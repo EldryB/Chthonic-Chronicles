@@ -13,13 +13,14 @@ enum class LookingDirections
 class MovementComponent
 {
 public:
-	MovementComponent(sf::Sprite& _sprite, float _maxVelocity);
+	MovementComponent(sf::Sprite& _sprite, 
+		float _maxVelocity, float _aceleration, float _deceleration);
 
 	virtual ~MovementComponent();
 
 	const sf::Vector2f& getVelocity() const;
 
-	const LookingDirections& getLookingDirection() const;
+	const LookingDirections& getLookingDirection();
 
 	void move(const float dir_x, const float dir_y, const float& _dt);
 
@@ -28,9 +29,9 @@ public:
 private:
 	sf::Sprite& sprite;
 	float maxVelocity;
+	float acceleration;
+	float deceleration;
 	LookingDirections lookingDirection;
 	sf::Vector2f velocity;
-	sf::Vector2f acceleration;
-	sf::Vector2f deceleration;
 };
 
