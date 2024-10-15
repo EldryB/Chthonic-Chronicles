@@ -199,6 +199,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->text.setFillColor(sf::Color::White);
 	text.setPosition(30, 30);
 	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
+	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
 }
 
 

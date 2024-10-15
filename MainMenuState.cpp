@@ -102,7 +102,7 @@ void MainMenuState::updateButtons()
 	else if (this->buttons["LOAD_GAME_STATE"]->isPressed())
 	{
 		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
-		dataManagement.loadPlayerFromFile("C:\\Users\\Usuario\\source\\repos\\Chthonic-Chronicles\\player.json", loadedPlayer);
+		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
 	}
 
