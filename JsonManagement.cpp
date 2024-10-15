@@ -2,7 +2,9 @@
 
 void JsonManagement::toJson(nlohmann::json& _j, Fighter* _fighter)
 {
-    _j = nlohmann::json{ {"name", std::string{_fighter->getName()}}, {"positionX", _fighter->getSprite()->getPosition().x}, {"positionY", _fighter->getSprite()->getPosition().y} };
+    _j = nlohmann::json{ {"name", std::string{_fighter->getName()}}, 
+        {"positionX", _fighter->getSprite()->getPosition().x}, 
+        {"positionY", _fighter->getSprite()->getPosition().y} };
 }
 
 void JsonManagement::fromJson(nlohmann::json& _j, Fighter* _fighter)

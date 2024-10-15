@@ -20,7 +20,7 @@ public:
 
 	const sf::Vector2f& getVelocity() const;
 
-	const LookingDirections& getLookingDirection();
+	const LookingDirections& getLookingDirection() const;
 
 	void move(const float dir_x, const float dir_y, const float& _dt);
 

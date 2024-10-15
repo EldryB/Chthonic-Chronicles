@@ -35,7 +35,7 @@ void Fighter::update(const float& _dt)
 {
 	this->movementComponent->update(_dt);
 
-	switch (this->movementComponent->getLookingDirection())
+	/*switch (this->movementComponent->getLookingDirection())
 	{
 	case LookingDirections::Left:
 		this->animationComponent->play("WALK_LEFT", _dt);
@@ -51,7 +51,7 @@ void Fighter::update(const float& _dt)
 
 	default:
 		break;
-	}
+	}*/
 
-	/*this->animationComponent->play("WALK_RIGHT", _dt);*/
+	this->animationComponent->play("WALK_RIGHT", _dt);
 }

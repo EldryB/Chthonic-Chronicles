@@ -18,9 +18,9 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 	return this->velocity;
 }
 
-const LookingDirections& MovementComponent::getLookingDirection() 
+const LookingDirections& MovementComponent::getLookingDirection() const
 {
-	if (this->getVelocity().x < 0.f)
+	/*if (this->getVelocity().x < 0.f)
 	{
 		this->lookingDirection = LookingDirections::Left;
 	}
@@ -35,7 +35,7 @@ const LookingDirections& MovementComponent::getLookingDirection()
 	else if (this->getVelocity().y > 0.f)
 	{
 		this->lookingDirection = LookingDirections::Down;
-	}
+	}*/
 
 	return this->lookingDirection;
 }
