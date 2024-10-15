@@ -26,6 +26,11 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_LOW_BRIDGE_TEXTURE!";
 	}
 
+	if (!this->textures["PLAYER_LEFT"].loadFromFile("assets/textures/textureSheet.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
+	}
+
 	if (!this->textures["Right1"].loadFromFile("assets/textures/right1.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
@@ -89,7 +94,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(200.f, 370, this->textures["Right2"], "Player");
+	this->player = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
 }
 
 void GameState::initBackground()
@@ -113,7 +118,7 @@ void GameState::initFighterFrames()
 	this->animationFighter.RightAnimation.push_back(this->textures["Right2"]);
 	this->animationFighter.RightAnimation.push_back(this->textures["Right3"]);
 
-	
+
 	this->animationFighter.LeftAnimation.push_back(this->textures["Left1"]);
 	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
 	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
@@ -165,7 +170,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initFighterFrames();
 	this->initKeybinds();
-    
+
 	this->currentFrame = 0;
 	this->timeSinceLastUpdate = 0.0f;
 	this->timeBetweenUpdates = 0.08f;
@@ -193,7 +198,7 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(-1.f, 0.f, _dt);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
+		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
@@ -201,7 +206,7 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(1.f, 0.f, _dt);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
+		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
@@ -209,7 +214,7 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(0.f, -1.f, _dt);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
+		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
@@ -217,7 +222,7 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(0.f, 1.f, _dt);
-		this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
+		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 	}
 
 

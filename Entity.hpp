@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MovementComponent.hpp"
+#include "AnimationComponent.hpp"
 
 class Entity
 {
@@ -15,16 +16,18 @@ public:
 
 	virtual ~Entity();
 
-	virtual void createMovementComponent(const float _maxVelocity);
+	void createMovementComponent(const float _maxVelocity);
+
+	void createAnimationComponent(sf::Texture& texture_sheet);
 
 	sf::Sprite* getSprite() noexcept;
 
-	virtual void setTexture(const sf::Texture& _texture);
-	
-	virtual void setSprite(sf::Sprite* sprite);
+	void setTexture(const sf::Texture& _texture);
+
+	void setSprite(sf::Sprite* sprite);
 
 	virtual void setPosition(const float _x, const float _y);
-	
+
 	virtual void setName(std::string _name);
 
 	virtual void move(const float dir_x, const float dir_y, const float& _dt);
@@ -40,10 +43,11 @@ private:
 
 protected:
 	sf::Sprite* sprite = new sf::Sprite();
-	
+
 	sf::Vector2f position;
 	MovementComponent* movementComponent;
- 
+	AnimationComponent* animationComponent;
+
 	std::string name;
 };
 
