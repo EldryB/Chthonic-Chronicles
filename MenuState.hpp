@@ -2,6 +2,9 @@
 
 #include "State.hpp"
 #include "Button.hpp"
+#include "JsonLibrary/nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 class MenuState :
     public State

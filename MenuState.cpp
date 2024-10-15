@@ -100,11 +100,12 @@ void MenuState::updateButtons()
 	}
 	if (this->buttons["NO_SAVE_AND_QUIT"]->isPressed())
 	{
-		
+		this->states->pop();
+		this->states->pop();
 	}
 	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
 	{
-		
+		this->states->pop();
 	}
 
 }
