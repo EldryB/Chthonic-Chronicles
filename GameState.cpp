@@ -90,14 +90,14 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	timeSinceLastUpdate += _dt;
-	bool isInLadder = (player->getSprite()->getPosition().x < 307.260651f || player->getSprite()->getPosition().x > 339.698334f);
+	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().y < 400));
 
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !(isInLadder))
 	{
 		this->player->move(-1.f, 0.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
+	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
 	{
 		this->player->move(1.f, 0.f, _dt);
 	}
