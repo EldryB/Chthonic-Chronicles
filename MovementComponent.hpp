@@ -38,6 +38,18 @@ public:
 
 	void update(const float& _dt);
 
+	//Funciones usadas en la limitacion del mapa 
+
+	float getXPos(sf::Sprite* spr);
+
+	float getYPos(sf::Sprite* spr);
+
+	void setXPos(float _x, sf::Sprite* sprite);
+
+	void setYPos(float _y, sf::Sprite* sprite);
+
+	void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
+
 private:
 	sf::Sprite& sprite;
 	float maxVelocity;
