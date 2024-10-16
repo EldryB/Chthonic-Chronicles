@@ -12,19 +12,21 @@ public:
     
     virtual ~GameState();
 
-    float getXPos(sf::Sprite* spr);
+    static float getXPos(sf::Sprite* spr);
 
-    float getYPos(sf::Sprite* spr);
+    static float getYPos(sf::Sprite* spr);
 
-    void setXPos(float _x, sf::Sprite* sprite);
+    static void setXPos(float _x, sf::Sprite* sprite);
 
-    void setYPos(float _y, sf::Sprite* sprite);
+    static void setYPos(float _y, sf::Sprite* sprite);
     
     void updateInput(const float& _dt);
 
     void update(const float& _dt);
 
     void render(sf::RenderTarget* target = nullptr);
+
+    static void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 
 private:
     Fighter* player;
@@ -45,7 +47,5 @@ private:
     void initBackground();
 
     void initFonts();
-
-    void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 };
 

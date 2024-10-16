@@ -46,27 +46,6 @@ void GameState::initFonts()
 	}
 }
 
-float GameState::getXPos(sf::Sprite* spr)
-{
-	return spr->getPosition().x;
-}
-
-float GameState::getYPos(sf::Sprite* spr)
-{
-	return spr->getPosition().y;
-}
-
-void GameState::setXPos(float _x, sf::Sprite* sprite)
-{
-	float _y = sprite->getPosition().y;
-	sprite->setPosition(_x, _y);
-}
-void GameState::setYPos(float _y, sf::Sprite* sprite)
-{
-	float _x = sprite->getPosition().x;
-	sprite->setPosition(_x, _y);
-}
-
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
@@ -143,7 +122,6 @@ void GameState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
@@ -181,6 +159,29 @@ void GameState::render(sf::RenderTarget* target)
 
 
 
+
+
+//Funciones estaticas usadas en el limite (Ver movementComponent)
+float GameState::getXPos(sf::Sprite* spr)
+{
+	return spr->getPosition().x;
+}
+
+float GameState::getYPos(sf::Sprite* spr)
+{
+	return spr->getPosition().y;
+}
+
+void GameState::setXPos(float _x, sf::Sprite* sprite)
+{
+	float _y = sprite->getPosition().y;
+	sprite->setPosition(_x, _y);
+}
+void GameState::setYPos(float _y, sf::Sprite* sprite)
+{
+	float _x = sprite->getPosition().x;
+	sprite->setPosition(_x, _y);
+}
 
 void GameState::setMainStageLimits(sf::Sprite* sprite, float& lastx, float& lasty)
 {

@@ -1,4 +1,5 @@
 #include "Entity.hpp"
+#include "GameState.hpp"
 
 void Entity::initVariables()
 {

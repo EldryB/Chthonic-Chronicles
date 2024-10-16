@@ -1,4 +1,5 @@
 #include "MovementComponent.hpp"
+#include "GameState.hpp"
 
 MovementComponent::MovementComponent(sf::Sprite& _sprite, 
 	float _maxVelocity, float _aceleration, float _deceleration)
@@ -142,6 +143,11 @@ void MovementComponent::update(const float& _dt)
 			this->velocity.y = 0.f;
 		}
 	}
-
+	float lastX = this->sprite.getPosition().x;
+	float lastY = this->sprite.getPosition().y;
 	this->sprite.move(this->velocity * _dt);
+
+	sf::Sprite* spr = &this->sprite;
+	GameState::setMainStageLimits(spr, lastX, lastY);
+	this->sprite = *spr;
 }
