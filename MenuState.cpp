@@ -7,7 +7,7 @@ void MenuState::initVariables()
 
 void MenuState::initTextures()
 {
-	if (!this->textures["Background"].loadFromFile("assets/textures/pause.png"))
+	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/pause.png"))
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}

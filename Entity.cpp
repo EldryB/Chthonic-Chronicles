@@ -82,16 +82,6 @@ void Entity::render(sf::RenderTarget* target)
 	target->draw(*this->sprite);
 }
 
-void Entity::animate(float& timeSinceLastUpdate, float& timeBetweenUpdates, std::vector<sf::Texture>& Myvector, int& currentFrame)
-{
-	if (timeSinceLastUpdate >= timeBetweenUpdates)
-	{
-		timeSinceLastUpdate = 0.0f;
-		currentFrame = (currentFrame + 1) % Myvector.size();
-		this->sprite->setTexture(Myvector[currentFrame]);
-	}
-}
-
 std::string Entity::getName()
 {
 	return this->name;

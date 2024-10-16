@@ -1,7 +1,7 @@
 #pragma once
 
 #include "MenuState.hpp"
-#include "Animation.hpp"
+
 class GameState :
     public State
 {
@@ -28,7 +28,6 @@ public:
 
 private:
     Fighter* player;
-    MainAnimation animationFighter;
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
@@ -46,8 +45,6 @@ private:
     void initBackground();
 
     void initFonts();
-
-    void initFighterFrames();
 
     void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 };

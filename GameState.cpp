@@ -16,79 +16,14 @@ void GameState::initKeybinds()
 
 void GameState::initTextures()
 {
-	if (!this->textures["MainStage"].loadFromFile("assets/textures/mainStage.png"))
+	if (!this->textures["MainStage"].loadFromFile("assets/textures/Backgrounds/mainStage.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
-	}
-
-	if (!this->textures["LowBridge"].loadFromFile("assets/textures/low_bridge_edge.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_LOW_BRIDGE_TEXTURE!";
 	}
 
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("assets/textures/Player/PLAYER_SHEET.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
-	}
-
-	if (!this->textures["Right1"].loadFromFile("assets/textures/right1.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Right2"].loadFromFile("assets/textures/right2.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Right3"].loadFromFile("assets/textures/right3.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Left1"].loadFromFile("assets/textures/left1.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Left2"].loadFromFile("assets/textures/left2.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Left3"].loadFromFile("assets/textures/left3.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Front1"].loadFromFile("assets/textures/front1.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Front2"].loadFromFile("assets/textures/front2.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Front3"].loadFromFile("assets/textures/front3.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Back1"].loadFromFile("assets/textures/back1.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Back2"].loadFromFile("assets/textures/back2.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
-	}
-
-	if (!this->textures["Back3"].loadFromFile("assets/textures/back3.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_TEXTURE!";
 	}
 }
 
@@ -110,34 +45,6 @@ void GameState::initFonts()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
 }
-
-void GameState::initFighterFrames()
-{
-	this->animationFighter.RightAnimation.push_back(this->textures["Right1"]);
-	this->animationFighter.RightAnimation.push_back(this->textures["Right2"]);
-	this->animationFighter.RightAnimation.push_back(this->textures["Right2"]);
-	this->animationFighter.RightAnimation.push_back(this->textures["Right3"]);
-
-
-	this->animationFighter.LeftAnimation.push_back(this->textures["Left1"]);
-	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
-	this->animationFighter.LeftAnimation.push_back(this->textures["Left2"]);
-	this->animationFighter.LeftAnimation.push_back(this->textures["Left3"]);
-
-
-	this->animationFighter.FrontAnimation.push_back(this->textures["Front1"]);
-	this->animationFighter.FrontAnimation.push_back(this->textures["Front2"]);
-	this->animationFighter.FrontAnimation.push_back(this->textures["Front2"]);
-	this->animationFighter.FrontAnimation.push_back(this->textures["Front3"]);
-
-
-	this->animationFighter.BackAnimation.push_back(this->textures["Back1"]);
-	this->animationFighter.BackAnimation.push_back(this->textures["Back2"]);
-	this->animationFighter.BackAnimation.push_back(this->textures["Back2"]);
-	this->animationFighter.BackAnimation.push_back(this->textures["Back3"]);
-}
-
-
 
 float GameState::getXPos(sf::Sprite* spr)
 {
@@ -168,12 +75,8 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initBackground();
 	this->initFonts();
-	this->initFighterFrames();
 	this->initKeybinds();
 
-	this->currentFrame = 0;
-	this->timeSinceLastUpdate = 0.0f;
-	this->timeBetweenUpdates = 0.08f;
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
@@ -188,12 +91,8 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initBackground();
 	this->initFonts();
-	this->initFighterFrames();
 	this->initKeybinds();
 
-	this->currentFrame = 0;
-	this->timeSinceLastUpdate = 0.0f;
-	this->timeBetweenUpdates = 0.08f;
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
@@ -221,7 +120,6 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(-1.f, 0.f, _dt);
-		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.LeftAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
@@ -229,7 +127,6 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(1.f, 0.f, _dt);
-		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.RightAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
@@ -237,7 +134,6 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(0.f, -1.f, _dt);
-		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.BackAnimation, currentFrame);
 	}
 	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
@@ -245,7 +141,6 @@ void GameState::updateInput(const float& _dt)
 		lastY = this->player->getSprite()->getPosition().y;
 
 		this->player->move(0.f, 1.f, _dt);
-		//this->player->animate(timeSinceLastUpdate, timeBetweenUpdates, animationFighter.FrontAnimation, currentFrame);
 	}
 
 
