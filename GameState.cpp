@@ -90,7 +90,7 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	timeSinceLastUpdate += _dt;
-	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().y < 400));
+	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
 
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !(isInLadder))
