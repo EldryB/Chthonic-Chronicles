@@ -1,15 +1,14 @@
 #pragma once
 
-#include "Settings.hpp"
+#include "MovementComponent.hpp"
+#include "AnimationComponent.hpp"
 
 class Entity
 {
 public:
 	Entity();
 
-	Entity(float _x, float _y, float _width, float _height) noexcept;
-
-	Entity(float _x, float _y, float _width, float _height, sf::Sprite _sprite) noexcept;
+	Entity(float _x, float _y, sf::Texture& _texture, std::string _name) noexcept;
 
 	Entity(const Entity&) = delete;
 
@@ -17,24 +16,40 @@ public:
 
 	virtual ~Entity();
 
-	sf::Sprite get_sprite() noexcept;
+	void createMovementComponent(const float _maxVelocity, const float _aceleration, const float _deceleration);
 
-	void setName(std::string _name);
+	void createAnimationComponent(sf::Texture& texture_sheet);
 
-	virtual void move(const float& _dt, const float dir_x, const float dir_y);
+	sf::Sprite* getSprite() noexcept;
+
+	void setTexture(const sf::Texture& _texture);
+
+	void setSprite(sf::Sprite* sprite);
+
+	virtual void setPosition(const float _x, const float _y);
+
+	virtual void setName(std::string _name);
+
+	virtual void move(const float dir_x, const float dir_y, const float& _dt);
 
 	virtual void update(const float& _dt);
 
 	virtual void render(sf::RenderTarget* target);
 
+	virtual std::string getName();
+
+	virtual void setAttributes(float _x, float _y, std::string _name);
+
+private:
+	void initVariables();
+
 protected:
-	float x;
-	float y;
-	float width;
-	float height;
-	float movementSpeed;
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Sprite* sprite = new sf::Sprite();
+
+	sf::Vector2f position;
+	MovementComponent* movementComponent;
+	AnimationComponent* animationComponent;
+
 	std::string name;
 };
 

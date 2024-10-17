@@ -1,43 +1,55 @@
 #include "Entity.hpp"
+#include "GameState.hpp"
+
+void Entity::initVariables()
+{
+	this->position.x = 0.f;
+	this->position.y = 0.f;
+	this->movementComponent = NULL;
+	this->animationComponent = NULL;
+}
 
 Entity::Entity()
 {
-	this->x = 321.f;
-	this->y = 270.f;
-	this->width = Settings::ENTITY_WIDTH;
-	this->height = Settings::ENTITY_HEIGHT;
-	this->texture.loadFromFile("assets/textures/right2.png");
-	this->sprite.setTexture(texture);
-	this->setName(" ");
-	this->sprite.setPosition(x, y);
-	this->movementSpeed = Settings::MOVEMENT_SPEED;
+	this->initVariables();
 }
 
-Entity::Entity(float _x, float _y, float _width, float _height) noexcept
-	: x{ _x }, y{ _y }, width{ _width }, height{ _height }
+Entity::Entity(float _x, float _y, sf::Texture& _texture, std::string _name) noexcept
+	: position{ _x, _y }, name{ _name }
 {
-	this->texture.loadFromFile("assets/textures/right2.png");
-	this->sprite.setTexture(texture);
-	this->setName(" ");
-	this->sprite.setPosition(x, y);
-	this->movementSpeed = Settings::MOVEMENT_SPEED;
-}
-
-Entity::Entity(float _x, float _y, float _width, float _height, sf::Sprite _sprite) noexcept
-	: x{ _x }, y{ _y }, width{ _width }, height{ _height }, sprite{ _sprite }
-{
-	this->sprite.setPosition(x, y);
-	this->movementSpeed = Settings::MOVEMENT_SPEED;
+	this->setTexture(_texture);
+	this->sprite->setPosition(this->position.x, this->position.y);
 }
 
 Entity::~Entity()
 {
-
+	delete this->movementComponent;
+	delete this->animationComponent;
 }
 
-sf::Sprite Entity::get_sprite() noexcept
+void Entity::createMovementComponent(const float _maxVelocity, const float _aceleration, const float _deceleration)
+{
+	this->movementComponent = new MovementComponent(*this->sprite, _maxVelocity, _aceleration, _deceleration);
+}
+
+void Entity::createAnimationComponent(sf::Texture& texture_sheet)
+{
+	this->animationComponent = new AnimationComponent(*this->sprite, texture_sheet);
+}
+
+sf::Sprite* Entity::getSprite() noexcept
 {
 	return this->sprite;
+}
+
+void Entity::setTexture(const sf::Texture& _texture)
+{
+	sprite->setTexture(_texture);
+}
+
+void Entity::setSprite(sf::Sprite* _sprite)
+{
+	this->sprite = _sprite;
 }
 
 void Entity::setName(std::string _name)
@@ -45,17 +57,43 @@ void Entity::setName(std::string _name)
 	this->name = _name;
 }
 
-void Entity::move(const float& _dt, const float dir_x, const float dir_y)
+void Entity::setPosition(const float _x, const float _y)
 {
-	this->sprite.move(dir_x * this->movementSpeed * _dt, dir_y * this->movementSpeed * _dt);
+	this->sprite->setPosition(_x, _y);
+}
+
+void Entity::move(const float dir_x, const float dir_y, const float& _dt)
+{
+	if (this->movementComponent)
+	{
+		this->movementComponent->move(dir_x, dir_y, _dt);
+	}
 }
 
 void Entity::update(const float& _dt)
 {
-
+	if (this->movementComponent)
+	{
+		this->movementComponent->update(_dt);
+	}
 }
 
 void Entity::render(sf::RenderTarget* target)
 {
-	target->draw(this->sprite);
+	target->draw(*this->sprite);
 }
+
+std::string Entity::getName()
+{
+	return this->name;
+}
+
+void Entity::setAttributes(float _x, float _y, std::string _name)
+{
+	this->setPosition(_x, _y);
+	this->setName(_name);
+}
+
+
+
+
