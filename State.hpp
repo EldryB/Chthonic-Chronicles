@@ -22,6 +22,8 @@ protected:
 	sf::RenderWindow* window;
 	std::unordered_map<std::string, sf::Keyboard::Key>* supportedKeys;
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;
+	float keyPressTimer;
+	float keyPressDelay;
 	bool quit;
 	sf::Sprite background;
 

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-enum class ButtonStates
+enum class ButtonState
 {
 	Idle,
 	Hover,
@@ -33,7 +33,7 @@ public:
 	void render(sf::RenderTarget* target);
 
 private:
-	ButtonStates buttonState;
+	ButtonState buttonState;
 	sf::Texture texture; 
 	sf::Sprite sprite;
 	sf::Font* font;

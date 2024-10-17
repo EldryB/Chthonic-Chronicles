@@ -2,7 +2,9 @@
 
 void MainMenuState::initVariables()
 {
-
+	this->selectedButtonIndex = 0;
+	this->keyPressTimer = 0.f;
+	this->keyPressDelay = 0.2f;
 }
 
 void MainMenuState::initTextures()
@@ -47,7 +49,7 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(100.f, 300.f, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
+	this->buttons["NEW_GAME_STATE"] = new Button(100.f, 300.f, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
 	this->buttons["LOAD_GAME_STATE"] = new Button(100.f, 400.f, this->textures["MainMenuButtonIdle"], &this->font, "Load Game");
 }
 
@@ -72,11 +74,49 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float& _dt)
 {
+	this->keyPressTimer += _dt;
 	
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		if (this->selectedButtonIndex < this->buttons.size() - 1)
+		{
+			++this->selectedButtonIndex;
+			this->keyPressTimer = 0.f;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		if (this->selectedButtonIndex > 0)
+		{
+			--this->selectedButtonIndex;
+			this->keyPressTimer = 0.f;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+		if (it != this->buttons.end())
+		{
+			if (it->first == "NEW_GAME_STATE")
+			{
+				this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+			}
+			else if (it->first == "LOAD_GAME_STATE")
+			{
+				Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
+				dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
+				this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+			}
+			this->keyPressTimer = 0.f;
+		}
+	}
 }
 
 void MainMenuState::updateButtons()
 {
+	int index = 0;
 	for (auto& it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -92,9 +132,17 @@ void MainMenuState::updateButtons()
 			it.second->setTexture(this->textures["MainMenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
 		}
+
+		if (index == this->selectedButtonIndex)
+		{
+			it.second->setTexture(this->textures["MainMenuButtonHover"]);
+			it.second->setTextFillColor(sf::Color(150, 104, 28));
+		}
+
+		++index;
 	}
 
-	if (this->buttons["GAME_STATE"]->isPressed())
+	if (this->buttons["NEW_GAME_STATE"]->isPressed())
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 	}

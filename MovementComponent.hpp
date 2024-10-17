@@ -2,7 +2,7 @@
 
 #include "Settings.hpp"
 
-enum class LookingDirections
+enum class LookingDirection
 {
 	Left,
 	Right,
@@ -20,19 +20,15 @@ public:
 
 	const sf::Vector2f& getVelocity() const;
 
-	const LookingDirections& getLookingDirection() const;
+	const LookingDirection& getLookingDirection() const;
 
 	const bool& isIdle() const;
 
-	const bool& isIdle(const LookingDirections& _lookDirection) const;
+	const bool& isIdle(const LookingDirection& look_direction) const;
 
-	const bool& isMovingLeft() const;
+	const bool& isMoving() const;
 
-	const bool& isMovingRight() const;
-
-	const bool& isMovingUp() const;
-
-	const bool& isMovingDown() const;
+	const bool& isMoving(const LookingDirection& look_direction) const;
 
 	void move(const float dir_x, const float dir_y, const float& _dt);
 
@@ -55,7 +51,7 @@ private:
 	float maxVelocity;
 	float acceleration;
 	float deceleration;
-	LookingDirections lookingDirection;
+	LookingDirection lookingDirection;
 	sf::Vector2f velocity;
 
 };

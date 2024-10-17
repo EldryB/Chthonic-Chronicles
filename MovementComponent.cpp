@@ -19,7 +19,7 @@ const sf::Vector2f& MovementComponent::getVelocity() const
 	return this->velocity;
 }
 
-const LookingDirections& MovementComponent::getLookingDirection() const
+const LookingDirection& MovementComponent::getLookingDirection() const
 {
 	return this->lookingDirection;
 }
@@ -33,45 +33,23 @@ const bool& MovementComponent::isIdle() const
 	return false;
 }
 
-const bool& MovementComponent::isIdle(const LookingDirections& look_direction) const
+const bool& MovementComponent::isIdle(const LookingDirection& look_direction) const
 {
 	return this->isIdle() && this->getLookingDirection() == look_direction;
 }
 
-const bool& MovementComponent::isMovingLeft() const
+const bool& MovementComponent::isMoving() const
 {
-	if (this->velocity.x < 0.f)
+	if (this->velocity.x != 0.f || this->velocity.y != 0.f)
 	{
 		return true;
 	}
 	return false;
 }
 
-const bool& MovementComponent::isMovingRight() const
+const bool& MovementComponent::isMoving(const LookingDirection& look_direction) const
 {
-	if (this->velocity.x > 0.f)
-	{
-		return true;
-	}
-	return false;
-}
-
-const bool& MovementComponent::isMovingUp() const
-{
-	if (this->velocity.y < 0.f)
-	{
-		return true;
-	}
-	return false;
-}
-
-const bool& MovementComponent::isMovingDown() const
-{
-	if (this->velocity.y > 0.f)
-	{
-		return true;
-	}
-	return false;
+	return this->isMoving() && this->getLookingDirection() == look_direction;
 }
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float& _dt)
@@ -84,7 +62,7 @@ void MovementComponent::update(const float& _dt)
 {
 	if (this->velocity.x < 0.f)
 	{
-		this->lookingDirection = LookingDirections::Left;
+		this->lookingDirection = LookingDirection::Left;
 
 		if (this->velocity.x < -this->maxVelocity)
 		{
@@ -99,7 +77,7 @@ void MovementComponent::update(const float& _dt)
 	}
 	else if (this->velocity.x > 0.f)
 	{
-		this->lookingDirection = LookingDirections::Right;
+		this->lookingDirection = LookingDirection::Right;
 
 		if (this->velocity.x > this->maxVelocity)
 		{
@@ -115,7 +93,7 @@ void MovementComponent::update(const float& _dt)
 	
 	if (this->velocity.y > 0.f)
 	{
-		this->lookingDirection = LookingDirections::Down;
+		this->lookingDirection = LookingDirection::Down;
 
 		if (this->velocity.y > this->maxVelocity)
 		{
@@ -130,7 +108,7 @@ void MovementComponent::update(const float& _dt)
 	}
 	else if (this->velocity.y < 0.f)
 	{
-		this->lookingDirection = LookingDirections::Up;
+		this->lookingDirection = LookingDirection::Up;
 		
 		if (this->velocity.y < -this->maxVelocity)
 		{

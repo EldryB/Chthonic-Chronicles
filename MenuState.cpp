@@ -2,7 +2,9 @@
 
 void MenuState::initVariables()
 {
-
+	this->selectedButtonIndex = 0;
+	this->keyPressTimer = 0.f;
+	this->keyPressDelay = 0.2f;
 }
 
 void MenuState::initTextures()
@@ -73,11 +75,54 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
+	this->keyPressTimer += _dt;
+	
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		if (this->selectedButtonIndex < this->buttons.size() - 1)
+		{
+			++this->selectedButtonIndex;
+			this->keyPressTimer = 0.f;
+		}
+	}
 
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		if (this->selectedButtonIndex > 0)
+		{
+			--this->selectedButtonIndex;
+			this->keyPressTimer = 0.f;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+		if (it != this->buttons.end())
+		{
+			if (it->first == "BACK_TO_THE_GAME")
+			{
+				this->states->pop();
+			}
+			else if (it->first == "NO_SAVE_AND_QUIT")
+			{
+				this->states->pop();
+				this->states->pop();
+			}
+			else if (it->first == "SAVE_AND_QUIT")
+			{
+				this->states->pop();
+				this->dataManagement.savePlayerToFile(player, "player.json");
+				this->states->pop();
+			}
+			this->keyPressTimer = 0.f;
+		}
+	}
 }
 
 void MenuState::updateButtons()
 {
+	int index = 0;
 	for (auto& it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -93,6 +138,14 @@ void MenuState::updateButtons()
 			it.second->setTexture(this->textures["MenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
 		}
+
+		if (index == this->selectedButtonIndex)
+		{
+			it.second->setTexture(this->textures["MenuButtonHover"]);
+			it.second->setTextFillColor(sf::Color(150, 104, 28));
+		}
+
+		++index;
 	}
 
 	if (this->buttons["BACK_TO_THE_GAME"]->isPressed())
@@ -110,7 +163,6 @@ void MenuState::updateButtons()
 		this->dataManagement.savePlayerToFile(player, "player.json");
 		this->states->pop();
 	}
-
 }
 
 void MenuState::update(const float& _dt)

@@ -40,35 +40,35 @@ void Fighter::update(const float& _dt)
 {
 	this->movementComponent->update(_dt);
 
-	if (this->movementComponent->isIdle(LookingDirections::Left))
+	if (this->movementComponent->isIdle(LookingDirection::Left))
 	{
 		this->animationComponent->play("IDLE_LEFT", _dt);
 	}
-	else if (this->movementComponent->isIdle(LookingDirections::Right))
+	else if (this->movementComponent->isIdle(LookingDirection::Right))
 	{
 		this->animationComponent->play("IDLE_RIGHT", _dt);
 	}
-	else if (this->movementComponent->isIdle(LookingDirections::Up))
+	else if (this->movementComponent->isIdle(LookingDirection::Up))
 	{
 		this->animationComponent->play("IDLE_UP", _dt);
 	}
-	else if (this->movementComponent->isIdle(LookingDirections::Down))
+	else if (this->movementComponent->isIdle(LookingDirection::Down))
 	{
 		this->animationComponent->play("IDLE_DOWN", _dt);
 	}
-	else if (this->movementComponent->isMovingLeft())
+	else if (this->movementComponent->isMoving(LookingDirection::Left))
 	{
 		this->animationComponent->play("WALK_LEFT", _dt);
 	}
-	else if (this->movementComponent->isMovingRight())
+	else if (this->movementComponent->isMoving(LookingDirection::Right))
 	{
 		this->animationComponent->play("WALK_RIGHT", _dt);
 	}
-	else if (this->movementComponent->isMovingUp())
+	else if (this->movementComponent->isMoving(LookingDirection::Up))
 	{
 		this->animationComponent->play("WALK_UP", _dt);
 	}
-	else if (this->movementComponent->isMovingDown())
+	else if (this->movementComponent->isMoving(LookingDirection::Down))
 	{
 		this->animationComponent->play("WALK_DOWN", _dt);
 	}

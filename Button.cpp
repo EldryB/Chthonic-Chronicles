@@ -2,9 +2,9 @@
 
 Button::Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::string _text)
 {
-	this->buttonState = ButtonStates::Idle;
+	this->buttonState = ButtonState::Idle;
 	this->texture = _texture;
-	this->sprite.setTexture(this->texture);
+	this->sprite.setTexture(_texture);
 	this->sprite.setPosition(_x, _y);
 	
 	this->font = _font;
@@ -26,7 +26,7 @@ Button::~Button()
 
 const bool Button::isIdle() const
 {
-	if (this->buttonState == ButtonStates::Idle)
+	if (this->buttonState == ButtonState::Idle)
 	{
 		return true;
 	}
@@ -36,7 +36,7 @@ const bool Button::isIdle() const
 
 const bool Button::isHover() const
 {
-	if (this->buttonState == ButtonStates::Hover)
+	if (this->buttonState == ButtonState::Hover)
 	{
 		return true;
 	}
@@ -46,7 +46,7 @@ const bool Button::isHover() const
 
 const bool Button::isPressed() const
 {
-	if (this->buttonState == ButtonStates::Pressed)
+	if (this->buttonState == ButtonState::Pressed)
 	{
 		return true;
 	}
@@ -66,15 +66,15 @@ void Button::setTextFillColor(const sf::Color& color)
 
 void Button::update(const sf::Vector2f mousePos)
 {
-	this->buttonState = ButtonStates::Idle;
+	this->buttonState = ButtonState::Idle;
 
 	if (this->sprite.getGlobalBounds().contains(mousePos))
 	{
-		this->buttonState = ButtonStates::Hover;
+		this->buttonState = ButtonState::Hover;
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			this->buttonState = ButtonStates::Pressed;
+			this->buttonState = ButtonState::Pressed;
 		}
 	}
 }
