@@ -33,6 +33,8 @@ public:
     // Métodos para obtener cantidad y nombre de los trabajos
     int Jobs::getJobAmount(JobTypes job) const;
     std::string Jobs::getJobName(JobTypes job) const;
+    
+    void Jobs::setJobAmount(JobTypes job, int amount);
 
     // Métodos para asignar aldeanos a un trabajo
     void assignVillagers(JobTypes job, int number);

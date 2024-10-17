@@ -20,7 +20,7 @@ Jobs::Jobs()
 
 }
 
-// Método para obtener la cantidad de un recurso
+// Método para obtener la cantidad de aldeanos en un trabajo
 int Jobs::getJobAmount(JobTypes job) const
 {
     return std::get<1>(jobs[static_cast<int>(job)]);
@@ -32,46 +32,57 @@ std::string Jobs::getJobName(JobTypes job) const
     return std::get<0>(jobs[static_cast<int>(job)]);
 }
 
+// Método para cambiar la cantidad de aldeanos en un trabajo
+void Jobs::setJobAmount(JobTypes job, int amount)
+{
+    std::get<1>(jobs[static_cast<int>(job)]) = amount;
+}
+
 // Método para asignar aldeanos a un trabajo
 void Jobs::assignVillagers(JobTypes job, int number)
 {
     if (number < 0)
+    {
         throw std::invalid_argument("No se puede asignar una cantidad negativa de aldeanos.");
-
-    int &villagers = std::get<1>(jobs[static_cast<int>(job)]);
+    }
 
     // Si el trabajo está bloqueado, no se pueden asignar aldeanos
-    if (villagers == -1)
+    if (getJobAmount(job) == -1)
+    {
         throw std::invalid_argument("El trabajo está bloqueado y no se pueden asignar aldeanos.");
+    }
 
-    villagers += number;
+    setJobAmount(job, getJobAmount(job) + number);
 }
 
 // Método para remover aldeanos de un trabajo
 void Jobs::removeVillagers(JobTypes job, int number)
 {
     if (number < 0)
+    {
         throw std::invalid_argument("No se puede remover una cantidad negativa de aldeanos.");
-
-    int &villagers = std::get<1>(jobs[static_cast<int>(job)]);
+    }
 
     // Si el trabajo está bloqueado, no se pueden remover aldeanos
-    if (villagers == -1)
+    if (getJobAmount(job) == -1)
+    {
         throw std::invalid_argument("El trabajo está bloqueado.");
+    }
 
-    if (villagers < number)
+    if (getJobAmount(job) < number)
+    {
         throw std::invalid_argument("No hay suficientes aldeanos asignados.");
+    }
 
-    villagers -= number;
+    setJobAmount(job, getJobAmount(job) - number);
 }
 
 // Método para desbloquear un trabajo
 void Jobs::unlockJob(JobTypes job)
 {
-    int &villagers = std::get<1>(jobs[static_cast<int>(job)]);
-    if (villagers == -1)
+    if (getJobAmount(job) == -1)
     {
-        villagers = 0; // Desbloquear asignando 0 aldeanos
+        setJobAmount(job, 0);
     }
 }
 
