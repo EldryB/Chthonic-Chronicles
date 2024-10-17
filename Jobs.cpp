@@ -1,3 +1,5 @@
+#include <SFML/Graphics.hpp>
+
 #include "Jobs.hpp"
 #include <iostream>
 #include <stdexcept>
@@ -86,7 +88,7 @@ void Jobs::unlockJob(JobTypes job)
     }
 }
 
-void Jobs::processJob(Resources &resources, JobTypes job, Types_of_resources inputResource, int inputAmount, Types_of_resources outputResource, int outputAmount) const
+void Jobs::processJob(Resources &resources, JobTypes job, ResourceTypes inputResource, int inputAmount, ResourceTypes outputResource, int outputAmount) const
 {
     if (getJobAmount(job) > 0)
     {
@@ -109,32 +111,54 @@ void Jobs::processJob(Resources &resources, JobTypes job, Types_of_resources inp
 void Jobs::collectResources(Resources &resources)
 {
     // Generador de monedas -> genera monedas    
-    processJob(resources, JobTypes::coinMaker, Types_of_resources::gold, 1, Types_of_resources::coin, 11);
+    processJob(resources, JobTypes::coinMaker, ResourceTypes::gold, 1, ResourceTypes::coin, 11);
 
     // Granjero -> genera trigo    
-    processJob(resources, JobTypes::farmer, Types_of_resources::coin, 0, Types_of_resources::wheat, 1);
+    processJob(resources, JobTypes::farmer, ResourceTypes::coin, 0, ResourceTypes::wheat, 1);
 
     // Panadero -> convierte trigo en pan
-    processJob(resources, JobTypes::baker, Types_of_resources::wheat, 2, Types_of_resources::bread, 1);
+    processJob(resources, JobTypes::baker, ResourceTypes::wheat, 2, ResourceTypes::bread, 1);
 
     // Curtidor -> genera cuero    
-    processJob(resources, JobTypes::tanner, Types_of_resources::bread, 2, Types_of_resources::leather, 1);
+    processJob(resources, JobTypes::tanner, ResourceTypes::bread, 2, ResourceTypes::leather, 1);
 
     // Tejedor -> genera tela    
-    processJob(resources, JobTypes::weaver, Types_of_resources::bread, 1, Types_of_resources::cloth, 1);
+    processJob(resources, JobTypes::weaver, ResourceTypes::bread, 1, ResourceTypes::cloth, 1);
 
     // Agricultor de seda -> genera seda    
-    processJob(resources, JobTypes::silkFarmer, Types_of_resources::cloth, 15, Types_of_resources::silk, 1);
+    processJob(resources, JobTypes::silkFarmer, ResourceTypes::cloth, 15, ResourceTypes::silk, 1);
 
     // Cantero -> genera piedra    
-    processJob(resources, JobTypes::stoneMason, Types_of_resources::bread, 1, Types_of_resources::stone, 3);
+    processJob(resources, JobTypes::stoneMason, ResourceTypes::bread, 1, ResourceTypes::stone, 3);
 
     // Leñador -> genera madera    
-    processJob(resources, JobTypes::woodcutter, Types_of_resources::bread, 1, Types_of_resources::wood, 3);
+    processJob(resources, JobTypes::woodcutter, ResourceTypes::bread, 1, ResourceTypes::wood, 3);
 
     // Minero de hierro -> genera hierro    
-    processJob(resources, JobTypes::ironMiner, Types_of_resources::bread, 2, Types_of_resources::iron, 1);
+    processJob(resources, JobTypes::ironMiner, ResourceTypes::bread, 2, ResourceTypes::iron, 1);
 
     // Minero de oro -> genera oro    
-    processJob(resources, JobTypes::goldMiner, Types_of_resources::bread, 10, Types_of_resources::gold, 1);
+    processJob(resources, JobTypes::goldMiner, ResourceTypes::bread, 10, ResourceTypes::gold, 1);
+}
+
+void Jobs::printJobs(sf::RenderWindow& window, sf::Font& font) const
+{
+    // Configuración de texto para mostrar trabajos
+    sf::Text text;
+    text.setFont(font);
+    text.setCharacterSize(24); // Tamaño del texto
+    text.setFillColor(sf::Color::White); // Color del texto
+
+    // Recorrer los trabajos y mostrarlos
+    for (size_t i = 0; i < jobs.size(); ++i) {
+        std::string jobName = std::get<0>(jobs[i]); // Obtener el nombre del trabajo
+        int assignedVillagers = std::get<1>(jobs[i]); // Obtener los aldeanos asignados
+
+        // Configurar el texto para mostrar el trabajo
+        text.setString(jobName + " - Assigned Villagers: " + std::to_string(assignedVillagers));
+        text.setPosition(50, 50 + i * 30); // Posiciona el texto (cambia el 50 y 30 según sea necesario)
+
+        // Dibujar el texto en la ventana
+        window.draw(text);
+    }
 }

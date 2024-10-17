@@ -4,7 +4,7 @@
 #include <string>
 
 // Enum para identificar los tipos de recursos
-enum class Types_of_resources
+enum class ResourceTypes
 {
     coin,
     wheat,
@@ -31,15 +31,15 @@ class Resources
         Resources();
 
         // Métodos para acceder a los recursos
-        int getResourceAmount(Types_of_resources resource) const;
-        std::string getResourceName(Types_of_resources resource) const;
+        int getResourceAmount(ResourceTypes resource) const;
+        std::string getResourceName(ResourceTypes resource) const;
 
         // Método para cambiar la cantidad de un recurso
-        void Resources::setResourceAmount(Types_of_resources resource, int amount);
+        void setResourceAmount(ResourceTypes resource, int amount);
 
-        void unlockResource(Types_of_resources resource);
-        void addResource(Types_of_resources resource, int amount);
-        void subtractResource(Types_of_resources resource, int amount);
+        void unlockResource(ResourceTypes resource);
+        void addResource(ResourceTypes resource, int amount);
+        void subtractResource(ResourceTypes resource, int amount);
 
         // Método para imprimir los recursos desbloqueados
         void printResources() const;

@@ -20,25 +20,25 @@ Resources::Resources()
 }
 
 // Método para obtener la cantidad de un recurso
-int Resources::getResourceAmount(Types_of_resources resource) const
+int Resources::getResourceAmount(ResourceTypes resource) const
 {
     return std::get<1>(resources[static_cast<int>(resource)]);
 }
 
 // Método para obtener el nombre de un recurso
-std::string Resources::getResourceName(Types_of_resources resource) const
+std::string Resources::getResourceName(ResourceTypes resource) const
 {
     return std::get<0>(resources[static_cast<int>(resource)]);
 }
 
 // Método para cambiar la cantidad de un recurso
-void Resources::setResourceAmount(Types_of_resources resource, int amount)
+void Resources::setResourceAmount(ResourceTypes resource, int amount)
 {
     std::get<1>(resources[static_cast<int>(resource)]) = amount;
 }
 
 // Método para desbloquear un recurso (si está bloqueado, lo establece en 0)
-void Resources::unlockResource(Types_of_resources resource)
+void Resources::unlockResource(ResourceTypes resource)
 {
     if (getResourceAmount(resource) == -1)
     {
@@ -47,33 +47,32 @@ void Resources::unlockResource(Types_of_resources resource)
 }
 
 // Método para agregar a la cantidad de un recurso
-void Resources::addResource(Types_of_resources resource, int amount)
+void Resources::addResource(ResourceTypes resource, int amount)
 {
     if (amount < 0)
     {
         throw std::invalid_argument("No se puede agregar una cantidad negativa.");
     }
-    int current_amount = getResourceAmount(resource);
-    setResourceAmount(resource, current_amount + amount);
+
+    setResourceAmount(resource, getResourceAmount(resource) + amount);
 }
 
 // Método para restar a la cantidad de un recurso
-void Resources::subtractResource(Types_of_resources resource, int amount)
+void Resources::subtractResource(ResourceTypes resource, int amount)
 {
     if (amount < 0)
     {
         throw std::invalid_argument("No se puede restar una cantidad negativa.");
     }
-    int current_amount = getResourceAmount(resource);
-    
+        
     // No permitir que baje de 0
-    if (current_amount < amount)
+    if (getResourceAmount(resource) < amount)
     {
         setResourceAmount(resource, 0);
     }
     else
     {
-        setResourceAmount(resource, current_amount - amount);
+        setResourceAmount(resource, getResourceAmount(resource) - amount);
     }
 }
 

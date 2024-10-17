@@ -15,7 +15,6 @@ public:
 	void update();
 	void render();
 	void run();
-	//void openJobsMenu();
 
 private:
 	//Variables

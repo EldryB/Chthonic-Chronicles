@@ -31,10 +31,10 @@ public:
     Jobs();
 
     // Métodos para obtener cantidad y nombre de los trabajos
-    int Jobs::getJobAmount(JobTypes job) const;
-    std::string Jobs::getJobName(JobTypes job) const;
+    int getJobAmount(JobTypes job) const;
+    std::string getJobName(JobTypes job) const;
     
-    void Jobs::setJobAmount(JobTypes job, int amount);
+    void setJobAmount(JobTypes job, int amount);
 
     // Métodos para asignar aldeanos a un trabajo
     void assignVillagers(JobTypes job, int number);
@@ -44,9 +44,9 @@ public:
     void unlockJob(JobTypes job);
 
     // Métodos para realizar la recolección de recursos basados en los trabajos
-    void Jobs::processJob(Resources &resources, JobTypes job, Types_of_resources inputResource, int inputAmount, Types_of_resources outputResource, int outputAmount) const;
+    void processJob(Resources &resources, JobTypes job, ResourceTypes inputResource, int inputAmount, ResourceTypes outputResource, int outputAmount) const;
     void collectResources(Resources &resources);
 
     // Método para imprimir los trabajos desbloqueados y sus aldeanos
-    void printJobs() const;
+    void printJobs(sf::RenderWindow& window, sf::Font& font) const;
 };

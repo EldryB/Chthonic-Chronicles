@@ -139,10 +139,13 @@
     <ClInclude Include="Fighter.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="JobMenuState.hpp" />
+    <ClInclude Include="Jobs.hpp" />
     <ClInclude Include="JsonManagement.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MenuState.hpp" />
     <ClInclude Include="MovementComponent.hpp" />
+    <ClInclude Include="Resources.hpp" />
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="State.hpp" />
   </ItemGroup>
@@ -153,11 +156,14 @@
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="JobMenuState.cpp" />
+    <ClCompile Include="Jobs.cpp" />
     <ClCompile Include="JsonManagement.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="State.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
