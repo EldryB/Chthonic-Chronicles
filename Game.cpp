@@ -1,6 +1,5 @@
 #include "Game.hpp"
-
-//Static functions
+//#include "JobMenuState.hpp"
 
 //Initializer functions
 void Game::initWindow()
@@ -20,6 +19,7 @@ void Game::initKeys()
     this->supportedKeys["Up"] = sf::Keyboard::Up;
     this->supportedKeys["Down"] = sf::Keyboard::Down;
     this->supportedKeys["Enter"] = sf::Keyboard::Enter;
+    this->supportedKeys["Z"] = sf::Keyboard::Z;
 }
 
 void Game::initStates()
@@ -64,6 +64,12 @@ void Game::updateSFMLEvents()
     {
         if (this->sfEvent.type == sf::Event::Closed)
             this->window->close();
+
+        // Abrir el menú de trabajos al presionar "Z"
+        /*if (sf::Keyboard::isKeyPressed(this->supportedKeys["Z"]))
+        {
+            this->openJobsMenu();
+        }*/
     }
 }
 
@@ -111,3 +117,9 @@ void Game::run()
         this->render();
     }
 }
+/*
+void Game::openJobsMenu()
+{
+    this->states.push(new JobMenuState(this->window, &this->supportedKeys, &this->states));
+}
+*/
