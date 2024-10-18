@@ -1,6 +1,7 @@
 #pragma once
 
 #include "MenuState.hpp"
+#include "FightState.hpp"
 
 class GameState :
     public State
@@ -25,6 +26,7 @@ private:
     float timeBetweenUpdates;
     sf::Font font;
     sf::Text text;
+    sf::Text message;
 
     void initVariables();
 

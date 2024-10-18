@@ -12,6 +12,8 @@ void GameState::initKeybinds()
 	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
 	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
+	this->keybinds["ACTION"] = this->supportedKeys->at("E");
+
 }
 
 void GameState::initTextures()
@@ -44,6 +46,14 @@ void GameState::initFonts()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
+
+
+	this->message.setFont(this->font);
+	this->message.setCharacterSize(20);
+	this->message.setFillColor(sf::Color::White);
+	message.setPosition(250.f, 850.f);
+	std::string textString = "Presiona E para entrar";
+	message.setString(textString);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -60,6 +70,13 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
 	text.setPosition(30, 30);
+
+	this->message.setFont(this->font);
+	this->message.setCharacterSize(20);
+	this->message.setFillColor(sf::Color::White);
+	message.setPosition(250.f, 850.f);
+	std::string textString = "Presiona E para entrar";
+	message.setString(textString);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -76,6 +93,15 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
 	text.setPosition(30, 30);
+
+	this->message.setFont(this->font);
+	this->message.setCharacterSize(20);
+	this->message.setFillColor(sf::Color::White);
+	message.setPosition(250.f, 850.f);
+	std::string textString = "Presiona E para entrar";
+	message.setString(textString);
+
+
 	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
 	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
 }
@@ -91,7 +117,7 @@ void GameState::updateInput(const float& _dt)
 {
 	timeSinceLastUpdate += _dt;
 	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
-
+	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !(isInLadder))
 	{
@@ -114,6 +140,11 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
+	{
+		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+	}
 }
 
 void GameState::update(const float& _dt)
@@ -128,6 +159,8 @@ void GameState::update(const float& _dt)
 
 void GameState::render(sf::RenderTarget* target)
 {
+	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
+
 	if (!target)
 	{
 		target = this->window;
@@ -138,4 +171,8 @@ void GameState::render(sf::RenderTarget* target)
 
 
 	target->draw(this->text);
+	if (isInDoor)
+	{
+		target->draw(this->message);
+	}
 }
