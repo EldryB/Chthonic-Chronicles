@@ -47,7 +47,6 @@ void GameState::initFonts()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
 
-
 	this->message.setFont(this->font);
 	this->message.setCharacterSize(20);
 	this->message.setFillColor(sf::Color::White);
