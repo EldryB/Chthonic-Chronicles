@@ -44,7 +44,7 @@ void FightState::initTextures()
 void FightState::initFighters(Fighter* _p)
 {
 	this->player = _p;
-	this->enemies.push_back(new Fighter(600.f, 400.f, this->textures["Bat1"], "Enemy1"));
+	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1"));
 }
 
 void FightState::initBackground()
@@ -106,6 +106,10 @@ void FightState::update(const float& _dt)
 	this->updateMousePositions();
 	this->updateInput(_dt);
 	this->player->update(_dt);
+	for (auto item: this->enemies)
+	{
+		item->update(_dt);
+	}
 
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	text.setString(textString);
@@ -120,6 +124,7 @@ void FightState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 	this->player->render(target);
+
 	for (auto item: this->enemies)
 	{
 		item->render(target);
