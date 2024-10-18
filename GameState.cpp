@@ -51,7 +51,7 @@ void GameState::initFonts()
 	this->message.setFont(this->font);
 	this->message.setCharacterSize(20);
 	this->message.setFillColor(sf::Color::White);
-	message.setPosition(250.f, 850.f);
+	message.setPosition(650.f, 250.f);
 	std::string textString = "Presiona E para entrar";
 	message.setString(textString);
 }
@@ -70,13 +70,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
 	text.setPosition(30, 30);
-
-	this->message.setFont(this->font);
-	this->message.setCharacterSize(20);
-	this->message.setFillColor(sf::Color::White);
-	message.setPosition(250.f, 850.f);
-	std::string textString = "Presiona E para entrar";
-	message.setString(textString);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -93,14 +86,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color::White);
 	text.setPosition(30, 30);
-
-	this->message.setFont(this->font);
-	this->message.setCharacterSize(20);
-	this->message.setFillColor(sf::Color::White);
-	message.setPosition(250.f, 850.f);
-	std::string textString = "Presiona E para entrar";
-	message.setString(textString);
-
 
 	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
 	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
@@ -169,10 +154,9 @@ void GameState::render(sf::RenderTarget* target)
 	target->draw(this->background);
 	this->player->render(target);
 
-
-	target->draw(this->text);
 	if (isInDoor)
 	{
 		target->draw(this->message);
 	}
+	target->draw(this->text);
 }
