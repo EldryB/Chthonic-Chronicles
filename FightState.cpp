@@ -44,7 +44,7 @@ void FightState::initTextures()
 void FightState::initFighters(Fighter* _p)
 {
 	this->player = _p;
-	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1"));
+	//this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1"));
 }
 
 void FightState::initBackground()
@@ -136,6 +136,5 @@ void FightState::render(sf::RenderTarget* target)
 
 void FightState::playerWeakAttack(int& positionEnemy)
 {
-	float _hp = this->enemies[positionEnemy]->getHp() - (player->getDamage() * 1);
-	this->enemies[positionEnemy]->setHp(_hp);
+	
 }

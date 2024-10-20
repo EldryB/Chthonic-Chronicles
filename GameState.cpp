@@ -31,9 +31,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	float hp = 1000;
-	float damage = 100;
-	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", hp, damage);
+	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player");
 }
 
 void GameState::initBackground()

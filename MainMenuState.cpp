@@ -105,7 +105,7 @@ void MainMenuState::updateInput(const float& _dt)
 			}
 			else if (it->first == "LOAD_GAME_STATE")
 			{
-				Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
+				Fighter* loadedPlayer = nullptr;
 				dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
 				this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
 			}
@@ -149,7 +149,7 @@ void MainMenuState::updateButtons()
 
 	else if (this->buttons["LOAD_GAME_STATE"]->isPressed())
 	{
-		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
+		Fighter* loadedPlayer = nullptr;
 		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
 	}
