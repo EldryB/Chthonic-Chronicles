@@ -1,8 +1,9 @@
 #include "Fighter.hpp"
 
-void Fighter::initVariables()
+void Fighter::initVariables(float& _hp, float& _damage)
 {
-
+	this->hp = _hp;
+	this->damage = _damage;
 }
 
 void Fighter::initComponents()
@@ -10,9 +11,9 @@ void Fighter::initComponents()
 
 }
 
-Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name)
+Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float& _hp, float& _damage)
 {
-	this->initVariables();
+	this->initVariables(_hp,_damage);
 
 	this->setPosition(_x, _y);
 	this->name = _name;
@@ -72,4 +73,19 @@ void Fighter::update(const float& _dt)
 	{
 		this->animationComponent->play("WALK_DOWN", _dt);
 	}
+}
+
+float Fighter::getHp()
+{
+	return this->hp;
+}
+
+float Fighter::getDamage()
+{
+	return this->damage;
+}
+
+void Fighter::setHp(float& myHp)
+{
+	this->hp = myHp;
 }

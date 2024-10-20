@@ -36,5 +36,7 @@ private:
     void initBackground();
 
     void initFonts();
+
+    void playerWeakAttack(int& positionEnemy);
 };
 

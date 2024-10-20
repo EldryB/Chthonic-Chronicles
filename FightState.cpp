@@ -133,3 +133,9 @@ void FightState::render(sf::RenderTarget* target)
 	target->draw(this->text);
 
 }
+
+void FightState::playerWeakAttack(int& positionEnemy)
+{
+	float _hp = this->enemies[positionEnemy]->getHp() - (player->getDamage() * 1);
+	this->enemies[positionEnemy]->setHp(_hp);
+}
