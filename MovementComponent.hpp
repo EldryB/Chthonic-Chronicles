@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Settings.hpp"
-#include "State.hpp"
 
 enum class LookingDirection
 {

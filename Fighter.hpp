@@ -12,7 +12,6 @@ public:
     virtual void update(const float& _dt);
 
 private:
-
     void initVariables();
 
     void initComponents();

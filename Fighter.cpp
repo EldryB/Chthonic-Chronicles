@@ -12,7 +12,7 @@ void Fighter::initComponents()
 
 Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name)
 {
-
+	this->initVariables();
 
 	this->setPosition(_x, _y);
 	this->name = _name;

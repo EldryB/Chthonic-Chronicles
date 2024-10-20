@@ -2,15 +2,6 @@
 
 #include "Fighter.hpp"
 
-enum class CurrentStage
-{
-	MainStage,
-	FightStage,
-	StoreStage,
-	COUNT
-};
-
-
 class State
 {
 public:
