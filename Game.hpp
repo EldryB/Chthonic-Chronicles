@@ -1,7 +1,6 @@
 #pragma once
 
 #include "MainMenuState.hpp"
-#include "JobMenuState.hpp"
 
 class Game
 {
