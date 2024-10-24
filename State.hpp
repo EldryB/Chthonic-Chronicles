@@ -2,6 +2,7 @@
 
 #include "Fighter.hpp"
 
+
 class State
 {
 public:
@@ -34,9 +35,6 @@ protected:
 	std::unordered_map<std::string, sf::Texture> textures;
 
 	virtual void initVariables() = 0;
-	//No creo que sean necesarios
-	/*virtual void initTextures() = 0;
-	virtual void initBackground() = 0;*/
 	virtual void initKeybinds() = 0;
 
 };

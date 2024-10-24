@@ -13,6 +13,7 @@ State::~State()
 
 }
 
+
 const bool& State::getQuit() const
 {
 	return this->quit;
@@ -22,6 +23,7 @@ void State::endState()
 {
 	this->quit = true;
 }
+
 
 void State::updateMousePositions()
 {

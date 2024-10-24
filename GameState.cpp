@@ -2,7 +2,7 @@
 
 void GameState::initVariables()
 {
-
+	
 }
 
 void GameState::initKeybinds()

@@ -42,6 +42,11 @@ sf::Sprite* Entity::getSprite() noexcept
 	return this->sprite;
 }
 
+const LookingDirection Entity::getLookingDirection() const
+{
+	return this->movementComponent->getLookingDirection();
+}
+
 void Entity::setTexture(const sf::Texture& _texture)
 {
 	sprite->setTexture(_texture);
@@ -50,6 +55,16 @@ void Entity::setTexture(const sf::Texture& _texture)
 void Entity::setSprite(sf::Sprite* _sprite)
 {
 	this->sprite = _sprite;
+}
+
+void Entity::setLookingDirection(LookingDirection _l)
+{
+	this->movementComponent->setLookingDirection(_l);
+}
+
+void Entity::setStage(CurrentStage _c)
+{
+	this->movementComponent->setStage(_c);
 }
 
 void Entity::setName(std::string _name)

@@ -30,6 +30,8 @@ public:
 
 	const bool& isMoving(const LookingDirection& look_direction) const;
 
+	void setLookingDirection(LookingDirection _l);
+
 	void move(const float dir_x, const float dir_y, const float& _dt);
 
 	void update(const float& _dt);
@@ -44,6 +46,8 @@ public:
 
 	void setYPos(float _y, sf::Sprite* sprite);
 
+	void setStage(CurrentStage _c);
+
 	void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 
 private:
@@ -53,6 +57,7 @@ private:
 	float deceleration;
 	LookingDirection lookingDirection;
 	sf::Vector2f velocity;
+	CurrentStage currentStage = CurrentStage::MainStage;
 
 };
 

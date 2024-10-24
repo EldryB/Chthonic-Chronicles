@@ -22,9 +22,15 @@ public:
 
 	sf::Sprite* getSprite() noexcept;
 
+	const LookingDirection getLookingDirection() const;
+
 	void setTexture(const sf::Texture& _texture);
 
 	void setSprite(sf::Sprite* sprite);
+
+	void setLookingDirection(LookingDirection _l);
+
+	void setStage(CurrentStage _c);
 
 	virtual void setPosition(const float _x, const float _y);
 

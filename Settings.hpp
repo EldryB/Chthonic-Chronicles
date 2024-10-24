@@ -12,6 +12,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+enum class CurrentStage
+{
+	MainStage,
+	Combat
+};
+
 struct Settings
 {
 	static const std::string ASSETS_PATH;
