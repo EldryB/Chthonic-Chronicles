@@ -35,7 +35,7 @@ void JobMenuState::updateJobList()
     addButtons.clear();
     subtractButtons.clear();
 
-    for (int i = 0; i < static_cast<int>(JobTypes::COUNT); ++i)
+    for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
         // Texto para los trabajos
         sf::Text jobText;
@@ -67,7 +67,7 @@ void JobMenuState::updateResourceList()
     resourceTexts.clear();
     amountTexts.clear();
 
-    for (int i = 0; i < static_cast<int>(ResourceTypes::COUNT); ++i)
+    for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
     {
         // Texto para los recursos
         sf::Text resourceText;
@@ -125,7 +125,7 @@ void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
     // Interacción con el botón de desbloquear trabajos
     if (unlockButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
     {
-        for (int i = 0; i < static_cast<int>(JobTypes::COUNT); ++i)
+        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
         {
             if (jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
             {

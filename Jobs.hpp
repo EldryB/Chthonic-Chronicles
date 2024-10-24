@@ -16,7 +16,7 @@ enum class JobTypes
     woodCutter,
     ironMiner,
     goldMiner,
-    COUNT
+    count
 };
 
 class Jobs
