@@ -20,7 +20,6 @@ Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _na
 	this->createMovementComponent(120.5f, 10.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 
-	//Faltan los idles
 	this->animationComponent->addAnimation("IDLE_LEFT", 40.f, 0, 0, 1, 0, 46, 46);
 	this->animationComponent->addAnimation("WALK_LEFT", 10.f, 2, 0, 5, 0, 46, 46);
 	this->animationComponent->addAnimation("IDLE_RIGHT", 40.f, 6, 0, 7, 0, 46, 46);
