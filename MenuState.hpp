@@ -28,6 +28,7 @@ private:
     std::unordered_map<std::string, Button*> buttons;
     Fighter* player;
     JsonManagement dataManagement;
+    int selectedButtonIndex;
 
     void initVariables();
 
