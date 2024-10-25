@@ -7,6 +7,7 @@ class JobMenuState :
     public State
 {
 public:
+    JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
     JobMenuState(Jobs& jobs, Resources& resources, sf::Font& font);
 
     void handleInput(sf::Event event);

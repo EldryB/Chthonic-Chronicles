@@ -36,5 +36,6 @@ protected:
 	virtual void initVariables() = 0;
 	virtual void initKeybinds() = 0;
 
+	State() : states(nullptr), window(nullptr), supportedKeys(nullptr), quit(false) {}
 };
 
