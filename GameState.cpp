@@ -2,7 +2,8 @@
 
 void GameState::initVariables()
 {
-	
+	this->keyPressTimer = 0.f;
+	this->keyPressDelay = 0.2f;
 }
 
 void GameState::initKeybinds()
@@ -99,6 +100,7 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& _dt)
 {
+	this->keyPressTimer += _dt;
 	timeSinceLastUpdate += _dt;
 	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
 	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
@@ -120,14 +122,16 @@ void GameState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")) && this->keyPressTimer >= this->keyPressDelay)
 	{
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
+		this->keyPressTimer = 0.f;
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor && this->keyPressTimer >= this->keyPressDelay)
 	{
 		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+		this->keyPressTimer = 0.f;
 	}
 }
 

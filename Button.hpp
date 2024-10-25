@@ -24,6 +24,8 @@ public:
 
 	const bool isPressed() const;
 
+	const ButtonState getButtonState() const;
+
 	void setTexture(const sf::Texture& _texture);
 
 	void setTextFillColor(const sf::Color& color);

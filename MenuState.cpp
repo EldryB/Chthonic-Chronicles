@@ -95,6 +95,11 @@ void MenuState::updateInput(const float& _dt)
 		}
 	}
 
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
+	{
+		this->states->pop();
+	}
+	
 	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
 	{
 		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
@@ -127,13 +132,13 @@ void MenuState::updateButtons()
 	{
 		it.second->update(this->mousePosView);
 
-		if (it.second->isIdle())
+		if (it.second->getButtonState() == ButtonState::Idle)
 		{
 			it.second->setTexture(this->textures["MenuButtonIdle"]);
 			it.second->setTextFillColor(sf::Color::White);
 		}
 
-		if (it.second->isHover())
+		if (it.second->getButtonState() == ButtonState::Hover)
 		{
 			it.second->setTexture(this->textures["MenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
@@ -148,16 +153,16 @@ void MenuState::updateButtons()
 		++index;
 	}
 
-	if (this->buttons["BACK_TO_THE_GAME"]->isPressed())
+	if (this->buttons["BACK_TO_THE_GAME"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 	}
-	if (this->buttons["NO_SAVE_AND_QUIT"]->isPressed())
+	if (this->buttons["NO_SAVE_AND_QUIT"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 		this->states->pop();
 	}
-	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
+	if (this->buttons["SAVE_AND_QUIT"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 		this->dataManagement.savePlayerToFile(player, "player.json");

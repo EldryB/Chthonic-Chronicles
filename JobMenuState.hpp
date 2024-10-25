@@ -1,9 +1,10 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Jobs.hpp"
-#include "Resources.hpp"
 
-class JobMenuState
+#include "State.hpp"
+#include "Jobs.hpp"
+
+class JobMenuState :
+    public State
 {
 public:
     JobMenuState(Jobs& jobs, Resources& resources, sf::Font& font);
@@ -33,3 +34,4 @@ private:
     void updateResourceList();
     void handleMouseClick(sf::Vector2i mousePos);
 };
+

@@ -8,12 +8,12 @@ void FightState::initKeybinds()
 	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
-	this->keybinds["Z"] = this->supportedKeys->at("Z");
 }
 
 void FightState::initVariables()
 {
-	
+	this->keyPressTimer = 0.f;
+	this->keyPressDelay = 0.2f;
 }
 
 void FightState::initFonts()
@@ -79,16 +79,15 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
-	//timeSinceLastUpdate += _dt;
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
-	{
-		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Z")))
+	this->keyPressTimer += _dt;
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
 		this->player->setPosition(870.77f, 323.92f);
 		this->states->pop();
 	}
+
+	this->keyPressTimer = 0.f;
 }
 
 void FightState::update(const float& _dt)

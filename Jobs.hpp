@@ -1,8 +1,5 @@
 #pragma once
 #include "Resources.hpp"
-#include <vector>
-#include <tuple>
-#include <string>
 
 enum class JobTypes
 {
