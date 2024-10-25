@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-//Initializer functions
+//Funciones de inicialización
 void Game::initWindow()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(Settings::WINDOW_WIDTH, Settings::WINDOW_HEIGHT), "Chthonic Chronicles", sf::Style::Resize | sf::Style::Close | sf::Style::Titlebar);
@@ -20,6 +20,7 @@ void Game::initKeys()
     this->supportedKeys["Enter"] = sf::Keyboard::Enter;
     this->supportedKeys["Z"] = sf::Keyboard::Z;
     this->supportedKeys["E"] = sf::Keyboard::E;
+    this->supportedKeys["Q"] = sf::Keyboard::Q;
 }
 
 void Game::initStates()

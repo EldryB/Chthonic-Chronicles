@@ -1,9 +1,12 @@
 #include "GameState.hpp"
 
+
 void GameState::initVariables()
 {
 	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
+	this->keyPressDelay = 0.1f;
+	this->resources = new Resources();
+	this->jobs = new Jobs();
 }
 
 void GameState::initKeybinds()
@@ -14,6 +17,7 @@ void GameState::initKeybinds()
 	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
+	this->keybinds["Q"] = this->supportedKeys->at("Q");
 
 }
 
@@ -54,6 +58,11 @@ void GameState::initFonts()
 	message.setPosition(650.f, 250.f);
 	std::string textString = "Presiona E para entrar";
 	message.setString(textString);
+
+	this->text.setFont(this->font);
+	this->text.setCharacterSize(20);
+	this->text.setFillColor(sf::Color::White);
+	text.setPosition(30, 30);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -66,10 +75,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color::White);
-	text.setPosition(30, 30);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -81,11 +86,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color::White);
-	text.setPosition(30, 30);
 
 	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
 	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
@@ -101,7 +101,7 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	this->keyPressTimer += _dt;
-	timeSinceLastUpdate += _dt;
+	this->timeSinceLastUpdate += _dt;
 	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
 	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
 
@@ -125,6 +125,11 @@ void GameState::updateInput(const float& _dt)
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")) && this->keyPressTimer >= this->keyPressDelay)
 	{
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
+		this->keyPressTimer = 0.f;
+	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")) && this->keyPressTimer >= this->keyPressDelay)
+	{
+		this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
 		this->keyPressTimer = 0.f;
 	}
 

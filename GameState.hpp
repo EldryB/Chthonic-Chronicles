@@ -2,6 +2,8 @@
 
 #include "MenuState.hpp"
 #include "FightState.hpp"
+#include "JobMenuState.hpp"
+#include "Jobs.hpp"
 
 class GameState :
     public State
@@ -21,6 +23,8 @@ public:
 
 private:
     Fighter* player;
+    Jobs* jobs;
+    Resources* resources;
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
