@@ -14,7 +14,8 @@ void FightState::initVariables()
 {
 	this->keyPressTimer = 0.f;
 	this->keyPressDelay = 0.2f;
-}
+	this->keyCode = " ";
+}	
 
 void FightState::initFonts()
 {
@@ -65,11 +66,8 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
-
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color::White);
-	text.setPosition(30, 30);
+	
+	this->player->setStage(CurrentStage::Combat);
 }
 
 FightState::~FightState()
@@ -83,8 +81,17 @@ void FightState::updateInput(const float& _dt)
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
-		this->player->setPosition(870.77f, 323.92f);
-		this->states->pop();
+		this->keyCode = "ACTION";
+	}
+	else
+	{
+		if (this->keyCode == "ACTION")
+		{
+			this->keyCode = " ";
+			this->player->setPosition(870.77f, 323.92f);
+			this->states->pop();
+			this->player->setStage(CurrentStage::MainStage);
+		}
 	}
 
 	this->keyPressTimer = 0.f;

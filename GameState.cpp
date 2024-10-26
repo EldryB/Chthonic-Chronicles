@@ -8,7 +8,6 @@ void GameState::initVariables()
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
-	//this->player->setStage(CurrentStage::MainStage);
 }
 
 void GameState::initKeybinds()
@@ -77,6 +76,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
+	this->player->setStage(CurrentStage::MainStage);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -110,15 +110,15 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(-1.f, 0.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
 	{
 		this->player->move(1.f, 0.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
 		this->player->move(0.f, -1.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
 		this->player->move(0.f, 1.f, _dt);
 	}
