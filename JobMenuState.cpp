@@ -4,6 +4,7 @@ void JobMenuState::initVariables()
 {
     this->keyPressTimer = 0.f;
     this->keyPressDelay = 1.f;
+    this->keyCode = " ";
 }
 
 void JobMenuState::initKeybinds()
@@ -183,23 +184,30 @@ void JobMenuState::updateInput(const float& _dt)
     {
         this->keyCode = "CLOSE";
     }
-
-    else if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+    else
+    {
+        if (keyCode == "CLOSE")
+        {
+            keyCode = " ";
+            this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
+            this->keyPressTimer = 0.f;
+        }
+    }
+   
+    if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
     {
         this->keyCode = "Q";
     }
-    if (keyCode == "Q")
+    else
     {
-        keyCode = " ";
-        this->states->pop();
-        this->keyPressTimer = 0.f;
+        if (keyCode == "Q")
+        {
+            keyCode = " ";
+            this->states->pop();
+            this->keyPressTimer = 0.f;
+        }
     }
-    else if (keyCode == "CLOSE")
-    {
-        keyCode = " ";
-        this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-        this->keyPressTimer = 0.f;
-    }
+    
 }
 
 void JobMenuState::update(const float& _dt)

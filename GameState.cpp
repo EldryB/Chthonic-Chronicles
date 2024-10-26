@@ -4,7 +4,7 @@
 void GameState::initVariables()
 {
 	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.1f;
+	this->keyPressDelay = 0.2f;
 	this->resources = new Resources();
 	this->jobs = new Jobs();
 }
@@ -127,10 +127,20 @@ void GameState::updateInput(const float& _dt)
 		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
 		this->keyPressTimer = 0.f;
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")) && this->keyPressTimer >= this->keyPressDelay)
+
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
 	{
-		this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
-		this->keyPressTimer = 0.f;
+		this->keyCode = "Q";
+	}
+	else
+	{
+		if (this->keyCode == "Q")
+		{
+			this->keyCode = " ";
+			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
+			this->keyPressTimer = 0.f;
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor && this->keyPressTimer >= this->keyPressDelay)
