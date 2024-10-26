@@ -37,7 +37,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player");
+	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f);
 }
 
 void GameState::initBackground()
@@ -88,8 +88,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
-	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
-	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
+	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName(), _p->getHp(), _p->getDamage());
 }
 
 

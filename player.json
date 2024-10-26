@@ -1,5 +1,7 @@
 {
+    "damage": 100.0,
+    "hp": 1000.0,
     "name": "Player",
-    "positionX": 478.1449279785156,
+    "positionX": 433.7005310058594,
     "positionY": 370.0
 }
