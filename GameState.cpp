@@ -8,6 +8,7 @@ void GameState::initVariables()
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
+	//this->player->setStage(CurrentStage::MainStage);
 }
 
 void GameState::initKeybinds()
