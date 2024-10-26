@@ -26,6 +26,7 @@ protected:
 	float keyPressDelay;
 	bool quit;
 	sf::Sprite background;
+	std::string keyCode{ "" };
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;

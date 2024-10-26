@@ -31,7 +31,6 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Text message;
-    std::string keyCode{ "" };
 
     void initVariables();
 

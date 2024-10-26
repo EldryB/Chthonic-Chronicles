@@ -5,6 +5,7 @@ void MenuState::initVariables()
 	this->selectedButtonIndex = 0;
 	this->keyPressTimer = 0.f;
 	this->keyPressDelay = 0.2f;
+	this->keyCode = " ";
 }
 
 void MenuState::initTextures()
@@ -77,50 +78,85 @@ void MenuState::updateInput(const float& _dt)
 {
 	this->keyPressTimer += _dt;
 	
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]) && this->keyPressTimer >= this->keyPressDelay)
+	//Movimiento en el menú
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
-		if (this->selectedButtonIndex < this->buttons.size() - 1)
+		this->keyCode = "MOVE_UP";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_UP")
 		{
-			++this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex < this->buttons.size() - 1)
+			{
+				++this->selectedButtonIndex;
+				this->keyPressTimer = 0.f;
+			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]) && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
 	{
-		if (this->selectedButtonIndex > 0)
+		this->keyCode = "MOVE_DOWN";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_DOWN")
 		{
-			--this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex > 0)
+			{
+				--this->selectedButtonIndex;
+				this->keyPressTimer = 0.f;
+			}
 		}
 	}
 
+	//Cerrar Menú
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{
-		this->states->pop();
+		this->keyCode = "CLOSE";
+	}
+	else
+	{
+		if (this->keyCode == "CLOSE")
+		{
+			this->keyCode = " ";
+			this->states->pop();
+		}
 	}
 	
-	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
 	{
-		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
-		if (it != this->buttons.end())
+		this->keyCode = "SELECT";
+	}
+	else
+	{
+		if (this->keyCode == "SELECT")
 		{
-			if (it->first == "BACK_TO_THE_GAME")
+			this->keyCode = " ";
+			auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+			if (it != this->buttons.end())
 			{
-				this->states->pop();
+				if (it->first == "BACK_TO_THE_GAME")
+				{
+					this->states->pop();
+				}
+				else if (it->first == "NO_SAVE_AND_QUIT")
+				{
+					this->states->pop();
+					this->states->pop();
+				}
+				else if (it->first == "SAVE_AND_QUIT")
+				{
+					this->states->pop();
+					this->dataManagement.savePlayerToFile(player, "player.json");
+					this->states->pop();
+				}
+				this->keyPressTimer = 0.f;
 			}
-			else if (it->first == "NO_SAVE_AND_QUIT")
-			{
-				this->states->pop();
-				this->states->pop();
-			}
-			else if (it->first == "SAVE_AND_QUIT")
-			{
-				this->states->pop();
-				this->dataManagement.savePlayerToFile(player, "player.json");
-				this->states->pop();
-			}
-			this->keyPressTimer = 0.f;
 		}
 	}
 }

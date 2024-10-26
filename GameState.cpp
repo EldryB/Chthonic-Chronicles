@@ -5,6 +5,7 @@ void GameState::initVariables()
 {
 	this->keyPressTimer = 0.f;
 	this->keyPressDelay = 0.2f;
+	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
 }
@@ -122,10 +123,19 @@ void GameState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")) && this->keyPressTimer >= this->keyPressDelay)
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
-		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-		this->keyPressTimer = 0.f;
+		this->keyCode = "CLOSE";
+	}
+	else
+	{
+		if (this->keyCode == "CLOSE")
+		{
+			this->keyCode = " ";
+			this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
+			this->keyPressTimer = 0.f;
+		}
 	}
 
 
@@ -143,10 +153,18 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
-		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-		this->keyPressTimer = 0.f;
+		this->keyCode = "ACTION";
+	}
+	else
+	{
+		if (this->keyCode == "ACTION")
+		{
+			this->keyCode = " ";
+			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+			this->keyPressTimer = 0.f;
+		}
 	}
 }
 

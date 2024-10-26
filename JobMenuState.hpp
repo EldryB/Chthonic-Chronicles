@@ -25,7 +25,6 @@ private:
     Resources& resources;
     sf::Font font;
     Fighter* player;
-    std::string keyCode{""};
 
     sf::Text title;
     sf::Text villagersAvailable;  // Texto para aldeanos disponibles
