@@ -5,6 +5,7 @@ void MenuState::initVariables()
 	this->selectedButtonIndex = 0;
 	this->keyPressTimer = 0.f;
 	this->keyPressDelay = 0.2f;
+	this->keyCode = " ";
 }
 
 void MenuState::initTextures()
@@ -77,45 +78,85 @@ void MenuState::updateInput(const float& _dt)
 {
 	this->keyPressTimer += _dt;
 	
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]) && this->keyPressTimer >= this->keyPressDelay)
+	//Movimiento en el menú
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
-		if (this->selectedButtonIndex < this->buttons.size() - 1)
+		this->keyCode = "MOVE_UP";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_UP")
 		{
-			++this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex < this->buttons.size() - 1)
+			{
+				++this->selectedButtonIndex;
+				this->keyPressTimer = 0.f;
+			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]) && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
 	{
-		if (this->selectedButtonIndex > 0)
+		this->keyCode = "MOVE_DOWN";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_DOWN")
 		{
-			--this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex > 0)
+			{
+				--this->selectedButtonIndex;
+				this->keyPressTimer = 0.f;
+			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
+	//Cerrar Menú
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{
-		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
-		if (it != this->buttons.end())
+		this->keyCode = "CLOSE";
+	}
+	else
+	{
+		if (this->keyCode == "CLOSE")
 		{
-			if (it->first == "BACK_TO_THE_GAME")
+			this->keyCode = " ";
+			this->states->pop();
+		}
+	}
+	
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
+	{
+		this->keyCode = "SELECT";
+	}
+	else
+	{
+		if (this->keyCode == "SELECT")
+		{
+			this->keyCode = " ";
+			auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+			if (it != this->buttons.end())
 			{
-				this->states->pop();
+				if (it->first == "BACK_TO_THE_GAME")
+				{
+					this->states->pop();
+				}
+				else if (it->first == "NO_SAVE_AND_QUIT")
+				{
+					this->states->pop();
+					this->states->pop();
+				}
+				else if (it->first == "SAVE_AND_QUIT")
+				{
+					this->states->pop();
+					this->dataManagement.savePlayerToFile(player, "player.json");
+					this->states->pop();
+				}
+				this->keyPressTimer = 0.f;
 			}
-			else if (it->first == "NO_SAVE_AND_QUIT")
-			{
-				this->states->pop();
-				this->states->pop();
-			}
-			else if (it->first == "SAVE_AND_QUIT")
-			{
-				this->states->pop();
-				this->dataManagement.savePlayerToFile(player, "player.json");
-				this->states->pop();
-			}
-			this->keyPressTimer = 0.f;
 		}
 	}
 }
@@ -127,13 +168,13 @@ void MenuState::updateButtons()
 	{
 		it.second->update(this->mousePosView);
 
-		if (it.second->isIdle())
+		if (it.second->getButtonState() == ButtonState::Idle)
 		{
 			it.second->setTexture(this->textures["MenuButtonIdle"]);
 			it.second->setTextFillColor(sf::Color::White);
 		}
 
-		if (it.second->isHover())
+		if (it.second->getButtonState() == ButtonState::Hover)
 		{
 			it.second->setTexture(this->textures["MenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
@@ -148,16 +189,16 @@ void MenuState::updateButtons()
 		++index;
 	}
 
-	if (this->buttons["BACK_TO_THE_GAME"]->isPressed())
+	if (this->buttons["BACK_TO_THE_GAME"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 	}
-	if (this->buttons["NO_SAVE_AND_QUIT"]->isPressed())
+	if (this->buttons["NO_SAVE_AND_QUIT"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 		this->states->pop();
 	}
-	if (this->buttons["SAVE_AND_QUIT"]->isPressed())
+	if (this->buttons["SAVE_AND_QUIT"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->pop();
 		this->dataManagement.savePlayerToFile(player, "player.json");

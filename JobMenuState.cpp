@@ -1,41 +1,81 @@
 #include "JobMenuState.hpp"
 
-JobMenuState::JobMenuState(Jobs& jobs, Resources& resources, sf::Font& font)
-    : jobs(jobs), resources(resources), font(font)
+void JobMenuState::initVariables()
 {
-    title.setFont(font);
-    title.setString("Settlement Management");
-    title.setCharacterSize(36);
-    title.setFillColor(sf::Color::Black);
-    title.setPosition(100, 20);
+    this->keyPressTimer = 0.f;
+    this->keyPressDelay = 1.f;
+    this->keyCode = " ";
+}
 
-    villagersAvailable.setFont(font);
-    villagersAvailable.setCharacterSize(24);
-    villagersAvailable.setFillColor(sf::Color::Black);
-    villagersAvailable.setPosition(100, 80);
+void JobMenuState::initKeybinds()
+{
+    this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
+    this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
+    this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
+    this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
+    this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
+    this->keybinds["ACTION"] = this->supportedKeys->at("E");
+    this->keybinds["Q"] = this->supportedKeys->at("Q");
+
+}
+
+void JobMenuState::initFonts()
+{
+    if (!this->font.loadFromFile("assets/fonts/font.ttf"))
+    {
+        throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
+    }
+
+    this->title.setFont(font);
+    this->title.setString("Settlement Management");
+    this->title.setCharacterSize(36);
+    this->title.setFillColor(sf::Color::Black);
+    this->title.setPosition(100, 20);
+
+    this->villagersAvailable.setFont(font);
+    this->villagersAvailable.setCharacterSize(24);
+    this->villagersAvailable.setFillColor(sf::Color::Black);
+    this->villagersAvailable.setPosition(100, 80);
+}
+
+
+JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Jobs& jobs, Resources& resources, Fighter* _p)
+    : jobs(jobs), resources(resources) ,State(_window, _supportedKeys, _states)
+{
+    this->initKeybinds();
+    this->initVariables();
+    this->initFonts();
 
     // Inicializa las listas de trabajos y recursos
-    updateJobList();
-    updateResourceList();
+    this->updateJobList();
+    this->updateResourceList();
 
     // Botón para recolección de recursos
-    collectButton.setSize(sf::Vector2f(150, 50));
-    collectButton.setPosition(800, 550);
-    collectButton.setFillColor(sf::Color(192, 192, 192));
+    this->collectButton.setSize(sf::Vector2f(150, 50));
+    this->collectButton.setPosition(800, 550);
+    this->collectButton.setFillColor(sf::Color(192, 192, 192));
 
     // Botón para desbloquear trabajos
-    unlockButton.setSize(sf::Vector2f(150, 50));
-    unlockButton.setPosition(100, 550);
-    unlockButton.setFillColor(sf::Color(192, 192, 192));
+    this->unlockButton.setSize(sf::Vector2f(150, 50));
+    this->unlockButton.setPosition(100, 550);
+    this->unlockButton.setFillColor(sf::Color(192, 192, 192));
+    
+    this->player = _p;
+
+}
+
+JobMenuState::~JobMenuState()
+{
+
 }
 
 void JobMenuState::updateJobList()
 {
-    jobTexts.clear();
-    addButtons.clear();
-    subtractButtons.clear();
+    this->jobTexts.clear();
+    this->addButtons.clear();
+    this->subtractButtons.clear();
 
-    for (int i = 0; i < static_cast<int>(JobTypes::COUNT); ++i)
+    for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
         // Texto para los trabajos
         sf::Text jobText;
@@ -64,10 +104,10 @@ void JobMenuState::updateJobList()
 
 void JobMenuState::updateResourceList()
 {
-    resourceTexts.clear();
-    amountTexts.clear();
+    this->resourceTexts.clear();
+    this->amountTexts.clear();
 
-    for (int i = 0; i < static_cast<int>(ResourceTypes::COUNT); ++i)
+    for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
     {
         // Texto para los recursos
         sf::Text resourceText;
@@ -105,12 +145,12 @@ void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
     {
         if (addButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
         {
-            jobs.assignVillagers(static_cast<JobTypes>(i));
+            this->jobs.assignVillagers(static_cast<JobTypes>(i));
             updateJobList();
         }
         else if (subtractButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
         {
-            jobs.removeVillagers(static_cast<JobTypes>(i));
+            this->jobs.removeVillagers(static_cast<JobTypes>(i));
             updateJobList();
         }
     }
@@ -118,18 +158,18 @@ void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
     // Interacción con el botón de recolectar recursos
     if (collectButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
     {
-        jobs.collectResources(resources);
+        this->jobs.collectResources(resources);
         updateResourceList();
     }
 
     // Interacción con el botón de desbloquear trabajos
     if (unlockButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
     {
-        for (int i = 0; i < static_cast<int>(JobTypes::COUNT); ++i)
+        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
         {
-            if (jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
+            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
             {
-                jobs.unlockJob(static_cast<JobTypes>(i));
+                this->jobs.unlockJob(static_cast<JobTypes>(i));
                 updateJobList();
                 break;
             }
@@ -137,44 +177,83 @@ void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
     }
 }
 
-void JobMenuState::update()
+void JobMenuState::updateInput(const float& _dt)
 {
-    // Actualizar lógica si es necesario
+    this->keyPressTimer += _dt;
+    if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
+    {
+        this->keyCode = "CLOSE";
+    }
+    else
+    {
+        if (keyCode == "CLOSE")
+        {
+            keyCode = " ";
+            this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
+            this->keyPressTimer = 0.f;
+        }
+    }
+   
+    if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+    {
+        this->keyCode = "Q";
+    }
+    else
+    {
+        if (keyCode == "Q")
+        {
+            keyCode = " ";
+            this->states->pop();
+            this->keyPressTimer = 0.f;
+        }
+    }
+    
 }
 
-void JobMenuState::render(sf::RenderWindow& window)
+void JobMenuState::update(const float& _dt)
 {
-    window.draw(title);
-    window.draw(villagersAvailable);
+    this->updateMousePositions();
+    this->updateInput(_dt);
+}
+
+void JobMenuState::render(sf::RenderTarget* target)
+{
+    if (!target)
+    {
+        target = this->window;
+    }
+
+    target->draw(this->title);
+    target->draw(this->villagersAvailable);
 
     // Dibujar trabajos y aldeanos
     for (const auto& jobText : jobTexts)
     {
-        window.draw(jobText);
+        target->draw(jobText);
     }
 
     for (const auto& subtractButton : subtractButtons)
     {
-        window.draw(subtractButton);
+        target->draw(subtractButton);
     }
 
     for (const auto& addButton : addButtons)
     {
-        window.draw(addButton);
+        target->draw(addButton);
     }
 
     // Dibujar recursos
     for (const auto& resourceText : resourceTexts)
     {
-        window.draw(resourceText);
+        target->draw(resourceText);
     }
 
     for (const auto& amountText : amountTexts)
     {
-        window.draw(amountText);
+        target->draw(amountText);
     }
 
     // Dibujar botones
-    window.draw(collectButton);
-    window.draw(unlockButton);
+    target->draw(this->collectButton);
+    target->draw(this->unlockButton);
 }

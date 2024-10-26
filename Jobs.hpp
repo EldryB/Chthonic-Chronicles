@@ -1,8 +1,5 @@
 #pragma once
 #include "Resources.hpp"
-#include <vector>
-#include <tuple>
-#include <string>
 
 enum class JobTypes
 {
@@ -16,7 +13,7 @@ enum class JobTypes
     woodCutter,
     ironMiner,
     goldMiner,
-    COUNT
+    count
 };
 
 class Jobs

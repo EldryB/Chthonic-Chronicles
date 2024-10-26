@@ -54,6 +54,11 @@ const bool Button::isPressed() const
 	return false;
 }
 
+const ButtonState Button::getButtonState() const
+{
+	return this->buttonState;
+}
+
 void Button::setTexture(const sf::Texture& _texture)
 {
 	this->sprite.setTexture(_texture);

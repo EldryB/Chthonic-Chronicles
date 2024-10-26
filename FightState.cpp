@@ -12,7 +12,8 @@ void FightState::initKeybinds()
 
 void FightState::initVariables()
 {
-
+	this->keyPressTimer = 0.f;
+	this->keyPressDelay = 0.2f;
 }
 
 void FightState::initFonts()
@@ -44,6 +45,8 @@ void FightState::initTextures()
 void FightState::initFighters(Fighter* _p)
 {
 	this->player = _p;
+	this->player->setLookingDirection(LookingDirection::Right);
+	this->player->setPosition(304.8f, 524.97f);
 	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1"));
 }
 
@@ -76,29 +79,15 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
-	//timeSinceLastUpdate += _dt;
+	this->keyPressTimer += _dt;
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
-		this->player->move(-1.f, 0.f, _dt);
-	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
-	{
-		this->player->move(1.f, 0.f, _dt);
-	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
-	{
-		this->player->move(0.f, -1.f, _dt);
-	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
-	{
-		this->player->move(0.f, 1.f, _dt);
+		this->player->setPosition(870.77f, 323.92f);
+		this->states->pop();
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
-	{
-		this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-	}
+	this->keyPressTimer = 0.f;
 }
 
 void FightState::update(const float& _dt)

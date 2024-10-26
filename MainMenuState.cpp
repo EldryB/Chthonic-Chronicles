@@ -121,13 +121,13 @@ void MainMenuState::updateButtons()
 	{
 		it.second->update(this->mousePosView);
 
-		if (it.second->isIdle())
+		if (it.second->getButtonState() == ButtonState::Idle)
 		{
 			it.second->setTexture(this->textures["MainMenuButtonIdle"]);
 			it.second->setTextFillColor(sf::Color::White);
 		}
 
-		if (it.second->isHover())
+		if (it.second->getButtonState() == ButtonState::Hover)
 		{
 			it.second->setTexture(this->textures["MainMenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(150, 104, 28));
@@ -142,12 +142,12 @@ void MainMenuState::updateButtons()
 		++index;
 	}
 
-	if (this->buttons["NEW_GAME_STATE"]->isPressed())
+	if (this->buttons["NEW_GAME_STATE"]->getButtonState() == ButtonState::Pressed)
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 	}
 
-	else if (this->buttons["LOAD_GAME_STATE"]->isPressed())
+	else if (this->buttons["LOAD_GAME_STATE"]->getButtonState() == ButtonState::Pressed)
 	{
 		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player");
 		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);

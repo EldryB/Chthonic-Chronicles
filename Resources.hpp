@@ -15,7 +15,7 @@ enum class ResourceTypes
     wood,
     iron,
     gold,
-    COUNT
+    count
 };
 
 class Resources
