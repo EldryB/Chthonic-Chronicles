@@ -3,8 +3,7 @@
 void MainMenuState::initVariables()
 {
 	this->selectedButtonIndex = 0;
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
+	this->keyCode = " ";
 }
 
 void MainMenuState::initTextures()
@@ -74,42 +73,61 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
-	
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]) && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
-		if (this->selectedButtonIndex < this->buttons.size() - 1)
+		this->keyCode = "MOVE_UP";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_UP")
 		{
-			++this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex < this->buttons.size() - 1)
+			{
+				++this->selectedButtonIndex;
+			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]) && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
 	{
-		if (this->selectedButtonIndex > 0)
+		this->keyCode = "MOVE_DOWN";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_DOWN")
 		{
-			--this->selectedButtonIndex;
-			this->keyPressTimer = 0.f;
+			this->keyCode = " ";
+			if (this->selectedButtonIndex > 0)
+			{
+				--this->selectedButtonIndex;
+			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]) && this->keyPressTimer >= this->keyPressDelay)
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
 	{
-		auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
-		if (it != this->buttons.end())
+		this->keyCode = "SELECT";
+	}
+	else
+	{
+		if (this->keyCode == "SELECT")
 		{
-			if (it->first == "NEW_GAME_STATE")
+			this->keyCode = " ";
+			auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+			if (it != this->buttons.end())
 			{
-				this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+				if (it->first == "NEW_GAME_STATE")
+				{
+					this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+				}
+				else if (it->first == "LOAD_GAME_STATE")
+				{
+					Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
+					dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
+					this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+				}
 			}
-			else if (it->first == "LOAD_GAME_STATE")
-			{
-				Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
-				dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
-				this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
-			}
-			this->keyPressTimer = 0.f;
 		}
 	}
 }

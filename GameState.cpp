@@ -1,10 +1,7 @@
 #include "GameState.hpp"
 
-
 void GameState::initVariables()
 {
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
@@ -134,7 +131,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 
@@ -149,7 +145,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 
@@ -163,7 +158,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 }

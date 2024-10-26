@@ -2,9 +2,21 @@
 
 void JobMenuState::initVariables()
 {
-    this->keyPressTimer = 0.f;
-    this->keyPressDelay = 1.f;
     this->keyCode = " ";
+}
+
+void JobMenuState::initTextures()
+{
+    if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/start.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
+    }
+}
+
+void JobMenuState::initBackground()
+{
+    this->background.setTexture(this->textures["Background"]);
+    this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 void JobMenuState::initKeybinds()
@@ -16,6 +28,11 @@ void JobMenuState::initKeybinds()
     this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
     this->keybinds["ACTION"] = this->supportedKeys->at("E");
     this->keybinds["Q"] = this->supportedKeys->at("Q");
+
+}
+
+void JobMenuState::initButtons()
+{
 
 }
 
@@ -50,15 +67,15 @@ JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::st
     this->updateJobList();
     this->updateResourceList();
 
-    // Botón para recolección de recursos
-    this->collectButton.setSize(sf::Vector2f(150, 50));
-    this->collectButton.setPosition(800, 550);
-    this->collectButton.setFillColor(sf::Color(192, 192, 192));
+    //// Botón para recolección de recursos
+    //this->collectButton.setSize(sf::Vector2f(150, 50));
+    //this->collectButton.setPosition(800, 550);
+    //this->collectButton.setFillColor(sf::Color(192, 192, 192));
 
-    // Botón para desbloquear trabajos
-    this->unlockButton.setSize(sf::Vector2f(150, 50));
-    this->unlockButton.setPosition(100, 550);
-    this->unlockButton.setFillColor(sf::Color(192, 192, 192));
+    //// Botón para desbloquear trabajos
+    //this->unlockButton.setSize(sf::Vector2f(150, 50));
+    //this->unlockButton.setPosition(100, 550);
+    //this->unlockButton.setFillColor(sf::Color(192, 192, 192));
     
     this->player = _p;
 
@@ -72,8 +89,8 @@ JobMenuState::~JobMenuState()
 void JobMenuState::updateJobList()
 {
     this->jobTexts.clear();
-    this->addButtons.clear();
-    this->subtractButtons.clear();
+    /*this->addButtons.clear();
+    this->subtractButtons.clear();*/
 
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
@@ -86,19 +103,19 @@ void JobMenuState::updateJobList()
         jobText.setPosition(100, 120 + i * 40);
         jobTexts.push_back(jobText);
 
-        // Botón de restar aldeanos
-        sf::RectangleShape subtractButton;
-        subtractButton.setSize(sf::Vector2f(30, 30));
-        subtractButton.setPosition(300, 120 + i * 40);
-        subtractButton.setFillColor(sf::Color(192, 192, 192));
-        subtractButtons.push_back(subtractButton);
+        //// Botón de restar aldeanos
+        //sf::RectangleShape subtractButton;
+        //subtractButton.setSize(sf::Vector2f(30, 30));
+        //subtractButton.setPosition(300, 120 + i * 40);
+        //subtractButton.setFillColor(sf::Color(192, 192, 192));
+        //subtractButtons.push_back(subtractButton);
 
-        // Botón de sumar aldeanos
-        sf::RectangleShape addButton;
-        addButton.setSize(sf::Vector2f(30, 30));
-        addButton.setPosition(400, 120 + i * 40);
-        addButton.setFillColor(sf::Color(192, 192, 192));
-        addButtons.push_back(addButton);
+        //// Botón de sumar aldeanos
+        //sf::RectangleShape addButton;
+        //addButton.setSize(sf::Vector2f(30, 30));
+        //addButton.setPosition(400, 120 + i * 40);
+        //addButton.setFillColor(sf::Color(192, 192, 192));
+        //addButtons.push_back(addButton);
     }
 }
 
@@ -129,57 +146,56 @@ void JobMenuState::updateResourceList()
     }
 }
 
-void JobMenuState::handleInput(sf::Event event)
-{
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-        sf::Vector2i mousePos = sf::Mouse::getPosition();
-        handleMouseClick(mousePos);
-    }
-}
-
-void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
-{
-    // Interactuar con los botones de aldeanos
-    for (int i = 0; i < addButtons.size(); ++i)
-    {
-        if (addButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
-        {
-            this->jobs.assignVillagers(static_cast<JobTypes>(i));
-            updateJobList();
-        }
-        else if (subtractButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
-        {
-            this->jobs.removeVillagers(static_cast<JobTypes>(i));
-            updateJobList();
-        }
-    }
-
-    // Interacción con el botón de recolectar recursos
-    if (collectButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-    {
-        this->jobs.collectResources(resources);
-        updateResourceList();
-    }
-
-    // Interacción con el botón de desbloquear trabajos
-    if (unlockButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-    {
-        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
-        {
-            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
-            {
-                this->jobs.unlockJob(static_cast<JobTypes>(i));
-                updateJobList();
-                break;
-            }
-        }
-    }
-}
+//void JobMenuState::handleInput(sf::Event event)
+//{
+//    if (event.type == sf::Event::MouseButtonPressed)
+//    {
+//        sf::Vector2i mousePos = sf::Mouse::getPosition();
+//        handleMouseClick(mousePos);
+//    }
+//}
+//
+//void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
+//{
+//    // Interactuar con los botones de aldeanos
+//    for (int i = 0; i < addButtons.size(); ++i)
+//    {
+//        if (addButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
+//        {
+//            this->jobs.assignVillagers(static_cast<JobTypes>(i));
+//            updateJobList();
+//        }
+//        else if (subtractButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
+//        {
+//            this->jobs.removeVillagers(static_cast<JobTypes>(i));
+//            updateJobList();
+//        }
+//    }
+//
+//    // Interacción con el botón de recolectar recursos
+//    if (collectButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+//    {
+//        this->jobs.collectResources(resources);
+//        updateResourceList();
+//    }
+//
+//    // Interacción con el botón de desbloquear trabajos
+//    if (unlockButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
+//    {
+//        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
+//        {
+//            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
+//            {
+//                this->jobs.unlockJob(static_cast<JobTypes>(i));
+//                updateJobList();
+//                break;
+//            }
+//        }
+//    }
+//}
 
 void JobMenuState::updateInput(const float& _dt)
 {
-    this->keyPressTimer += _dt;
     if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
     {
         this->keyCode = "CLOSE";
@@ -190,7 +206,6 @@ void JobMenuState::updateInput(const float& _dt)
         {
             keyCode = " ";
             this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-            this->keyPressTimer = 0.f;
         }
     }
    
@@ -204,7 +219,6 @@ void JobMenuState::updateInput(const float& _dt)
         {
             keyCode = " ";
             this->states->pop();
-            this->keyPressTimer = 0.f;
         }
     }
     
@@ -232,7 +246,7 @@ void JobMenuState::render(sf::RenderTarget* target)
         target->draw(jobText);
     }
 
-    for (const auto& subtractButton : subtractButtons)
+    /*for (const auto& subtractButton : subtractButtons)
     {
         target->draw(subtractButton);
     }
@@ -240,7 +254,7 @@ void JobMenuState::render(sf::RenderTarget* target)
     for (const auto& addButton : addButtons)
     {
         target->draw(addButton);
-    }
+    }*/
 
     // Dibujar recursos
     for (const auto& resourceText : resourceTexts)
@@ -253,7 +267,7 @@ void JobMenuState::render(sf::RenderTarget* target)
         target->draw(amountText);
     }
 
-    // Dibujar botones
-    target->draw(this->collectButton);
-    target->draw(this->unlockButton);
+    //// Dibujar botones
+    //target->draw(this->collectButton);
+    //target->draw(this->unlockButton);
 }

@@ -22,11 +22,9 @@ protected:
 	sf::RenderWindow* window;
 	std::unordered_map<std::string, sf::Keyboard::Key>* supportedKeys;
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;
-	float keyPressTimer;
-	float keyPressDelay;
+	std::string keyCode{ "" };
 	bool quit;
 	sf::Sprite background;
-	std::string keyCode{ "" };
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;

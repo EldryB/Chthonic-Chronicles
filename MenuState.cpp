@@ -3,8 +3,6 @@
 void MenuState::initVariables()
 {
 	this->selectedButtonIndex = 0;
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
 	this->keyCode = " ";
 }
 
@@ -76,9 +74,6 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
-	
-	//Movimiento en el menú
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
 		this->keyCode = "MOVE_UP";
@@ -91,7 +86,6 @@ void MenuState::updateInput(const float& _dt)
 			if (this->selectedButtonIndex < this->buttons.size() - 1)
 			{
 				++this->selectedButtonIndex;
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
@@ -108,12 +102,10 @@ void MenuState::updateInput(const float& _dt)
 			if (this->selectedButtonIndex > 0)
 			{
 				--this->selectedButtonIndex;
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
 
-	//Cerrar Menú
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{
 		this->keyCode = "CLOSE";
@@ -127,7 +119,6 @@ void MenuState::updateInput(const float& _dt)
 		}
 	}
 	
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
 	{
 		this->keyCode = "SELECT";
@@ -155,7 +146,6 @@ void MenuState::updateInput(const float& _dt)
 					this->dataManagement.savePlayerToFile(player, "player.json");
 					this->states->pop();
 				}
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
