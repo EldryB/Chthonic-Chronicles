@@ -98,7 +98,6 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
 	this->timeSinceLastUpdate += _dt;
 	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
 	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));

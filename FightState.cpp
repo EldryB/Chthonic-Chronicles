@@ -12,8 +12,6 @@ void FightState::initKeybinds()
 
 void FightState::initVariables()
 {
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
 	this->keyCode = " ";
 }	
 
@@ -77,8 +75,6 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
 		this->keyCode = "ACTION";
@@ -93,8 +89,6 @@ void FightState::updateInput(const float& _dt)
 			this->player->setStage(CurrentStage::MainStage);
 		}
 	}
-
-	this->keyPressTimer = 0.f;
 }
 
 void FightState::update(const float& _dt)

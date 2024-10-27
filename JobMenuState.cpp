@@ -11,6 +11,16 @@ void JobMenuState::initTextures()
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
     }
+
+    if (!this->textures["AddButton"].loadFromFile("assets/textures/addButton.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ADD_BUTTON_TEXTURE!";
+    }
+
+    if (!this->textures["SubstractButton"].loadFromFile("assets/textures/substractButton.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
+    }
 }
 
 void JobMenuState::initBackground()
@@ -33,7 +43,8 @@ void JobMenuState::initKeybinds()
 
 void JobMenuState::initButtons()
 {
-
+    this->buttons["ADD"] = new Button(10.f, 512.5f, this->textures["AddButton"], &this->font, "");
+    this->buttons["SUBSTRACT"] = new Button(250.f, 512.5f, this->textures["SubstractButton"], &this->font, "");
 }
 
 void JobMenuState::initFonts()
@@ -59,9 +70,12 @@ void JobMenuState::initFonts()
 JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Jobs& jobs, Resources& resources, Fighter* _p)
     : jobs(jobs), resources(resources) ,State(_window, _supportedKeys, _states)
 {
-    this->initKeybinds();
     this->initVariables();
+    this->initTextures();
+    this->initBackground();
     this->initFonts();
+    this->initKeybinds();
+    this->initButtons();
 
     // Inicializa las listas de trabajos y recursos
     this->updateJobList();
@@ -83,7 +97,10 @@ JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::st
 
 JobMenuState::~JobMenuState()
 {
-
+    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+    {
+        delete it->second;
+    }
 }
 
 void JobMenuState::updateJobList()
@@ -224,10 +241,37 @@ void JobMenuState::updateInput(const float& _dt)
     
 }
 
+void JobMenuState::updateButtons()
+{
+    for (auto& it : this->buttons)
+    {
+        it.second->update(this->mousePosView);
+    }
+
+    if (this->buttons["ADD"]->getButtonState() == ButtonState::Pressed)
+    {
+
+    }
+
+    if (this->buttons["SUBSTRACT"]->getButtonState() == ButtonState::Pressed)
+    {
+
+    }
+}
+
 void JobMenuState::update(const float& _dt)
 {
     this->updateMousePositions();
     this->updateInput(_dt);
+    this->updateButtons();
+}
+
+void JobMenuState::renderButtons(sf::RenderTarget* target)
+{
+    for (auto& it : this->buttons)
+    {
+        it.second->render(target);
+    }
 }
 
 void JobMenuState::render(sf::RenderTarget* target)
@@ -236,6 +280,10 @@ void JobMenuState::render(sf::RenderTarget* target)
     {
         target = this->window;
     }
+
+    target->draw(this->background);
+
+    this->renderButtons(target);
 
     target->draw(this->title);
     target->draw(this->villagersAvailable);
