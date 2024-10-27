@@ -28,6 +28,8 @@ public:
 
 	void setTexture(const sf::Texture& _texture);
 
+	void setTextCharacterSize(unsigned int size);
+	
 	void setTextFillColor(const sf::Color& color);
 
 	void update(const sf::Vector2f mousePos);

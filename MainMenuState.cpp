@@ -171,7 +171,6 @@ void MainMenuState::updateButtons()
 		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
 	}
-
 }
 
 void MainMenuState::update(const float& _dt)

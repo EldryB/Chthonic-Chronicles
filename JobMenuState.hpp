@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Jobs.hpp"
-#include "MenuState.hpp"
+#include "State.hpp"
 #include "Button.hpp"
 
 class JobMenuState :
@@ -26,6 +26,8 @@ public:
 
 private:
     sf::Font font;
+    std::vector<Button*> addButtons;
+    std::vector<Button*> substractButtons;
     std::unordered_map<std::string, Button*> buttons;
     Jobs& jobs;
     Resources& resources;
@@ -49,9 +51,9 @@ private:
 
     void initButtons();
 
-    void updateJobList();
+    void initJobList();
 
-    void updateResourceList();
+    void initResourceList();
 
     void handleMouseClick(sf::Vector2i mousePos);
 };
