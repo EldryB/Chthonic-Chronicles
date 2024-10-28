@@ -27,6 +27,11 @@ void JobMenuState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
+    if (!this->textures["SubstractButtonHover"].loadFromFile("assets/textures/substractButtonHover.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
+    }
+
     if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
@@ -280,9 +285,14 @@ void JobMenuState::updateButtons()
             this->addButtons[i]->setTexture(this->textures["AddButtonHover"]);
         }
 
-        if (this->substractButtons[i]->getButtonState() == ButtonState::Idle || this->substractButtons[i]->getButtonState() == ButtonState::Hover)
+        if (this->substractButtons[i]->getButtonState() == ButtonState::Idle)
         {
             this->substractButtons[i]->setTexture(this->textures["SubstractButton"]);
+        }
+
+        if (this->substractButtons[i]->getButtonState() == ButtonState::Hover)
+        {
+            this->substractButtons[i]->setTexture(this->textures["SubstractButtonHover"]);
         }
 
         if (this->addButtons[i]->getButtonState() == ButtonState::Pressed)
