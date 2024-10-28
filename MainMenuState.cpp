@@ -48,8 +48,8 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["NEW_GAME_STATE"] = new Button(100.f, 300.f, this->textures["MainMenuButtonIdle"], &this->font, "New Game");
-	this->buttons["LOAD_GAME_STATE"] = new Button(100.f, 400.f, this->textures["MainMenuButtonIdle"], &this->font, "Load Game");
+	this->buttons["NEW_GAME_STATE"] = new Button(100.f, 200.f, this->textures["MainMenuButtonIdle"], &this->font, "NEW GAME");
+	this->buttons["LOAD_GAME_STATE"] = new Button(100.f, 400.f, this->textures["MainMenuButtonIdle"], &this->font, "LOAD GAME");
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -142,19 +142,13 @@ void MainMenuState::updateButtons()
 		if (it.second->getButtonState() == ButtonState::Idle)
 		{
 			it.second->setTexture(this->textures["MainMenuButtonIdle"]);
-			it.second->setTextFillColor(sf::Color::White);
+			it.second->setTextFillColor(sf::Color(21, 26, 38));
 		}
 
-		if (it.second->getButtonState() == ButtonState::Hover)
+		if (it.second->getButtonState() == ButtonState::Hover || index == this->selectedButtonIndex)
 		{
 			it.second->setTexture(this->textures["MainMenuButtonHover"]);
-			it.second->setTextFillColor(sf::Color(150, 104, 28));
-		}
-
-		if (index == this->selectedButtonIndex)
-		{
-			it.second->setTexture(this->textures["MainMenuButtonHover"]);
-			it.second->setTextFillColor(sf::Color(150, 104, 28));
+			it.second->setTextFillColor(sf::Color(96, 60, 3));
 		}
 
 		++index;

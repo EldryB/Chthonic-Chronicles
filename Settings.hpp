@@ -23,9 +23,9 @@ struct Settings
 	static const std::string ASSETS_PATH;
 	static const std::string TEXTURES_PATH;
 
-	static constexpr int WINDOW_WIDTH{ 1080 };
+	static constexpr int WINDOW_WIDTH{ 1020 };
 	static constexpr int WINDOW_HEIGHT{ 617 };
-	static constexpr int VIRTUAL_WIDTH{ 1080 * 4 / 5 };
+	static constexpr int VIRTUAL_WIDTH{ 1020 * 4 / 5 };
 	static constexpr int VIRTUAL_HEIGHT{ 617 * 4 / 5 };
 	static constexpr float MOVEMENT_SPEED{ 120.5f };
 };

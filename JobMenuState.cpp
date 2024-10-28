@@ -22,12 +22,12 @@ void JobMenuState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButton.png"))
+    if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
     }
 
-    if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/bro.png"))
+    if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
     }
@@ -36,7 +36,6 @@ void JobMenuState::initTextures()
 void JobMenuState::initBackground()
 {
     this->background.setTexture(this->textures["Background"]);
-    this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
 void JobMenuState::initFonts()
@@ -49,13 +48,13 @@ void JobMenuState::initFonts()
     this->title.setFont(font);
     this->title.setString("Settlement Management");
     this->title.setCharacterSize(36);
-    this->title.setFillColor(sf::Color::White);
-    this->title.setPosition(100, 20);
+    this->title.setFillColor(sf::Color(206, 185, 141));
+    this->title.setPosition(100, 30);
 
     this->villagersAvailable.setFont(this->font);
     this->villagersAvailable.setCharacterSize(24);
-    this->villagersAvailable.setFillColor(sf::Color::White);
-    this->villagersAvailable.setPosition(100, 80);
+    this->villagersAvailable.setFillColor(sf::Color(206, 185, 141));
+    this->villagersAvailable.setPosition(500, 80);
 }
 
 void JobMenuState::initKeybinds()
@@ -72,8 +71,8 @@ void JobMenuState::initKeybinds()
 
 void JobMenuState::initButtons()
 {
-    this->buttons["COLLECT"] = new Button(800.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "Colect");
-    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "Unlock");
+    this->buttons["COLLECT"] = new Button(800.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "COLECT");
+    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UNLOCK");
      
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
@@ -126,7 +125,7 @@ void JobMenuState::initJobList()
         jobText.setFont(font);
         jobText.setString(jobs.getJobName(static_cast<JobTypes>(i)));
         jobText.setCharacterSize(20);
-        jobText.setFillColor(sf::Color::White);
+        jobText.setFillColor(sf::Color(206, 185, 141));
         jobText.setPosition(100.f, 70.f + i * 40);
         jobTexts.push_back(jobText);
     }
