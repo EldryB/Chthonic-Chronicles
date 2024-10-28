@@ -17,6 +17,11 @@ void JobMenuState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ADD_BUTTON_TEXTURE!";
     }
 
+    if (!this->textures["AddButtonHover"].loadFromFile("assets/textures/addButtonHover.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ADD_BUTTON_TEXTURE!";
+    }
+
     if (!this->textures["SubstractButton"].loadFromFile("assets/textures/substractButton.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
@@ -45,7 +50,7 @@ void JobMenuState::initFonts()
         throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
     }
 
-    this->title.setFont(font);
+    this->title.setFont(this->font);
     this->title.setString("Settlement Management");
     this->title.setCharacterSize(36);
     this->title.setFillColor(sf::Color(206, 185, 141));
@@ -262,9 +267,17 @@ void JobMenuState::updateButtons()
 
     for (size_t i = 0; i < this->addButtons.size(); ++i)
     {
-        if (this->addButtons[i]->getButtonState() == ButtonState::Idle || this->addButtons[i]->getButtonState() == ButtonState::Hover)
+        this->addButtons[i]->update(this->mousePosView);
+        this->substractButtons[i]->update(this->mousePosView);
+        
+        if (this->addButtons[i]->getButtonState() == ButtonState::Idle)
         {
             this->addButtons[i]->setTexture(this->textures["AddButton"]);
+        }
+
+        if (this->addButtons[i]->getButtonState() == ButtonState::Hover)
+        {
+            this->addButtons[i]->setTexture(this->textures["AddButtonHover"]);
         }
 
         if (this->substractButtons[i]->getButtonState() == ButtonState::Idle || this->substractButtons[i]->getButtonState() == ButtonState::Hover)
