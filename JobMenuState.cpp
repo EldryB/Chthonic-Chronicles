@@ -76,6 +76,19 @@ void JobMenuState::initFonts()
     this->villagersAvailable.setCharacterSize(24);
     this->villagersAvailable.setFillColor(sf::Color(206, 185, 141));
     this->villagersAvailable.setPosition(500, 80);
+
+    this->backgroundTooltip.setTexture(this->textures["MenuButtonIdle"]);
+    this->backgroundTooltip.setPosition(700.f, 450.f);
+
+    this->tooltip.setFont(this->font);
+    this->tooltip.setString(" ");
+    this->tooltip.setCharacterSize(12);
+    this->tooltip.setFillColor(sf::Color::Black);
+    this->tooltip.setPosition
+    (
+        this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - this->backgroundTooltip.getGlobalBounds().width / 2.7f,
+        this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.5f) - this->backgroundTooltip.getGlobalBounds().height / 23.f
+    );
 }
 
 void JobMenuState::initKeybinds()
@@ -192,6 +205,36 @@ void JobMenuState::initResourceList()
     }
 }
 
+std::string JobMenuState::getTooltipMessage(JobTypes _jobs)
+{
+    switch (_jobs)
+    {
+    case JobTypes::coinMaker: return "CoinMaker\nNecesita 1 oro\nProduce 11 monedas";
+        
+    case JobTypes::farmer:return "Farmer\nNo necesita nada\nProduce 1 trigo";
+       
+    case JobTypes::baker:return "Baker\nNecesita 2 trigos\nProduce 1 pan";
+       
+    case JobTypes::tanner:return "Tanner\nNecesita 2 panes\nProduce 1 cuero";
+       
+    case JobTypes::weaver:return "Weaver\nNecesita 1 pan\nProduce 1 ropa";
+      
+    case JobTypes::silkFarmer:return "SilkFarmer\nNecesita 15 ropa\nProduce 1 seda";
+ 
+    case JobTypes::stoneMason:return "StoneMason\nNecesita 1 pan\nProduce 3 piedras";
+
+    case JobTypes::woodCutter:return "WoodCutter\nNecesita 1 pan\nProduce 3 maderas";
+
+    case JobTypes::ironMiner:return "IronMiner\nNecesita 2 pan\nProduce 1 hierro";
+
+    case JobTypes::goldMiner:return "GoldMiner\nNecesita 10 pan\nProduce 1 oro";
+
+    default:
+        break;
+    }
+    return std::string();
+}
+
 void JobMenuState::updateInput(const float& _dt)
 {   
     if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
@@ -281,12 +324,13 @@ void JobMenuState::updateButtons()
         {
             this->collectButtons[i]->setTexture(this->textures["CollectButton"]);
         }
-
+       
         if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
         {
             this->collectButtons[i]->setTexture(this->textures["CollectButtonHover"]);
+            this->tooltip.setString(this->getTooltipMessage(static_cast<JobTypes>(i)));
         }
-
+ 
         if (this->addButtons[i]->getButtonState() == ButtonState::Pressed)
         {
             this->jobs.assignVillagers(static_cast<JobTypes>(i));
@@ -341,6 +385,14 @@ void JobMenuState::render(sf::RenderTarget* target)
 
     target->draw(this->title);
     target->draw(this->villagersAvailable);
+    for (size_t i = 0; i < addButtons.size(); i++)
+    {
+        if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
+        {
+            target->draw(this->backgroundTooltip);
+            target->draw(this->tooltip);
+        }
+    }
 
     for (const auto& jobText : jobTexts)
     {

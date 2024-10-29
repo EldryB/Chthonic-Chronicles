@@ -41,6 +41,8 @@ private:
     std::vector<sf::Text> jobAmount;  // Cantidad de trabajadores
     std::vector<sf::Text> resourceTexts;  // Texto de recursos
     std::vector<sf::Text> amountTexts;  // Cantidades de recursos
+    sf::Text tooltip;
+    sf::Sprite backgroundTooltip;
 
     void initVariables();
     
@@ -58,6 +60,6 @@ private:
 
     void initResourceList();
 
-    void handleMouseClick(sf::Vector2i mousePos);
+    std::string getTooltipMessage(JobTypes _jobs);
 };
 
