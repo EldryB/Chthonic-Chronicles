@@ -42,5 +42,6 @@ private:
 	sf::Sprite sprite;
 	sf::Font* font;
 	sf::Text text;
+	std::string keyCode;
 };
 

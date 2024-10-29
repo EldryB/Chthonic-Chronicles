@@ -46,5 +46,12 @@ void Resources::addResource(ResourceTypes resource, int amount)
 
 void Resources::subtractResource(ResourceTypes resource, int amount)
 {
-    setResourceAmount(resource, getResourceAmount(resource) - amount);
+    if (getResourceAmount(resource) - amount >= 0)
+    {
+        setResourceAmount(resource, getResourceAmount(resource) - amount);
+    }
+    else
+    {
+        //nada por el momento
+    }
 }

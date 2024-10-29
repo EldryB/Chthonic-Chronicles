@@ -28,14 +28,17 @@ private:
     sf::Font font;
     std::vector<Button*> addButtons;
     std::vector<Button*> substractButtons;
+    std::vector<Button*> collectButtons;
     std::unordered_map<std::string, Button*> buttons;
     Jobs& jobs;
     Resources& resources;
     Fighter* player;
 
+
     sf::Text title;
     sf::Text villagersAvailable;  // Texto para aldeanos disponibles
     std::vector<sf::Text> jobTexts;  // Texto de trabajos
+    std::vector<sf::Text> jobAmount;  // Cantidad de trabajadores
     std::vector<sf::Text> resourceTexts;  // Texto de recursos
     std::vector<sf::Text> amountTexts;  // Cantidades de recursos
 

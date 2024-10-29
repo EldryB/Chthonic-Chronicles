@@ -72,25 +72,41 @@ void Jobs::processJob(Resources& resources, JobTypes job, ResourceTypes inputRes
     }
 }
 
-void Jobs::collectResources(Resources& resources)
+void Jobs::collectResources(Resources& resources, JobTypes _jobs)
 {
-    processJob(resources, JobTypes::coinMaker, ResourceTypes::gold, 1, ResourceTypes::coin, 11);
+    switch (_jobs)
+    {
+    case JobTypes::coinMaker:  processJob(resources, JobTypes::coinMaker, ResourceTypes::gold, 1, ResourceTypes::coin, 11);
+        break;
 
-    processJob(resources, JobTypes::farmer, ResourceTypes::coin, 0, ResourceTypes::wheat, 1);
+    case JobTypes::farmer:  processJob(resources, JobTypes::farmer, ResourceTypes::coin, 0, ResourceTypes::wheat, 1);
+        break;
 
-    processJob(resources, JobTypes::baker, ResourceTypes::wheat, 2, ResourceTypes::bread, 1);
+    case JobTypes::baker:  processJob(resources, JobTypes::baker, ResourceTypes::wheat, 2, ResourceTypes::bread, 1);
+        break;
 
-    processJob(resources, JobTypes::tanner, ResourceTypes::bread, 2, ResourceTypes::leather, 1);
+    case JobTypes::tanner:  processJob(resources, JobTypes::tanner, ResourceTypes::bread, 2, ResourceTypes::leather, 1);
+        break;
 
-    processJob(resources, JobTypes::weaver, ResourceTypes::bread, 1, ResourceTypes::cloth, 1);
+    case JobTypes::weaver:  processJob(resources, JobTypes::weaver, ResourceTypes::bread, 1, ResourceTypes::cloth, 1);
+        break;
 
-    processJob(resources, JobTypes::silkFarmer, ResourceTypes::cloth, 15, ResourceTypes::silk, 1);
+    case JobTypes::silkFarmer:  processJob(resources, JobTypes::silkFarmer, ResourceTypes::cloth, 15, ResourceTypes::silk, 1);
+        break;
 
-    processJob(resources, JobTypes::stoneMason, ResourceTypes::bread, 1, ResourceTypes::stone, 3);
+    case JobTypes::stoneMason:  processJob(resources, JobTypes::stoneMason, ResourceTypes::bread, 1, ResourceTypes::stone, 3);
+        break;
 
-    processJob(resources, JobTypes::woodCutter, ResourceTypes::bread, 1, ResourceTypes::wood, 3);
+    case JobTypes::woodCutter:  processJob(resources, JobTypes::woodCutter, ResourceTypes::bread, 1, ResourceTypes::wood, 3);
+        break;
 
-    processJob(resources, JobTypes::ironMiner, ResourceTypes::bread, 2, ResourceTypes::iron, 1);
+    case JobTypes::ironMiner:  processJob(resources, JobTypes::ironMiner, ResourceTypes::bread, 2, ResourceTypes::iron, 1);
+        break;
 
-    processJob(resources, JobTypes::goldMiner, ResourceTypes::bread, 10, ResourceTypes::gold, 1);
+    case JobTypes::goldMiner:  processJob(resources, JobTypes::goldMiner, ResourceTypes::bread, 10, ResourceTypes::gold, 1);
+        break;
+
+    default:
+        break;
+    }
 }

@@ -32,6 +32,16 @@ void JobMenuState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
+    if (!this->textures["CollectButton"].loadFromFile("assets/textures/collectButton.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
+    }
+
+    if (!this->textures["CollectButtonHover"].loadFromFile("assets/textures/collectButtonHover.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
+    }
+
     if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
@@ -81,13 +91,13 @@ void JobMenuState::initKeybinds()
 
 void JobMenuState::initButtons()
 {
-    this->buttons["COLLECT"] = new Button(800.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "COLECT");
     this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UNLOCK");
      
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
         this->addButtons.push_back(new Button(300.f, 55.f + i * 40, this->textures["AddButton"], &this->font, ""));
         this->substractButtons.push_back(new Button(340.f, 55.f + i * 40, this->textures["SubstractButton"], &this->font, ""));
+        this->collectButtons.push_back(new Button(380.f, 55.f + i * 40, this->textures["CollectButton"], &this->font, ""));
     }
 }
 
@@ -123,11 +133,18 @@ JobMenuState::~JobMenuState()
         delete button;
     }
     this->substractButtons.clear();
+
+    for (auto& button : this->collectButtons)
+    {
+        delete button;
+    }
+    this->collectButtons.clear();
 }
 
 void JobMenuState::initJobList()
 {
     this->jobTexts.clear();
+    this->jobAmount.clear();
 
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
@@ -138,6 +155,14 @@ void JobMenuState::initJobList()
         jobText.setFillColor(sf::Color(206, 185, 141));
         jobText.setPosition(100.f, 70.f + i * 40);
         jobTexts.push_back(jobText);
+
+        sf::Text amountText;
+        amountText.setFont(font);
+        amountText.setString(std::to_string(jobs.getJobAmount(static_cast<JobTypes>(i))));
+        amountText.setCharacterSize(20);
+        amountText.setFillColor(sf::Color(206, 185, 141));
+        amountText.setPosition(450.f, 70.f + i * 40);
+        jobAmount.push_back(amountText);
     }
 }
 
@@ -165,54 +190,6 @@ void JobMenuState::initResourceList()
         amountTexts.push_back(amountText);
     }
 }
-
-//void JobMenuState::handleInput(sf::Event event)
-//{
-//    if (event.type == sf::Event::MouseButtonPressed)
-//    {
-//        sf::Vector2i mousePos = sf::Mouse::getPosition();
-//        handleMouseClick(mousePos);
-//    }
-//}
-//
-//void JobMenuState::handleMouseClick(sf::Vector2i mousePos)
-//{
-//    // Interactuar con los botones de aldeanos
-//    for (int i = 0; i < addButtons.size(); ++i)
-//    {
-//        if (addButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
-//        {
-//            this->jobs.assignVillagers(static_cast<JobTypes>(i));
-//            updateJobList();
-//        }
-//        else if (subtractButtons[i].getGlobalBounds().contains(mousePos.x, mousePos.y))
-//        {
-//            this->jobs.removeVillagers(static_cast<JobTypes>(i));
-//            updateJobList();
-//        }
-//    }
-//
-//    // Interacción con el botón de recolectar recursos
-//    if (collectButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-//    {
-//        this->jobs.collectResources(resources);
-//        updateResourceList();
-//    }
-//
-//    // Interacción con el botón de desbloquear trabajos
-//    if (unlockButton.getGlobalBounds().contains(mousePos.x, mousePos.y))
-//    {
-//        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
-//        {
-//            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
-//            {
-//                this->jobs.unlockJob(static_cast<JobTypes>(i));
-//                updateJobList();
-//                break;
-//            }
-//        }
-//    }
-//}
 
 void JobMenuState::updateInput(const float& _dt)
 {   
@@ -250,13 +227,6 @@ void JobMenuState::updateButtons()
             it.second->setTextFillColor(sf::Color(96, 60, 3));
         }
     }
-
-    if (this->buttons["COLLECT"]->getButtonState() == ButtonState::Pressed)
-    {
-        this->jobs.collectResources(resources);
-        this->initResourceList();
-    }
-
     if (this->buttons["UNLOCK"]->getButtonState() == ButtonState::Pressed)
     {
         for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
@@ -265,7 +235,17 @@ void JobMenuState::updateButtons()
             {
                 this->jobs.unlockJob(static_cast<JobTypes>(i));
                 this->initJobList();
-                break;
+                this->initResourceList();
+            }
+        }
+
+        for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
+        {
+            if (this->resources.getResourceAmount(static_cast<ResourceTypes>(i)) == -1)
+            {
+                this->resources.unlockResource(static_cast<ResourceTypes>(i));
+                this->initJobList();
+                this->initResourceList();
             }
         }
     }
@@ -274,6 +254,7 @@ void JobMenuState::updateButtons()
     {
         this->addButtons[i]->update(this->mousePosView);
         this->substractButtons[i]->update(this->mousePosView);
+        this->collectButtons[i]->update(this->mousePosView);
         
         if (this->addButtons[i]->getButtonState() == ButtonState::Idle)
         {
@@ -295,6 +276,16 @@ void JobMenuState::updateButtons()
             this->substractButtons[i]->setTexture(this->textures["SubstractButtonHover"]);
         }
 
+        if (this->collectButtons[i]->getButtonState() == ButtonState::Idle)
+        {
+            this->collectButtons[i]->setTexture(this->textures["CollectButton"]);
+        }
+
+        if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
+        {
+            this->collectButtons[i]->setTexture(this->textures["CollectButtonHover"]);
+        }
+
         if (this->addButtons[i]->getButtonState() == ButtonState::Pressed)
         {
             this->jobs.assignVillagers(static_cast<JobTypes>(i));
@@ -304,6 +295,12 @@ void JobMenuState::updateButtons()
         {
             this->jobs.removeVillagers(static_cast<JobTypes>(i));
             this->initJobList();
+        }
+        else if (this->collectButtons[i]->getButtonState() == ButtonState::Pressed)
+        {
+            this->jobs.collectResources(resources,static_cast<JobTypes>(i));
+            this->initJobList();
+            this->initResourceList();
         }
     }
 }
@@ -326,6 +323,7 @@ void JobMenuState::renderButtons(sf::RenderTarget* target)
     {
         this->addButtons[i]->render(target);
         this->substractButtons[i]->render(target);
+        this->collectButtons[i]->render(target);
     }
 }
 
@@ -346,6 +344,11 @@ void JobMenuState::render(sf::RenderTarget* target)
     for (const auto& jobText : jobTexts)
     {
         target->draw(jobText);
+    }
+
+    for (const auto& amount : jobAmount)
+    {
+        target->draw(amount);
     }
 
     for (const auto& resourceText : resourceTexts)

@@ -16,7 +16,7 @@ Button::Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::s
 		this->sprite.getPosition().x + (this->sprite.getGlobalBounds().width / 2.f) - this->sprite.getGlobalBounds().width / 4.f,
 		this->sprite.getPosition().y + (this->sprite.getGlobalBounds().height / 2.f) - this->sprite.getGlobalBounds().height / 16.f
 	);
-
+	this->keyCode = " ";
 }
 
 Button::~Button()
@@ -84,7 +84,15 @@ void Button::update(const sf::Vector2f mousePos)
 
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			this->buttonState = ButtonState::Pressed;
+			this->keyCode = "LEFT";
+		}
+		else
+		{
+			if (this->keyCode == "LEFT")
+			{
+				this->keyCode = " ";
+				this->buttonState = ButtonState::Pressed;
+			}
 		}
 	}
 }
