@@ -33,7 +33,6 @@ Game::Game()
     this->initWindow();
     this->initKeys();
     this->initStates();
-
 }
 
 Game::~Game()
@@ -47,15 +46,8 @@ Game::~Game()
     }
 }
 
-void Game::endApplication()
-{
-    std::cout << "Ending Application" << "\n";
-}
-
 void Game::updateDt()
 {
-    //Update the dt variable with the time it takes to update and render one frame.
-
     this->dt = this->dtClock.restart().asSeconds();
 }
 
@@ -87,7 +79,6 @@ void Game::update()
     }
     else
     {
-        this->endApplication();
         this->window->close();
     }
 }
@@ -96,7 +87,6 @@ void Game::render()
 {
     this->window->clear();
 
-    //render items
     if (!this->states.empty())
     {
         this->states.top()->render();
