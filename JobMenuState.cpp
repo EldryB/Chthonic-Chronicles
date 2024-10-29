@@ -3,6 +3,7 @@
 void JobMenuState::initVariables()
 {
     this->keyCode = " ";
+
 }
 
 void JobMenuState::initTextures()
