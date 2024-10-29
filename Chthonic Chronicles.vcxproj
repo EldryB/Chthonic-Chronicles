@@ -135,6 +135,8 @@
   <ItemGroup>
     <ClInclude Include="AnimationComponent.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Dice.hpp" />
+    <ClInclude Include="DiceAnimation.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Fighter.hpp" />
     <ClInclude Include="FightState.hpp" />
@@ -153,6 +155,8 @@
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Dice.cpp" />
+    <ClCompile Include="DiceAnimation.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FightState.cpp" />

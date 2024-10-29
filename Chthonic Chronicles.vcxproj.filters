@@ -63,6 +63,12 @@
     <ClInclude Include="JobMenuState.hpp">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="DiceAnimation.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,6 +117,12 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="JobMenuState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="DiceAnimation.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
