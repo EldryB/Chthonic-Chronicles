@@ -400,9 +400,13 @@ void JobMenuState::render(sf::RenderTarget* target)
         target->draw(jobText);
     }
 
-    for (const auto& amount : jobAmount)
+
+    if(this->jobAmount[0].getString() != "-1")
     {
-        target->draw(amount);
+        for (const auto& amount : jobAmount)
+        {
+            target->draw(amount);
+        }
     }
 
     for (const auto& resourceText : resourceTexts)
@@ -410,8 +414,11 @@ void JobMenuState::render(sf::RenderTarget* target)
         target->draw(resourceText);
     }
 
-    for (const auto& amountText : amountTexts)
+    if (this->amountTexts[0].getString() != "-1")
     {
-        target->draw(amountText);
+        for (const auto& amountText : amountTexts)
+        {
+            target->draw(amountText);
+        }
     }
 }
