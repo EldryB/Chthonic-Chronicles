@@ -36,11 +36,11 @@ private:
 
 
     sf::Text title;
-    sf::Text villagersAvailable;  // Texto para aldeanos disponibles
-    std::vector<sf::Text> jobTexts;  // Texto de trabajos
-    std::vector<sf::Text> jobAmount;  // Cantidad de trabajadores
-    std::vector<sf::Text> resourceTexts;  // Texto de recursos
-    std::vector<sf::Text> amountTexts;  // Cantidades de recursos
+    sf::Text villagersAvailable;
+    std::vector<sf::Text> jobTexts;
+    std::vector<sf::Text> jobAmount;
+    std::vector<sf::Text> resourceTexts;
+    std::vector<sf::Text> amountTexts;
     sf::Text tooltip;
     sf::Sprite backgroundTooltip;
 
