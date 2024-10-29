@@ -323,6 +323,7 @@ void JobMenuState::updateButtons()
         if (this->collectButtons[i]->getButtonState() == ButtonState::Idle)
         {
             this->collectButtons[i]->setTexture(this->textures["CollectButton"]);
+
         }
        
         if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
