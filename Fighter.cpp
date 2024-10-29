@@ -1,8 +1,9 @@
 #include "Fighter.hpp"
 
-void Fighter::initVariables()
+void Fighter::initVariables(float& _hp, float& _damage)
 {
-
+	this->hp = _hp;
+	this->damage = _damage;
 }
 
 void Fighter::initComponents()
@@ -10,10 +11,9 @@ void Fighter::initComponents()
 
 }
 
-Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name)
+Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _damage)
 {
-	this->initVariables();
-
+	this->initVariables(_hp, _damage);
 	this->setPosition(_x, _y);
 	this->name = _name;
 
@@ -33,6 +33,24 @@ Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _na
 Fighter::~Fighter()
 {
 
+}
+
+float Fighter::getHp()
+{
+	return this->hp;
+}
+
+float Fighter::getDamage()
+{
+	return this->damage;
+}
+
+void Fighter::setAttributes(float _x, float _y, std::string _name, float _hp, float _damage)
+{
+	this->sprite->setPosition(_x, _y);
+	this->name = _name;
+	this->hp = _hp;
+	this->damage = _damage;
 }
 
 void Fighter::update(const float& _dt)

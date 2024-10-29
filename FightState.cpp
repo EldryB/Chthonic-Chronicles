@@ -12,9 +12,8 @@ void FightState::initKeybinds()
 
 void FightState::initVariables()
 {
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
-}
+	this->keyCode = " ";
+}	
 
 void FightState::initFonts()
 {
@@ -47,7 +46,7 @@ void FightState::initFighters(Fighter* _p)
 	this->player = _p;
 	this->player->setLookingDirection(LookingDirection::Right);
 	this->player->setPosition(304.8f, 524.97f);
-	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1"));
+	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1", 500, 50));
 }
 
 void FightState::initBackground()
@@ -65,11 +64,8 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
-
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color::White);
-	text.setPosition(30, 30);
+	
+	this->player->setStage(CurrentStage::Combat);
 }
 
 FightState::~FightState()
@@ -79,15 +75,20 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
-		this->player->setPosition(870.77f, 323.92f);
-		this->states->pop();
+		this->keyCode = "ACTION";
 	}
-
-	this->keyPressTimer = 0.f;
+	else
+	{
+		if (this->keyCode == "ACTION")
+		{
+			this->keyCode = " ";
+			this->player->setPosition(870.77f, 323.92f);
+			this->states->pop();
+			this->player->setStage(CurrentStage::MainStage);
+		}
+	}
 }
 
 void FightState::update(const float& _dt)

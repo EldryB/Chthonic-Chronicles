@@ -57,7 +57,7 @@ private:
 	float deceleration;
 	LookingDirection lookingDirection;
 	sf::Vector2f velocity;
-	CurrentStage currentStage = CurrentStage::MainStage;
+	CurrentStage currentStage;
 
 };
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "State.hpp"
 #include "Jobs.hpp"
-#include"MenuState.hpp"
+#include "State.hpp"
+#include "Button.hpp"
 
 class JobMenuState :
     public State
@@ -10,20 +10,27 @@ class JobMenuState :
 public:
     JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Jobs& jobs, Resources& resources, Fighter* _p);
 
-    void handleInput(sf::Event event);
-
     virtual ~JobMenuState();
-
+    
+    void handleInput(sf::Event event);
+    
     void updateInput(const float& _dt);
 
+    void updateButtons();
+
     void update(const float& _dt);
+
+    void renderButtons(sf::RenderTarget* target = nullptr);
 
     void render(sf::RenderTarget* target = nullptr);
 
 private:
+    sf::Font font;
+    std::vector<Button*> addButtons;
+    std::vector<Button*> substractButtons;
+    std::unordered_map<std::string, Button*> buttons;
     Jobs& jobs;
     Resources& resources;
-    sf::Font font;
     Fighter* player;
 
     sf::Text title;
@@ -32,21 +39,21 @@ private:
     std::vector<sf::Text> resourceTexts;  // Texto de recursos
     std::vector<sf::Text> amountTexts;  // Cantidades de recursos
 
-    std::vector<sf::RectangleShape> addButtons;  // Botones para sumar aldeanos
-    std::vector<sf::RectangleShape> subtractButtons;  // Botones para restar aldeanos
+    void initVariables();
+    
+    void initTextures();
 
-    sf::RectangleShape collectButton;  // Botón de recolección
-    sf::RectangleShape unlockButton;  // Botón para desbloquear trabajos
-
+    void initBackground();
+    
+    void initFonts();
+    
     void initKeybinds();
 
-    void initVariables();
+    void initButtons();
 
-    void initFonts();
+    void initJobList();
 
-    void updateJobList();
-
-    void updateResourceList();
+    void initResourceList();
 
     void handleMouseClick(sf::Vector2i mousePos);
 };

@@ -3,14 +3,12 @@
 void MenuState::initVariables()
 {
 	this->selectedButtonIndex = 0;
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
 	this->keyCode = " ";
 }
 
 void MenuState::initTextures()
 {
-	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/pause.png"))
+	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/pauseMenu.png"))
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}
@@ -49,9 +47,13 @@ void MenuState::initKeybinds()
 
 void MenuState::initButtons()
 {
-	this->buttons["BACK_TO_THE_GAME"] = new Button(10.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "<- Back to\nthe game");
-	this->buttons["NO_SAVE_AND_QUIT"] = new Button(250.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "No save and\nquit");
-	this->buttons["SAVE_AND_QUIT"] = new Button(490.f, 512.5f, this->textures["MenuButtonIdle"], &this->font, "Save and\nquit");
+	this->buttons["BACK_TO_THE_GAME"] = new Button((Settings::WINDOW_WIDTH - this->textures["MenuButtonIdle"].getSize().x) / 2, 372.5f, this->textures["MenuButtonIdle"], &this->font, "<- BACK TO\nTHE GAME");
+	this->buttons["NO_SAVE_AND_QUIT"] = new Button(
+		520.f, 166.5f, 
+		this->textures["MenuButtonIdle"], &this->font, "NO SAVE AND\n    QUIT");
+	this->buttons["SAVE_AND_QUIT"] = new Button(
+		300.f, 166.5f,
+		this->textures["MenuButtonIdle"], &this->font, "SAVE AND\n    QUIT");
 }
 
 MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -76,9 +78,6 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
-	
-	//Movimiento en el menú
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
 	{
 		this->keyCode = "MOVE_UP";
@@ -91,7 +90,6 @@ void MenuState::updateInput(const float& _dt)
 			if (this->selectedButtonIndex < this->buttons.size() - 1)
 			{
 				++this->selectedButtonIndex;
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
@@ -108,12 +106,10 @@ void MenuState::updateInput(const float& _dt)
 			if (this->selectedButtonIndex > 0)
 			{
 				--this->selectedButtonIndex;
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
 
-	//Cerrar Menú
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{
 		this->keyCode = "CLOSE";
@@ -127,7 +123,6 @@ void MenuState::updateInput(const float& _dt)
 		}
 	}
 	
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
 	{
 		this->keyCode = "SELECT";
@@ -155,7 +150,6 @@ void MenuState::updateInput(const float& _dt)
 					this->dataManagement.savePlayerToFile(player, "player.json");
 					this->states->pop();
 				}
-				this->keyPressTimer = 0.f;
 			}
 		}
 	}
@@ -171,19 +165,13 @@ void MenuState::updateButtons()
 		if (it.second->getButtonState() == ButtonState::Idle)
 		{
 			it.second->setTexture(this->textures["MenuButtonIdle"]);
-			it.second->setTextFillColor(sf::Color::White);
+			it.second->setTextFillColor(sf::Color(21, 26, 38));
 		}
 
-		if (it.second->getButtonState() == ButtonState::Hover)
+		if (it.second->getButtonState() == ButtonState::Hover || index == this->selectedButtonIndex)
 		{
 			it.second->setTexture(this->textures["MenuButtonHover"]);
-			it.second->setTextFillColor(sf::Color(150, 104, 28));
-		}
-
-		if (index == this->selectedButtonIndex)
-		{
-			it.second->setTexture(this->textures["MenuButtonHover"]);
-			it.second->setTextFillColor(sf::Color(150, 104, 28));
+			it.second->setTextFillColor(sf::Color(96, 60, 3));
 		}
 
 		++index;

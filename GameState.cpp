@@ -1,10 +1,7 @@
 #include "GameState.hpp"
 
-
 void GameState::initVariables()
 {
-	this->keyPressTimer = 0.f;
-	this->keyPressDelay = 0.2f;
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
@@ -37,7 +34,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player");
+	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f);
 }
 
 void GameState::initBackground()
@@ -76,6 +73,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
+	this->player->setStage(CurrentStage::MainStage);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -88,8 +86,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
-	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName());
-	this->player->setPosition(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y);
+	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName(), _p->getHp(), _p->getDamage());
 }
 
 
@@ -101,7 +98,6 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& _dt)
 {
-	this->keyPressTimer += _dt;
 	this->timeSinceLastUpdate += _dt;
 	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
 	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
@@ -110,15 +106,15 @@ void GameState::updateInput(const float& _dt)
 	{
 		this->player->move(-1.f, 0.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
 	{
 		this->player->move(1.f, 0.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
 		this->player->move(0.f, -1.f, _dt);
 	}
-	else if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
 		this->player->move(0.f, 1.f, _dt);
 	}
@@ -134,7 +130,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new MenuState(this->window, this->supportedKeys, this->states, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 
@@ -149,7 +144,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 
@@ -163,7 +157,6 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-			this->keyPressTimer = 0.f;
 		}
 	}
 }
