@@ -2,6 +2,7 @@
 
 void LostFightState::initVariables()
 {
+	this->currentState = CurrentState::LostFight;
 	this->selectedButtonIndex = 0;
 	this->keyCode = " ";
 }
@@ -48,6 +49,7 @@ void LostFightState::initKeybinds()
 	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
 	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
+	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void LostFightState::initButtons()

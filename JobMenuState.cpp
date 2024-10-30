@@ -2,6 +2,7 @@
 
 void JobMenuState::initVariables()
 {
+    this->currentState = CurrentState::JobMenu;
     this->keyCode = " ";
 
 }
@@ -93,14 +94,8 @@ void JobMenuState::initFonts()
 
 void JobMenuState::initKeybinds()
 {
-    this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-    this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
-    this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
-    this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
-    this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
-    this->keybinds["ACTION"] = this->supportedKeys->at("E");
-    this->keybinds["Q"] = this->supportedKeys->at("Q");
-
+    this->keybinds["CLOSE"] = this->supportedKeys->at("Q");
+    this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void JobMenuState::initButtons()
@@ -237,13 +232,13 @@ std::string JobMenuState::getTooltipMessage(JobTypes _jobs)
 
 void JobMenuState::updateInput(const float& _dt)
 {   
-    if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+    if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
     {
-        this->keyCode = "Q";
+        this->keyCode = "CLOSE";
     }
     else
     {
-        if (keyCode == "Q")
+        if (keyCode == "CLOSE")
         {
             keyCode = " ";
             this->states->pop();

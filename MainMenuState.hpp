@@ -1,8 +1,6 @@
 #pragma once
 
 #include "GameState.hpp"
-#include "Button.hpp"
-#include "JsonManagement.hpp"
 
 class MainMenuState :
     public State

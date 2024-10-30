@@ -3,15 +3,13 @@
 void FightState::initKeybinds()
 {
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("A");
-	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("D");
-	this->keybinds["MOVE_UP"] = this->supportedKeys->at("W");
-	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
+	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void FightState::initVariables()
 {
+	this->currentState = CurrentState::Fight;
 	this->keyCode = " ";
 }	
 

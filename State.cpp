@@ -19,6 +19,11 @@ const bool& State::getQuit() const
 	return this->quit;
 }
 
+const CurrentState State::getCurrentState() const
+{
+	return this->currentState;
+}
+
 void State::endState()
 {
 	this->quit = true;

@@ -2,6 +2,7 @@
 
 void MenuState::initVariables()
 {
+	this->currentState = CurrentState::PauseMenu;
 	this->selectedButtonIndex = 0;
 	this->keyCode = " ";
 }
@@ -43,6 +44,7 @@ void MenuState::initKeybinds()
 	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
 	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
+	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void MenuState::initButtons()

@@ -2,6 +2,7 @@
 
 void MainMenuState::initVariables()
 {
+	this->currentState = CurrentState::MainMenu;
 	this->selectedButtonIndex = 0;
 	this->keyCode = " ";
 }
@@ -49,6 +50,7 @@ void MainMenuState::initKeybinds()
 	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
 	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
+	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void MainMenuState::initButtons()
@@ -79,6 +81,19 @@ MainMenuState::~MainMenuState()
 
 void MainMenuState::updateInput(const float& _dt)
 {
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CONTROLS"]))
+	{
+		this->keyCode = "CONTROLS";
+	}
+	else
+	{
+		if (this->keyCode == "CONTROLS")
+		{
+			this->keyCode = " ";
+			this->states->push(new ControlsState(this->window, this->supportedKeys, this->states));
+		}
+	}
+	
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
 		this->keyCode = "MOVE_LEFT";

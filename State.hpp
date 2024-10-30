@@ -10,6 +10,8 @@ public:
 
 	const bool& getQuit() const;
 
+	const CurrentState getCurrentState() const;
+
 	virtual void endState();
 
 	virtual void updateMousePositions();
@@ -18,6 +20,7 @@ public:
 	virtual void render(sf::RenderTarget* target = nullptr) = 0;
 
 protected:
+	CurrentState currentState;
 	std::stack<State*>* states;
 	sf::RenderWindow* window;
 	std::unordered_map<std::string, sf::Keyboard::Key>* supportedKeys;

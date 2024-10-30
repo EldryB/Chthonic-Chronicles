@@ -2,6 +2,7 @@
 
 void GameState::initVariables()
 {
+	this->currentState = CurrentState::Game;
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
@@ -16,7 +17,7 @@ void GameState::initKeybinds()
 	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("S");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
 	this->keybinds["Q"] = this->supportedKeys->at("Q");
-
+	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
 void GameState::initTextures()
@@ -52,14 +53,14 @@ void GameState::initFonts()
 
 	this->message.setFont(this->font);
 	this->message.setCharacterSize(20);
-	this->message.setFillColor(sf::Color::White);
+	this->message.setFillColor(sf::Color(206, 185, 141));
 	message.setPosition(650.f, 250.f);
-	std::string textString = "Presiona E para entrar";
+	std::string textString = "Press 'E' to enter";
 	message.setString(textString);
 
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color::White);
+	this->text.setFillColor(sf::Color(206, 185, 141));
 	text.setPosition(30, 30);
 }
 

@@ -21,6 +21,7 @@ void Game::initKeys()
     this->supportedKeys["Z"] = sf::Keyboard::Z;
     this->supportedKeys["E"] = sf::Keyboard::E;
     this->supportedKeys["Q"] = sf::Keyboard::Q;
+    this->supportedKeys["C"] = sf::Keyboard::C;
 }
 
 void Game::initStates()

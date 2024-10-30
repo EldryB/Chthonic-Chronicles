@@ -18,6 +18,16 @@ enum class CurrentStage
 	Combat
 };
 
+enum class CurrentState
+{
+	MainMenu,
+	Game,
+	PauseMenu,
+	JobMenu,
+	Fight,
+	LostFight
+};
+
 struct Settings
 {
 	static const std::string ASSETS_PATH;
