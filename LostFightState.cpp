@@ -1,35 +1,35 @@
-#include "MainMenuState.hpp"
+#include "LostFightState.hpp"
 
-void MainMenuState::initVariables()
+void LostFightState::initVariables()
 {
 	this->selectedButtonIndex = 0;
 	this->keyCode = " ";
 }
 
-void MainMenuState::initTextures()
+void LostFightState::initTextures()
 {
-	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/mainMenu.jpg"))
+	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/lostFight.jpg"))
 	{
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}
-	
+
 	if (!this->textures["MainMenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
 	{
-		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_IDLE_TEXTURE!";
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
 	}
 
 	if (!this->textures["MainMenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
 	{
-		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_HOVER_TEXTURE!";
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
 	}
 }
 
-void MainMenuState::initBackground()
+void LostFightState::initBackground()
 {
 	this->background.setTexture(this->textures["Background"]);
 }
 
-void MainMenuState::initFonts()
+void LostFightState::initFonts()
 {
 	if (!this->font.loadFromFile("assets/fonts/font.ttf"))
 	{
@@ -37,28 +37,26 @@ void MainMenuState::initFonts()
 	}
 
 	this->title.setFont(this->font);
-	this->title.setString("CHTHONIC CHRONICLES");
+	this->title.setString("YOU LOST...");
 	this->title.setCharacterSize(42);
 	this->title.setFillColor(sf::Color(206, 185, 141));
 	this->title.setPosition((Settings::WINDOW_WIDTH - this->title.getGlobalBounds().width) / 2, 75);
 }
 
-void MainMenuState::initKeybinds()
+void LostFightState::initKeybinds()
 {
-	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
 	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
 	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
 }
 
-void MainMenuState::initButtons()
+void LostFightState::initButtons()
 {
-	this->buttons["LOAD_GAME_STATE"] = new Button(700.f, 175.f, this->textures["MainMenuButtonIdle"], &this->font, "LOAD GAME");
-	this->buttons["NEW_GAME_STATE"] = new Button(125.f, 175.f, this->textures["MainMenuButtonIdle"], &this->font, "NEW GAME");
-	
+	this->buttons["GIVE_UP"] = new Button(275.f, 472.5f, this->textures["MainMenuButtonIdle"], &this->font, "GIVE UP");
+	this->buttons["RETRY"] = new Button(550.f, 472.5f, this->textures["MainMenuButtonIdle"], &this->font, "RETRY");
 }
 
-MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
+LostFightState::LostFightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initVariables();
@@ -69,7 +67,7 @@ MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::
 	this->initButtons();
 }
 
-MainMenuState::~MainMenuState()
+LostFightState::~LostFightState()
 {
 	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
 	{
@@ -77,7 +75,7 @@ MainMenuState::~MainMenuState()
 	}
 }
 
-void MainMenuState::updateInput(const float& _dt)
+void LostFightState::updateInput(const float& _dt)
 {
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
@@ -123,22 +121,24 @@ void MainMenuState::updateInput(const float& _dt)
 			auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
 			if (it != this->buttons.end())
 			{
-				if (it->first == "NEW_GAME_STATE")
+				if (it->first == "GIVE_UP")
 				{
-					this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+					this->states->pop();
+					this->states->pop();
+					this->states->pop();
 				}
-				else if (it->first == "LOAD_GAME_STATE")
+				else if (it->first == "RETRY")
 				{
-					Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
-					dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
-					this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+					this->states->pop();
+					this->states->pop();
+					//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 				}
 			}
 		}
 	}
 }
 
-void MainMenuState::updateButtons()
+void LostFightState::updateButtons()
 {
 	int index = 0;
 	for (auto& it : this->buttons)
@@ -160,27 +160,29 @@ void MainMenuState::updateButtons()
 		++index;
 	}
 
-	if (this->buttons["NEW_GAME_STATE"]->getButtonState() == ButtonState::Pressed)
+	if (this->buttons["GIVE_UP"]->getButtonState() == ButtonState::Pressed)
 	{
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
+		this->states->pop();
+		this->states->pop();
+		this->states->pop();
 	}
 
-	else if (this->buttons["LOAD_GAME_STATE"]->getButtonState() == ButtonState::Pressed)
+	else if (this->buttons["RETRY"]->getButtonState() == ButtonState::Pressed)
 	{
-		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
-		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+		this->states->pop();
+		this->states->pop();
+		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 	}
 }
 
-void MainMenuState::update(const float& _dt)
+void LostFightState::update(const float& _dt)
 {
 	this->updateMousePositions();
 	this->updateInput(_dt);
 	this->updateButtons();
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget* target)
+void LostFightState::renderButtons(sf::RenderTarget* target)
 {
 	for (auto& it : this->buttons)
 	{
@@ -188,7 +190,7 @@ void MainMenuState::renderButtons(sf::RenderTarget* target)
 	}
 }
 
-void MainMenuState::render(sf::RenderTarget* target)
+void LostFightState::render(sf::RenderTarget* target)
 {
 	if (!target)
 	{

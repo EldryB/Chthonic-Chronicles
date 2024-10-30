@@ -75,6 +75,20 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
+	{
+		this->keyCode = "CLOSE";
+	}
+	else
+	{
+		if (this->keyCode == "CLOSE")
+		{
+			this->keyCode = " ";
+			this->player->setPosition(870.77f, 323.92f);
+			this->states->push(new LostFightState(this->window, this->supportedKeys, this->states));
+		}
+	}
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
 	{
 		this->keyCode = "ACTION";

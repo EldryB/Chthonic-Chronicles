@@ -40,20 +40,24 @@ void MenuState::initFonts()
 void MenuState::initKeybinds()
 {
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-	this->keybinds["MOVE_UP"] = this->supportedKeys->at("Up");
-	this->keybinds["MOVE_DOWN"] = this->supportedKeys->at("Down");
+	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
+	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
 	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
 }
 
 void MenuState::initButtons()
 {
-	this->buttons["BACK_TO_THE_GAME"] = new Button((Settings::WINDOW_WIDTH - this->textures["MenuButtonIdle"].getSize().x) / 2, 372.5f, this->textures["MenuButtonIdle"], &this->font, "<- BACK TO\nTHE GAME");
-	this->buttons["NO_SAVE_AND_QUIT"] = new Button(
-		520.f, 166.5f, 
-		this->textures["MenuButtonIdle"], &this->font, "NO SAVE AND\n    QUIT");
 	this->buttons["SAVE_AND_QUIT"] = new Button(
 		300.f, 166.5f,
 		this->textures["MenuButtonIdle"], &this->font, "SAVE AND\n    QUIT");
+
+	this->buttons["NO_SAVE_AND_QUIT"] = new Button(
+		520.f, 166.5f, 
+		this->textures["MenuButtonIdle"], &this->font, "NO SAVE AND\n    QUIT");
+
+	this->buttons["BACK_TO_THE_GAME"] = new Button(
+		(Settings::WINDOW_WIDTH - this->textures["MenuButtonIdle"].getSize().x) / 2, 372.5f,
+		this->textures["MenuButtonIdle"], &this->font, "<- BACK TO\nTHE GAME");
 }
 
 MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -78,34 +82,34 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_UP"]))
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
-		this->keyCode = "MOVE_UP";
+		this->keyCode = "MOVE_LEFT";
 	}
 	else
 	{
-		if (this->keyCode == "MOVE_UP")
-		{
-			this->keyCode = " ";
-			if (this->selectedButtonIndex < this->buttons.size() - 1)
-			{
-				++this->selectedButtonIndex;
-			}
-		}
-	}
-
-	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_DOWN"]))
-	{
-		this->keyCode = "MOVE_DOWN";
-	}
-	else
-	{
-		if (this->keyCode == "MOVE_DOWN")
+		if (this->keyCode == "MOVE_LEFT")
 		{
 			this->keyCode = " ";
 			if (this->selectedButtonIndex > 0)
 			{
 				--this->selectedButtonIndex;
+			}
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
+	{
+		this->keyCode = "MOVE_RIGHT";
+	}
+	else
+	{
+		if (this->keyCode == "MOVE_RIGHT")
+		{
+			this->keyCode = " ";
+			if (this->selectedButtonIndex < this->buttons.size() - 1)
+			{
+				++this->selectedButtonIndex;
 			}
 		}
 	}
