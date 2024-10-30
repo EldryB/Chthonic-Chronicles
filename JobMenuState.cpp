@@ -4,7 +4,6 @@ void JobMenuState::initVariables()
 {
     this->currentState = CurrentState::JobMenu;
     this->keyCode = " ";
-
 }
 
 void JobMenuState::initTextures()
@@ -90,6 +89,12 @@ void JobMenuState::initFonts()
         this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - this->backgroundTooltip.getGlobalBounds().width / 2.7f,
         this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.5f) - this->backgroundTooltip.getGlobalBounds().height / 23.f
     );
+
+    this->message.setFont(this->font);
+    this->message.setString("Press 'C' to show controls");
+    this->message.setCharacterSize(24);
+    this->message.setFillColor(sf::Color::White);
+    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 }
 
 void JobMenuState::initKeybinds()
@@ -232,6 +237,19 @@ std::string JobMenuState::getTooltipMessage(JobTypes _jobs)
 
 void JobMenuState::updateInput(const float& _dt)
 {   
+    if (sf::Keyboard::isKeyPressed(this->keybinds["CONTROLS"]))
+    {
+        this->keyCode = "CONTROLS";
+    }
+    else
+    {
+        if (this->keyCode == "CONTROLS")
+        {
+            this->keyCode = " ";
+            this->states->push(new ControlsState(this->window, this->supportedKeys, this->states));
+        }
+    }
+    
     if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
     {
         this->keyCode = "CLOSE";
@@ -381,6 +399,7 @@ void JobMenuState::render(sf::RenderTarget* target)
 
     target->draw(this->title);
     target->draw(this->villagersAvailable);
+    target->draw(this->message);
 
     for (size_t i = 0; i < addButtons.size(); i++)
     {

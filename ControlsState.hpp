@@ -23,11 +23,9 @@ private:
 
     sf::Text title;
 
-    std::vector<sf::Text> controls;
+    sf::Text message;
 
-    std::vector<sf::Text> menuControls;
-    
-    std::vector<sf::Text> gameControls;
+    std::vector<sf::Text> controls;
 
     void initVariables();
 

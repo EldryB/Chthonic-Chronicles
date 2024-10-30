@@ -22,11 +22,12 @@ public:
 
 private:
     sf::Font font;
-    //JsonManagement dataManagement;
     std::unordered_map<std::string, Button*> buttons;
     int selectedButtonIndex;
 
     sf::Text title;
+
+    sf::Text message;
 
     void initVariables();
 

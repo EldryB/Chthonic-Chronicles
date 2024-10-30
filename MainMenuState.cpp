@@ -42,6 +42,12 @@ void MainMenuState::initFonts()
 	this->title.setCharacterSize(42);
 	this->title.setFillColor(sf::Color(206, 185, 141));
 	this->title.setPosition((Settings::WINDOW_WIDTH - this->title.getGlobalBounds().width) / 2, 75);
+
+	this->message.setFont(this->font);
+	this->message.setString("Press 'C' to show controls");
+	this->message.setCharacterSize(24);
+	this->message.setFillColor(sf::Color::White);
+	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 }
 
 void MainMenuState::initKeybinds()
@@ -215,4 +221,5 @@ void MainMenuState::render(sf::RenderTarget* target)
 	this->renderButtons(target);
 
 	target->draw(this->title);
+	target->draw(this->message);
 }

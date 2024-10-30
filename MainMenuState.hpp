@@ -27,6 +27,8 @@ private:
     int selectedButtonIndex;
 
     sf::Text title;
+
+    sf::Text message;
     
     void initVariables();
 

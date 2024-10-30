@@ -52,11 +52,10 @@ void GameState::initFonts()
 	}
 
 	this->message.setFont(this->font);
-	this->message.setCharacterSize(20);
-	this->message.setFillColor(sf::Color(206, 185, 141));
-	message.setPosition(650.f, 250.f);
-	std::string textString = "Press 'E' to enter";
-	message.setString(textString);
+	this->message.setString("Press 'C' to show controls");
+	this->message.setCharacterSize(24);
+	this->message.setFillColor(sf::Color::White);
+	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(20);
@@ -121,6 +120,19 @@ void GameState::updateInput(const float& _dt)
 	}
 
 
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CONTROLS"]))
+	{
+		this->keyCode = "CONTROLS";
+	}
+	else
+	{
+		if (this->keyCode == "CONTROLS")
+		{
+			this->keyCode = " ";
+			this->states->push(new ControlsState(this->window, this->supportedKeys, this->states));
+		}
+	}
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("CLOSE")))
 	{
 		this->keyCode = "CLOSE";
@@ -182,11 +194,10 @@ void GameState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->background);
+	
 	this->player->render(target);
-
-	if (isInDoor)
-	{
-		target->draw(this->message);
-	}
+	
 	target->draw(this->text);
+
+	target->draw(this->message);
 }

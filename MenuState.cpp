@@ -36,6 +36,12 @@ void MenuState::initFonts()
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_FONT";
 	}
+
+	this->message.setFont(this->font);
+	this->message.setString("Press 'C' to show controls");
+	this->message.setCharacterSize(24);
+	this->message.setFillColor(sf::Color::White);
+	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 }
 
 void MenuState::initKeybinds()
@@ -58,7 +64,7 @@ void MenuState::initButtons()
 		this->textures["MenuButtonIdle"], &this->font, "NO SAVE AND\n    QUIT");
 
 	this->buttons["BACK_TO_THE_GAME"] = new Button(
-		(Settings::WINDOW_WIDTH - this->textures["MenuButtonIdle"].getSize().x) / 2, 372.5f,
+		(Settings::WINDOW_WIDTH - this->textures["MenuButtonIdle"].getSize().x) / 2.f, 372.5f,
 		this->textures["MenuButtonIdle"], &this->font, "<- BACK TO\nTHE GAME");
 }
 
@@ -84,6 +90,19 @@ MenuState::~MenuState()
 
 void MenuState::updateInput(const float& _dt)
 {
+	if (sf::Keyboard::isKeyPressed(this->keybinds["CONTROLS"]))
+	{
+		this->keyCode = "CONTROLS";
+	}
+	else
+	{
+		if (this->keyCode == "CONTROLS")
+		{
+			this->keyCode = " ";
+			this->states->push(new ControlsState(this->window, this->supportedKeys, this->states));
+		}
+	}
+	
 	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
 		this->keyCode = "MOVE_LEFT";
@@ -225,4 +244,6 @@ void MenuState::render(sf::RenderTarget* target)
 	target->draw(this->background);
 
 	this->renderButtons(target);
+
+	target->draw(this->message);
 }

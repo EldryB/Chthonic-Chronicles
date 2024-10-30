@@ -31,6 +31,8 @@ private:
     JsonManagement dataManagement;
     int selectedButtonIndex;
 
+    sf::Text message;
+
     void initVariables();
 
     void initTextures();
