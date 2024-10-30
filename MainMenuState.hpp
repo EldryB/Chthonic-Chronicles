@@ -27,6 +27,8 @@ private:
     JsonManagement dataManagement;
     std::unordered_map<std::string, Button*> buttons;
     int selectedButtonIndex;
+
+    sf::Text title;
     
     void initVariables();
 

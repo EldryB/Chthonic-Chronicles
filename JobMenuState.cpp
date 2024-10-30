@@ -386,6 +386,7 @@ void JobMenuState::render(sf::RenderTarget* target)
 
     target->draw(this->title);
     target->draw(this->villagersAvailable);
+
     for (size_t i = 0; i < addButtons.size(); i++)
     {
         if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
