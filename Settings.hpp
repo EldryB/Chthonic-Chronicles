@@ -15,7 +15,8 @@
 enum class CurrentStage
 {
 	MainStage,
-	Combat
+	Combat,
+	Stage2
 };
 
 enum class CurrentState

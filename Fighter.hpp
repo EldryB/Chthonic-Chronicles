@@ -15,6 +15,8 @@ public:
 
     virtual float getDamage();
 
+    virtual void setHp(float _hp);
+
     virtual void setAttributes(float _x, float _y, std::string _name, float _hp, float _damage);
 
 private:

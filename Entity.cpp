@@ -67,6 +67,11 @@ void Entity::setStage(CurrentStage _c)
 	this->movementComponent->setStage(_c);
 }
 
+CurrentStage Entity::getStage()
+{
+	return this->movementComponent->getStage();
+}
+
 void Entity::setName(std::string _name)
 {
 	this->name = _name;

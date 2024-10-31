@@ -48,6 +48,10 @@ public:
 
 	void setStage(CurrentStage _c);
 
+	CurrentStage getStage();
+
+	void setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty);
+
 	void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 
 private:

@@ -50,6 +50,11 @@ float Fighter::getDamage()
 	return this->damage;
 }
 
+void Fighter::setHp(float _hp)
+{
+	this->hp = _hp;
+}
+
 void Fighter::setAttributes(float _x, float _y, std::string _name, float _hp, float _damage)
 {
 	this->sprite->setPosition(_x, _y);

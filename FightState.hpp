@@ -23,6 +23,9 @@ private:
     std::vector<Fighter*> enemies;
     sf::Font font;
     sf::Text text;
+    sf::Text message;
+    sf::RectangleShape barraVida;
+    float vidaMaxima;
 
     void initVariables();
 

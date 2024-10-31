@@ -32,6 +32,8 @@ public:
 
 	void setStage(CurrentStage _c);
 
+	CurrentStage getStage();
+
 	virtual void setPosition(const float _x, const float _y);
 
 	virtual void setName(std::string _name);

@@ -17,6 +17,8 @@ public:
     
     void updateInput(const float& _dt);
 
+    void updateInput2(const float& _dt);
+
     void update(const float& _dt);
 
     void render(sf::RenderTarget* target = nullptr);
@@ -31,6 +33,8 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Text message;
+    sf::Text message2;
+    std::stack<sf::Sprite> backgrounds;
 
     void initVariables();
 

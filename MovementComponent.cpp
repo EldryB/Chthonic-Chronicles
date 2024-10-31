@@ -62,6 +62,24 @@ void MovementComponent::setStage(CurrentStage _c)
 	this->currentStage = _c;
 }
 
+CurrentStage MovementComponent::getStage()
+{
+	return this->currentStage;
+}
+
+void MovementComponent::setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty)
+{
+	if (getYPos(spr) < 202 || getYPos(spr) > 353)
+	{
+		spr->setPosition(lastx, lasty);
+	}
+
+	if (getXPos(spr) < 20 || getXPos(spr) > 971.5f)
+	{
+		spr->setPosition(lastx, lasty);
+	}
+}
+
 void MovementComponent::move(const float dir_x, const float dir_y, const float& _dt)
 {
 	this->velocity.x += this->acceleration * dir_x;
@@ -139,6 +157,10 @@ void MovementComponent::update(const float& _dt)
 	if (this->currentStage == CurrentStage::MainStage)
 	{
 		this->setMainStageLimits(spr, lastX, lastY);
+	}
+	else if (this->currentStage == CurrentStage::Stage2)
+	{
+		this->setStage2Limits(spr, lastX, lastY);
 	}
 	this->sprite = *spr;
 }

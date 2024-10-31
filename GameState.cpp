@@ -2,7 +2,6 @@
 
 void GameState::initVariables()
 {
-	this->currentState = CurrentState::Game;
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
@@ -27,6 +26,11 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
 	}
 
+	if (!this->textures["Stage2"].loadFromFile("assets/textures/Backgrounds/stage2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
+	}
+
 	if (!this->textures["PLAYER_SHEET"].loadFromFile("assets/textures/Player/PLAYER_SHEET.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
@@ -40,8 +44,11 @@ void GameState::initFighters()
 
 void GameState::initBackground()
 {
-	this->background.setTexture(this->textures["MainStage"]);
-	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
+	sf::Sprite back;
+	back.setTexture(this->textures["MainStage"]);
+	back.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
+	this->backgrounds.push(back);
+
 }
 
 void GameState::initFonts()
@@ -57,6 +64,12 @@ void GameState::initFonts()
 	this->message.setFillColor(sf::Color::White);
 	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 
+	this->message2.setFont(this->font);
+	this->message2.setString("Press E to enter");
+	this->message2.setCharacterSize(24);
+	this->message2.setFillColor(sf::Color::White);
+	this->message2.setPosition(600,250);
+
 	this->text.setFont(this->font);
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color(206, 185, 141));
@@ -66,9 +79,9 @@ void GameState::initFonts()
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initFighters();
 	this->initVariables();
 	this->initTextures();
-	this->initFighters();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -79,9 +92,9 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initFighters();
 	this->initVariables();
 	this->initTextures();
-	this->initFighters();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -160,7 +173,7 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
 	{
 		this->keyCode = "ACTION";
 	}
@@ -172,12 +185,83 @@ void GameState::updateInput(const float& _dt)
 			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x > 771.f)
+	{
+		this->keyCode = "ACTION2";
+	}
+	else
+	{
+		if (this->keyCode == "ACTION2")
+		{
+			this->keyCode = " ";
+			this->player->setPosition(200,300);
+			this->player->setStage(CurrentStage::Stage2);
+			sf::Sprite spr{ this->textures["Stage2"] };
+			this->backgrounds.push(spr);
+		}
+	}
+}
+
+void GameState::updateInput2(const float& _dt)
+{
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) )
+	{
+		this->player->move(-1.f, 0.f, _dt);
+		if(this->backgrounds.top().getPosition().x <= 0)
+		{
+			this->backgrounds.top().move(60 * _dt + 0.005, 0);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) )
+	{
+		this->player->move(1.f, 0.f, _dt);
+		if(this->player->getSprite()->getPosition().x <= 971)
+		{
+			this->backgrounds.top().move(-60 * _dt + 0.005, 0);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
+	{
+		this->player->move(0.f, -1.f, _dt);
+	}
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
+	{
+		this->player->move(0.f, 1.f, _dt);
+	}
+
+	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
+	{
+		this->keyCode = "ACTION";
+	}
+	else
+	{
+		if (this->keyCode == "ACTION")
+		{
+			this->keyCode = " ";
+			this->player->setPosition(780, 340);
+			this->player->setStage(CurrentStage::MainStage);
+			this->backgrounds.pop();
+		}
+	}
+
+	if (this->player->getSprite()->getPosition().x > 870)
+	{
+		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+	}
 }
 
 void GameState::update(const float& _dt)
 {
 	this->updateMousePositions();
-	this->updateInput(_dt);
+	if(this->player->getStage() == CurrentStage::MainStage)
+	{
+		this->updateInput(_dt);
+	}
+	else if (this->player->getStage() == CurrentStage::Stage2)
+	{
+		this->updateInput2(_dt);
+	}
 
 	this->player->update(_dt);
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
@@ -193,11 +277,16 @@ void GameState::render(sf::RenderTarget* target)
 		target = this->window;
 	}
 
-	target->draw(this->background);
+	target->draw(this->backgrounds.top());
 	
 	this->player->render(target);
 	
 	target->draw(this->text);
 
 	target->draw(this->message);
+
+	if ((isInDoor || this->player->getSprite()->getPosition().x > 771.f) && this->player->getStage() == CurrentStage::MainStage)
+	{
+		target->draw(this->message2);
+	}
 }

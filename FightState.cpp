@@ -5,12 +5,14 @@ void FightState::initKeybinds()
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
 	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
+	this->keybinds["Q"] = this->supportedKeys->at("Q");
 }
 
 void FightState::initVariables()
 {
 	this->currentState = CurrentState::Fight;
 	this->keyCode = " ";
+	this->vidaMaxima = this->player->getHp();
 }	
 
 void FightState::initFonts()
@@ -19,6 +21,12 @@ void FightState::initFonts()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
+
+	this->message.setFont(this->font);
+	this->message.setString(std::to_string(this->player->getHp()));
+	this->message.setCharacterSize(24);
+	this->message.setFillColor(sf::Color::White);
+	this->message.setPosition(20,20);
 }
 
 void FightState::initTextures()
@@ -56,14 +64,17 @@ void FightState::initBackground()
 FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initFighters(_p);
 	this->initVariables();
 	this->initTextures();
-	this->initFighters(_p);
 	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
 	
 	this->player->setStage(CurrentStage::Combat);
+	this->barraVida.setPosition(100.f,100.f);
+	this->barraVida.setSize(sf::Vector2f(200.0f, 20.0f));
+	this->barraVida.setFillColor(sf::Color::Green);
 }
 
 FightState::~FightState()
@@ -101,6 +112,23 @@ void FightState::updateInput(const float& _dt)
 			this->player->setStage(CurrentStage::MainStage);
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	{
+		this->keyCode = "Q";
+	}
+	else
+	{
+		if (this->keyCode == "Q")
+		{
+			this->keyCode = " ";
+			this->player->setHp(this->player->getHp() - 50.f);
+			if (this->player->getHp() < 0)
+			{
+				this->player->setHp(0);
+			}
+		}
+	}
 }
 
 void FightState::update(const float& _dt)
@@ -112,6 +140,9 @@ void FightState::update(const float& _dt)
 	{
 		item->update(_dt);
 	}
+
+	float porcentajeVida = this->player->getHp() / vidaMaxima;
+	barraVida.setSize(sf::Vector2f(200.0f * porcentajeVida, 20.0f));
 
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	text.setString(textString);
@@ -133,5 +164,6 @@ void FightState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->text);
+	target->draw(this->barraVida);
 
 }
