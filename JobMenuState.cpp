@@ -229,6 +229,7 @@ std::string JobMenuState::getTooltipMessage(JobTypes _jobs)
 
     case JobTypes::goldMiner:return "GoldMiner\nNecesita 10 pan\nProduce 1 oro";
 
+
     default:
         break;
     }
