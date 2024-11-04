@@ -62,7 +62,7 @@ void FightState::initBackground()
 	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
-FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
+FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p, sf::Vector2f _lastPos)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initFighters(_p);
@@ -71,6 +71,7 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
+	this->lastPosition = _lastPos;
 	
 	sf::RectangleShape hpBar1;
 	hpBar1.setPosition(100.f,100.f);
@@ -159,6 +160,7 @@ void FightState::update(const float& _dt)
 
 	if (this->enemies[0]->getHp() <= 0)
 	{
+		this->player->setPosition(lastPosition.x - 10.f, lastPosition.y);
 		this->states->pop();
 	}
 }

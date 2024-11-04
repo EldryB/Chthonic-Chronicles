@@ -193,19 +193,6 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
-	{
-		this->keyCode = "ACTION";
-	}
-	else
-	{
-		if (this->keyCode == "ACTION")
-		{
-			this->keyCode = " ";
-			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-		}
-	}
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x > 771.f)
 	{
 		this->keyCode = "ACTION2";
@@ -267,7 +254,8 @@ void GameState::updateInput2(const float& _dt)
 
 	if (this->player->getSprite()->getPosition().x > 870)
 	{
-		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
 	}
 }
 

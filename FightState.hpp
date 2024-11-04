@@ -7,7 +7,7 @@ class FightState :
     public State
 {
 public:
-    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p);
+    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p, sf::Vector2f _lastPos);
 
     virtual ~FightState();
 
@@ -26,6 +26,7 @@ private:
     sf::Text message;
     std::vector<sf::RectangleShape> hpBar;
     std::vector<float> hpMax;
+    sf::Vector2f lastPosition;
 
 
     void initVariables();
