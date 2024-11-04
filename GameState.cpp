@@ -74,6 +74,26 @@ void GameState::initFonts()
 	this->text.setCharacterSize(20);
 	this->text.setFillColor(sf::Color(206, 185, 141));
 	text.setPosition(30, 30);
+
+	this->stageText.setFont(this->font);
+	this->stageText.setCharacterSize(24);
+	this->stageText.setFillColor(sf::Color::White);
+	this->stageText.setPosition(700, 30);
+}
+
+std::string GameState::getStringStage(CurrentStage _c)
+{
+	switch (_c)
+	{
+
+	case CurrentStage::MainStage: return "MainStage";
+
+	case CurrentStage::Combat:return "Combat";
+
+	case CurrentStage::Stage2:return "Stage2";
+
+	default: return " ";
+	}
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
@@ -266,6 +286,7 @@ void GameState::update(const float& _dt)
 	this->player->update(_dt);
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	text.setString(textString);
+	this->stageText.setString(this->getStringStage(this->player->getStage()));
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -284,6 +305,8 @@ void GameState::render(sf::RenderTarget* target)
 	target->draw(this->text);
 
 	target->draw(this->message);
+
+	target->draw(this->stageText);
 
 	if ((isInDoor || this->player->getSprite()->getPosition().x > 771.f) && this->player->getStage() == CurrentStage::MainStage)
 	{

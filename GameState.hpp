@@ -34,6 +34,7 @@ private:
     sf::Text text;
     sf::Text message;
     sf::Text message2;
+    sf::Text stageText;
     std::stack<sf::Sprite> backgrounds;
 
     void initVariables();
@@ -47,5 +48,7 @@ private:
     void initBackground();
 
     void initFonts();
+
+    std::string getStringStage(CurrentStage _c);
 };
 
