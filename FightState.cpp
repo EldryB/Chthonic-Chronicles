@@ -51,7 +51,7 @@ void FightState::initFighters(Fighter* _p)
 	this->player = _p;
 	this->player->setLookingDirection(LookingDirection::Right);
 	this->player->setPosition(304.8f, 524.97f);
-	this->enemies.push_back(new Fighter(200.f, 200.f, this->textures["Bat1"], "Enemy1", 500, 50));
+	this->enemies.push_back(new Fighter(704.8f, 524.97f, this->textures["Bat1"], "Enemy1", 500, 50));
 }
 
 void FightState::initBackground()
