@@ -2,6 +2,7 @@
 
 void GameState::initVariables()
 {
+	this->currentState = CurrentState::Game;
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
