@@ -24,8 +24,9 @@ private:
     sf::Font font;
     sf::Text text;
     sf::Text message;
-    sf::RectangleShape barraVida;
-    float vidaMaxima;
+    std::vector<sf::RectangleShape> hpBar;
+    std::vector<float> hpMax;
+
 
     void initVariables();
 

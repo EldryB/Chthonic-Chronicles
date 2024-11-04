@@ -12,7 +12,8 @@ void FightState::initKeybinds()
 void FightState::initVariables()
 {
 	this->keyCode = " ";
-	this->vidaMaxima = this->player->getHp();
+	this->hpMax.push_back(this->player->getHp());
+	this->hpMax.push_back(this->enemies[0]->getHp());
 }	
 
 void FightState::initFonts()
@@ -71,9 +72,19 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	this->initKeybinds();
 	this->initFonts();
 	
-	this->barraVida.setPosition(100.f,100.f);
-	this->barraVida.setSize(sf::Vector2f(200.0f, 20.0f));
-	this->barraVida.setFillColor(sf::Color::Green);
+	sf::RectangleShape hpBar1;
+	hpBar1.setPosition(100.f,100.f);
+	hpBar1.setSize(sf::Vector2f(200.0f, 20.0f));
+	hpBar1.setFillColor(sf::Color::Green);
+
+	this->hpBar.push_back(hpBar1);
+
+	sf::RectangleShape hpBar2;
+	hpBar2.setPosition(600.f, 100.f);
+	hpBar2.setSize(sf::Vector2f(200.0f, 20.0f));
+	hpBar2.setFillColor(sf::Color::Green);
+
+	this->hpBar.push_back(hpBar2);
 }
 
 FightState::~FightState()
@@ -128,8 +139,14 @@ void FightState::update(const float& _dt)
 		item->update(_dt);
 	}
 
-	float porcentajeVida = this->player->getHp() / vidaMaxima;
-	barraVida.setSize(sf::Vector2f(200.0f * porcentajeVida, 20.0f));
+	float barLife = this->player->getHp() / this->hpMax[0];
+	this->hpBar[0].setSize(sf::Vector2f(200.0f * barLife, 20.0f));
+
+	for (size_t i = 1; i < hpBar.size(); i++)
+	{
+		float bar = this->enemies[i - 1]->getHp() / this->hpMax[i];
+		this->hpBar[i].setSize(sf::Vector2f(200.0f * bar, 20.0f));
+	}
 
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	text.setString(textString);
@@ -162,7 +179,10 @@ void FightState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->text);
-	target->draw(this->barraVida);
+	for (auto item: this->hpBar)
+	{
+		target->draw(item);
+	}
 	target->draw(this->message);
 
 }
