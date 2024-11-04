@@ -6,6 +6,7 @@ void FightState::initKeybinds()
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
 	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 	this->keybinds["Q"] = this->supportedKeys->at("Q");
+	this->keybinds["Z"] = this->supportedKeys->at("Z");
 }
 
 void FightState::initVariables()
@@ -98,6 +99,23 @@ void FightState::updateInput(const float& _dt)
 			}
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Z")))
+	{
+		this->keyCode = "Z";
+	}
+	else
+	{
+		if (this->keyCode == "Z")
+		{
+			this->keyCode = " ";
+			this->enemies[0]->setHp(this->enemies[0]->getHp() - 50.f);
+			if (this->enemies[0]->getHp() < 0)
+			{
+				this->enemies[0]->setHp(0);
+			}
+		}
+	}
 }
 
 void FightState::update(const float& _dt)
@@ -120,6 +138,11 @@ void FightState::update(const float& _dt)
 	if (this->player->getHp() <= 0)
 	{
 		this->states->push(new LostFightState(this->window, this->supportedKeys, this->states));
+	}
+
+	if (this->enemies[0]->getHp() <= 0)
+	{
+		this->states->pop();
 	}
 }
 
