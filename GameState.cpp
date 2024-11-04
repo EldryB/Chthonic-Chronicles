@@ -86,7 +86,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
-	this->player->setStage(CurrentStage::MainStage);
+	this->player->pushStage(CurrentStage::MainStage);
 }
 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
@@ -196,7 +196,7 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->player->setPosition(200,300);
-			this->player->setStage(CurrentStage::Stage2);
+			this->player->pushStage(CurrentStage::Stage2);
 			sf::Sprite spr{ this->textures["Stage2"] };
 			this->backgrounds.push(spr);
 		}
@@ -239,8 +239,8 @@ void GameState::updateInput2(const float& _dt)
 		if (this->keyCode == "ACTION")
 		{
 			this->keyCode = " ";
-			this->player->setPosition(780, 340);
-			this->player->setStage(CurrentStage::MainStage);
+			this->player->setPosition(780, 360);
+			this->player->popStage();
 			this->backgrounds.pop();
 		}
 	}

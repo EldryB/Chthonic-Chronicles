@@ -62,9 +62,14 @@ void Entity::setLookingDirection(LookingDirection _l)
 	this->movementComponent->setLookingDirection(_l);
 }
 
-void Entity::setStage(CurrentStage _c)
+void Entity::pushStage(CurrentStage _c)
 {
-	this->movementComponent->setStage(_c);
+	this->movementComponent->pushStage(_c);
+}
+
+void Entity::popStage()
+{
+	this->movementComponent->popStage();
 }
 
 CurrentStage Entity::getStage()

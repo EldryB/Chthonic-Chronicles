@@ -10,7 +10,6 @@ void FightState::initKeybinds()
 
 void FightState::initVariables()
 {
-	this->currentState = CurrentState::Fight;
 	this->keyCode = " ";
 	this->vidaMaxima = this->player->getHp();
 }	
@@ -71,7 +70,6 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	this->initKeybinds();
 	this->initFonts();
 	
-	this->player->setStage(CurrentStage::Combat);
 	this->barraVida.setPosition(100.f,100.f);
 	this->barraVida.setSize(sf::Vector2f(200.0f, 20.0f));
 	this->barraVida.setFillColor(sf::Color::Green);
@@ -84,35 +82,6 @@ FightState::~FightState()
 
 void FightState::updateInput(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
-	{
-		this->keyCode = "CLOSE";
-	}
-	else
-	{
-		if (this->keyCode == "CLOSE")
-		{
-			this->keyCode = " ";
-			this->player->setPosition(870.77f, 323.92f);
-			this->states->push(new LostFightState(this->window, this->supportedKeys, this->states));
-		}
-	}
-
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
-	{
-		this->keyCode = "ACTION";
-	}
-	else
-	{
-		if (this->keyCode == "ACTION")
-		{
-			this->keyCode = " ";
-			this->player->setPosition(870.77f, 323.92f);
-			this->states->pop();
-			this->player->setStage(CurrentStage::MainStage);
-		}
-	}
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
 	{
 		this->keyCode = "Q";
@@ -146,6 +115,12 @@ void FightState::update(const float& _dt)
 
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	text.setString(textString);
+	this->message.setString(std::to_string(this->player->getHp()));
+
+	if (this->player->getHp() <= 0)
+	{
+		this->states->push(new LostFightState(this->window, this->supportedKeys, this->states));
+	}
 }
 
 void FightState::render(sf::RenderTarget* target)
@@ -165,5 +140,6 @@ void FightState::render(sf::RenderTarget* target)
 
 	target->draw(this->text);
 	target->draw(this->barraVida);
+	target->draw(this->message);
 
 }

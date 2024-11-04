@@ -30,7 +30,9 @@ public:
 
 	void setLookingDirection(LookingDirection _l);
 
-	void setStage(CurrentStage _c);
+	void pushStage(CurrentStage _c);
+
+	void popStage();
 
 	CurrentStage getStage();
 

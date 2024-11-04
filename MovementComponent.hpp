@@ -46,7 +46,9 @@ public:
 
 	void setYPos(float _y, sf::Sprite* sprite);
 
-	void setStage(CurrentStage _c);
+	void pushStage(CurrentStage _c);
+
+	void popStage();
 
 	CurrentStage getStage();
 
@@ -61,7 +63,7 @@ private:
 	float deceleration;
 	LookingDirection lookingDirection;
 	sf::Vector2f velocity;
-	CurrentStage currentStage;
+	std::stack<CurrentStage> stages;
 
 };
 

@@ -6,7 +6,7 @@ MovementComponent::MovementComponent(sf::Sprite& _sprite,
 	: sprite{_sprite}, 
 	maxVelocity{_maxVelocity}, acceleration{_aceleration}, deceleration{_deceleration}
 {
-	this->currentStage = CurrentStage::MainStage;
+	this->stages.push(CurrentStage::MainStage);
 }
 
 MovementComponent::~MovementComponent()
@@ -57,14 +57,19 @@ void MovementComponent::setLookingDirection(LookingDirection _l)
 	this->lookingDirection = _l;
 }
 
-void MovementComponent::setStage(CurrentStage _c)
+void MovementComponent::pushStage(CurrentStage _c)
 {
-	this->currentStage = _c;
+	this->stages.push(_c);
+}
+
+void MovementComponent::popStage()
+{
+	this->stages.pop();
 }
 
 CurrentStage MovementComponent::getStage()
 {
-	return this->currentStage;
+	return this->stages.top();
 }
 
 void MovementComponent::setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty)
@@ -154,11 +159,11 @@ void MovementComponent::update(const float& _dt)
 	this->sprite.move(this->velocity * _dt);
 
 	sf::Sprite* spr = &this->sprite;
-	if (this->currentStage == CurrentStage::MainStage)
+	if (this->stages.top() == CurrentStage::MainStage)
 	{
 		this->setMainStageLimits(spr, lastX, lastY);
 	}
-	else if (this->currentStage == CurrentStage::Stage2)
+	else if (this->stages.top() == CurrentStage::Stage2)
 	{
 		this->setStage2Limits(spr, lastX, lastY);
 	}

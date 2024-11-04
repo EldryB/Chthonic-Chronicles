@@ -6,6 +6,8 @@ State::State(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyb
 	this->supportedKeys = _supportedKeys;
 	this->states = _states;
 	this->quit = false;
+	
+
 }
 
 State::~State()
