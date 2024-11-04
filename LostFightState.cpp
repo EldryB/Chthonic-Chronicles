@@ -14,12 +14,12 @@ void LostFightState::initTextures()
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}
 
-	if (!this->textures["MainMenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
+	if (!this->textures["MainMenuButtonIdle"].loadFromFile("assets/textures/Buttons/MenuButtonIdle.png"))
 	{
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
 	}
 
-	if (!this->textures["MainMenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
+	if (!this->textures["MainMenuButtonHover"].loadFromFile("assets/textures/Buttons/MenuButtonHover.png"))
 	{
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
 	}

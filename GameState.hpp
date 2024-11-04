@@ -1,9 +1,8 @@
 #pragma once
 
-#include "MenuState.hpp"
+#include "InventoryState.hpp"
 #include "FightState.hpp"
 #include "JobMenuState.hpp"
-#include "Jobs.hpp"
 
 class GameState :
     public State

@@ -18,6 +18,7 @@ void GameState::initKeybinds()
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
 	this->keybinds["Q"] = this->supportedKeys->at("Q");
 	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
+	this->keybinds["INVENTORY"] = this->supportedKeys->at("I");
 }
 
 void GameState::initTextures()
@@ -180,7 +181,6 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
 	{
 		this->keyCode = "Q";
@@ -191,6 +191,32 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
+	{
+		this->keyCode = "INVENTORY";
+	}
+	else
+	{
+		if (this->keyCode == "INVENTORY")
+		{
+			this->keyCode = " ";
+			this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
+	{
+		this->keyCode = "ACTION";
+	}
+	else
+	{
+		if (this->keyCode == "ACTION")
+		{
+			this->keyCode = " ";
+			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
 

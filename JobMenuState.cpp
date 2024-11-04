@@ -13,42 +13,42 @@ void JobMenuState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
     }
 
-    if (!this->textures["AddButton"].loadFromFile("assets/textures/addButton.png"))
+    if (!this->textures["AddButton"].loadFromFile("assets/textures/Buttons/addButton.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ADD_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["AddButtonHover"].loadFromFile("assets/textures/addButtonHover.png"))
+    if (!this->textures["AddButtonHover"].loadFromFile("assets/textures/Buttons/addButtonHover.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ADD_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["SubstractButton"].loadFromFile("assets/textures/substractButton.png"))
+    if (!this->textures["SubstractButton"].loadFromFile("assets/textures/Buttons/substractButton.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["SubstractButtonHover"].loadFromFile("assets/textures/substractButtonHover.png"))
+    if (!this->textures["SubstractButtonHover"].loadFromFile("assets/textures/Buttons/substractButtonHover.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["CollectButton"].loadFromFile("assets/textures/collectButton.png"))
+    if (!this->textures["CollectButton"].loadFromFile("assets/textures/Buttons/collectButton.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["CollectButtonHover"].loadFromFile("assets/textures/collectButtonHover.png"))
+    if (!this->textures["CollectButtonHover"].loadFromFile("assets/textures/Buttons/collectButtonHover.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
     }
 
-    if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/MenuButtonIdle.png"))
+    if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/Buttons/MenuButtonIdle.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
     }
 
-    if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/MenuButtonHover.png"))
+    if (!this->textures["MenuButtonHover"].loadFromFile("assets/textures/Buttons/MenuButtonHover.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
     }

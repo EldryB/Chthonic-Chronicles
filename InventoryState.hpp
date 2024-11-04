@@ -1,0 +1,57 @@
+#pragma once
+
+#include "MenuState.hpp"
+
+class InventoryState :
+    public State
+{
+public:
+    InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, /*Items& _items,*/ Fighter* _p);
+
+    virtual ~InventoryState();
+
+    void updateInput(const float& _dt);
+
+    void updateButtons();
+
+    void update(const float& _dt);
+
+    void renderButtons(sf::RenderTarget* target = nullptr);
+
+    void render(sf::RenderTarget* target = nullptr);
+
+private:
+    sf::Font font;
+    std::vector<Button*> useButtons;
+    std::unordered_map<std::string, Button*> buttons;
+    /*Items& items;*/
+    Fighter* player;
+
+    sf::Text title;
+
+    sf::Text message;
+
+    std::vector<sf::Text> itemNames;
+    std::vector<sf::Text> itemAmounts;
+    sf::Text itemDescription;
+    sf::Sprite backgroundItemDescription;
+
+    void initVariables();
+
+    void initTextures();
+
+    void initBackground();
+
+    void initFonts();
+
+    void initKeybinds();
+
+    void initButtons();
+
+    void initItemList();
+
+    std::string getTooltipMessage(/*ItemTypes _items*/);
+};
+
+
+
