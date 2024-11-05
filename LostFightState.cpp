@@ -64,7 +64,7 @@ void LostFightState::initButtons()
 	this->buttons["RETRY"] = new Button(550.f, 472.5f, this->textures["MainMenuButtonIdle"], &this->font, "RETRY");
 }
 
-LostFightState::LostFightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
+LostFightState::LostFightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initVariables();
@@ -73,6 +73,8 @@ LostFightState::LostFightState(sf::RenderWindow* _window, std::unordered_map<std
 	this->initFonts();
 	this->initKeybinds();
 	this->initButtons();
+
+	this->player = _p;
 }
 
 LostFightState::~LostFightState()
@@ -150,9 +152,8 @@ void LostFightState::updateInput(const float& _dt)
 				}
 				else if (it->first == "RETRY")
 				{
+					this->player->setHp(100.f);
 					this->states->pop();
-					this->states->pop();
-					//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 				}
 			}
 		}
@@ -190,9 +191,8 @@ void LostFightState::updateButtons()
 
 	else if (this->buttons["RETRY"]->getButtonState() == ButtonState::Pressed)
 	{
+		this->player->setHp(100.f);
 		this->states->pop();
-		this->states->pop();
-		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
 	}
 }
 

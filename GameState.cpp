@@ -280,10 +280,10 @@ void GameState::updateInput2(const float& _dt)
 		}
 	}
 
-	if (this->player->getSprite()->getPosition().x > 870)
+	if (this->player->getSprite()->getPosition().x > 400)
 	{
 		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
-		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
+		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
 	}
 
 	if (this->player->getSprite()->getPosition().x > 865)

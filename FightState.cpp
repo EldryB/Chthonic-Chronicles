@@ -155,7 +155,7 @@ void FightState::update(const float& _dt)
 
 	if (this->player->getHp() <= 0)
 	{
-		this->states->push(new LostFightState(this->window, this->supportedKeys, this->states));
+		this->states->push(new LostFightState(this->window, this->supportedKeys, this->states, this->player));
 	}
 
 	if (this->enemies[0]->getHp() <= 0)

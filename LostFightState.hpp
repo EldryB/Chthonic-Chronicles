@@ -6,7 +6,7 @@ class LostFightState :
     public State
 {
 public:
-    LostFightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
+    LostFightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p);
 
     virtual ~LostFightState();
 
@@ -21,6 +21,7 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
+    Fighter* player;
     sf::Font font;
     std::unordered_map<std::string, Button*> buttons;
     int selectedButtonIndex;
