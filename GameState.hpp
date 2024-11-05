@@ -35,6 +35,7 @@ private:
     sf::Text message2;
     sf::Text stageText;
     std::stack<sf::Sprite> backgrounds;
+    float dt;
 
     void initVariables();
 

@@ -6,6 +6,7 @@ void GameState::initVariables()
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
+	this->dt = 0;
 }
 
 void GameState::initKeybinds()
@@ -244,15 +245,15 @@ void GameState::updateInput2(const float& _dt)
 		this->player->move(-1.f, 0.f, _dt);
 		if(this->backgrounds.top().getPosition().x <= 0)
 		{
-			this->backgrounds.top().move(60 * _dt + 0.005, 0);
+			this->backgrounds.top().move(80 * _dt, 0);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) )
 	{
 		this->player->move(1.f, 0.f, _dt);
-		if(this->player->getSprite()->getPosition().x <= 971)
+		if(true)
 		{
-			this->backgrounds.top().move(-60 * _dt + 0.005, 0);
+			this->backgrounds.top().move(-80 * _dt, 0);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
@@ -264,7 +265,7 @@ void GameState::updateInput2(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
-	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")))
+	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x >= -10)
 	{
 		this->keyCode = "ACTION";
 	}
@@ -282,7 +283,12 @@ void GameState::updateInput2(const float& _dt)
 	if (this->player->getSprite()->getPosition().x > 870)
 	{
 		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
-		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
+		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
+	}
+
+	if (this->player->getSprite()->getPosition().x > 865)
+	{	
+		
 	}
 }
 
@@ -326,5 +332,10 @@ void GameState::render(sf::RenderTarget* target)
 	if ((isInDoor || this->player->getSprite()->getPosition().x > 771.f) && this->player->getStage() == CurrentStage::MainStage)
 	{
 		target->draw(this->message2);
+	}
+
+	if (this->player->getStage() == CurrentStage::Stage2)
+	{
+		//renderizar minimapa
 	}
 }
