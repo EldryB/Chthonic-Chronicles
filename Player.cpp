@@ -5,6 +5,9 @@ Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name
 {
     Item* item = new Item(texture_sheet, "Papa", 10, "Hola");
     this->addItem(item);
+
+    this->jobs = new Jobs();
+    this->resources = new Resources();
 }
 
 Player::~Player()
@@ -15,6 +18,16 @@ Player::~Player()
 std::vector<Item*>* Player::getInventory() const
 {
     return this->inventory;
+}
+
+Jobs* Player::getJobs() const
+{
+    return this->jobs;
+}
+
+Resources* Player::getResources() const
+{
+    return this->resources;
 }
 
 void Player::attack(Fighter* _p)

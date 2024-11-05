@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Fighter.hpp"
+#include "Jobs.hpp"
 
 class Player :
     public Fighter
@@ -11,11 +12,18 @@ public:
 
     std::vector<Item*>* getInventory() const;
 
+    Jobs* getJobs() const;
+
+    Resources* getResources() const;
+
     void addItem(Item* _item);
 
     void attack(Fighter* _p);
 
 protected:
+    Resources* resources;
+    Jobs* jobs;
+
     std::vector<Item*>* inventory = new std::vector<Item*>();
 };
 

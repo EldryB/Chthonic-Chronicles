@@ -122,6 +122,8 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFonts();
 	this->initKeybinds();
 
+	this->resources = _p->getResources();
+	this->jobs = _p->getJobs();
 	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName(), _p->getHp(), _p->getDamage());
 }
 
