@@ -208,18 +208,18 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
-	{
-		this->keyCode = "ACTION";
-	}
-	else
-	{
-		if (this->keyCode == "ACTION")
-		{
-			this->keyCode = " ";
-			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-		}
-	}
+	//if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
+	//{
+	//	this->keyCode = "ACTION";
+	//}
+	//else
+	//{
+	//	if (this->keyCode == "ACTION")
+	//	{
+	//		this->keyCode = " ";
+	//		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
+	//	}
+	//}
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x > 771.f)
 	{
