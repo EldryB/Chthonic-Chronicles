@@ -1,31 +1,40 @@
 #pragma once
 #include "Entity.hpp"
+#include "Item.hpp";
 
 class Fighter :
     public Entity
 {
 public:
-    Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _damage);
+    Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _attackPower, int _defense, int _initiative);
 
     virtual ~Fighter();
 
     virtual void update(const float& _dt);
 
-    virtual float getHp();
+    float getHp() const ;
 
-    virtual float getDamage();
+    float getDamage() const ; 
 
-    virtual void setHp(float _hp);
+    void setHp(float _hp);
 
     virtual void setAttributes(float _x, float _y, std::string _name, float _hp, float _damage);
 
-private:
+    virtual void attack(Fighter* target);
+
+    void takeDamage(float _attackPower);
+
+    bool isAlive() const;
+
+    
+
+protected:
     float hp;
-    float damage;
+    float attackPower;
+    int defense;
+    int initiative;
 
-    void initVariables(float& _hp, float& _damage);
-
-    void initComponents();
+    void initVariables(std::string& _name, float& _hp, float& _damage, int& _defense, int& _initiative);
 
 
 };

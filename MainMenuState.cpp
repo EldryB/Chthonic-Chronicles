@@ -47,7 +47,7 @@ void MainMenuState::initFonts()
 	this->message.setString("Press 'C' to show controls");
 	this->message.setCharacterSize(24);
 	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
 }
 
 void MainMenuState::initKeybinds()
@@ -150,9 +150,9 @@ void MainMenuState::updateInput(const float& _dt)
 				}
 				else if (it->first == "LOAD_GAME_STATE")
 				{
-					Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
+					/*Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
 					dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
-					this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+					this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));*/
 				}
 			}
 		}
@@ -188,9 +188,9 @@ void MainMenuState::updateButtons()
 
 	else if (this->buttons["LOAD_GAME_STATE"]->getButtonState() == ButtonState::Pressed)
 	{
-		Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
+		/*Fighter* loadedPlayer = new Fighter(500.f, 370, this->textures["PLAYER_LEFT"], "Player", 10, 10);
 		dataManagement.loadPlayerFromFile("player.json", loadedPlayer);
-		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));
+		this->states->push(new GameState(this->window, this->supportedKeys, this->states, loadedPlayer));*/
 	}
 }
 

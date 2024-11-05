@@ -94,7 +94,7 @@ void JobMenuState::initFonts()
     this->message.setString("Press 'C' to show controls");
     this->message.setCharacterSize(24);
     this->message.setFillColor(sf::Color::White);
-    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
 }
 
 void JobMenuState::initKeybinds()

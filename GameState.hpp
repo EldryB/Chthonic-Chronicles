@@ -10,7 +10,7 @@ class GameState :
 public:
     GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
 
-    GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p);
+    GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
     
     virtual ~GameState();
     
@@ -23,7 +23,7 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    Fighter* player;
+    Player* player;
     Jobs* jobs;
     Resources* resources;
     int currentFrame;

@@ -42,7 +42,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Fighter(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f);
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 10, 8);
 }
 
 void GameState::initBackground()
@@ -112,7 +112,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->player->pushStage(CurrentStage::MainStage);
 }
 
-GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
+GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initFighters();
@@ -208,19 +208,6 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	//if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInDoor)
-	//{
-	//	this->keyCode = "ACTION";
-	//}
-	//else
-	//{
-	//	if (this->keyCode == "ACTION")
-	//	{
-	//		this->keyCode = " ";
-	//		//this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player));
-	//	}
-	//}
-
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x > 771.f)
 	{
 		this->keyCode = "ACTION2";
@@ -267,11 +254,11 @@ void GameState::updateInput2(const float& _dt)
 
 	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x >= -10)
 	{
-		this->keyCode = "ACTION";
+		this->keyCode = "ACTION2";
 	}
 	else
 	{
-		if (this->keyCode == "ACTION")
+		if (this->keyCode == "ACTION2")
 		{
 			this->keyCode = " ";
 			this->player->setPosition(780, 360);
@@ -280,7 +267,7 @@ void GameState::updateInput2(const float& _dt)
 		}
 	}
 
-	if (this->player->getSprite()->getPosition().x > 400)
+	if (this->player->getSprite()->getPosition().x > 400 && this->player->getStage() == CurrentStage::Stage2)
 	{
 		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
 		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));

@@ -41,7 +41,7 @@ void MenuState::initFonts()
 	this->message.setString("Press 'C' to show controls");
 	this->message.setCharacterSize(24);
 	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
 }
 
 void MenuState::initKeybinds()
@@ -172,7 +172,7 @@ void MenuState::updateInput(const float& _dt)
 				else if (it->first == "SAVE_AND_QUIT")
 				{
 					this->states->pop();
-					this->dataManagement.savePlayerToFile(player, "player.json");
+					//this->dataManagement.savePlayerToFile(player, "player.json");
 					this->states->pop();
 				}
 			}

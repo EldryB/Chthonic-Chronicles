@@ -1,12 +1,13 @@
 #pragma once
 
 #include "MenuState.hpp"
+#include "Player.hpp"
 
 class InventoryState :
     public State
 {
 public:
-    InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, /*Items& _items,*/ Fighter* _p);
+    InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
 
     virtual ~InventoryState();
 
@@ -23,9 +24,8 @@ public:
 private:
     sf::Font font;
     std::vector<Button*> useButtons;
-    std::unordered_map<std::string, Button*> buttons;
-    /*Items& items;*/
-    Fighter* player;
+    Player* player;
+    std::vector<Item*>* inventory = new std::vector<Item*>();
 
     sf::Text title;
 
@@ -49,8 +49,6 @@ private:
     void initButtons();
 
     void initItemList();
-
-    std::string getTooltipMessage(/*ItemTypes _items*/);
 };
 
 

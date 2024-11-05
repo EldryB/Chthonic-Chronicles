@@ -52,7 +52,8 @@ void InventoryState::initFonts()
     this->title.setPosition(100, 30);
 
     this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
-    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH / 2.f, 275.f);
+    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f, 
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
 
     this->itemDescription.setFont(this->font);
     this->itemDescription.setString(" ");
@@ -68,7 +69,7 @@ void InventoryState::initFonts()
     this->message.setString("Press 'C' to show controls");
     this->message.setCharacterSize(24);
     this->message.setFillColor(sf::Color::White);
-    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
 }
 
 void InventoryState::initKeybinds()
@@ -79,22 +80,21 @@ void InventoryState::initKeybinds()
 
 void InventoryState::initButtons()
 {
-    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UNLOCK");
-
-    for (int i = 0; i < 3/*static_cast<int>(itemTypes::count)*/; ++i)
+    for (int i = 0; i < this->inventory->size(); ++i)
     {
         this->useButtons.push_back(new Button(475.f, 160.f + i * 40, this->textures["UseButton"], &this->font, ""));
     }
 }
 
-InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, /*Items& _items,*/ Fighter* _p)
-    : /*items(_items),*/ State(_window, _supportedKeys, _states)
+InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
+    : State(_window, _supportedKeys, _states)
 {
     this->initVariables();
     this->initTextures();
     this->initBackground();
     this->initFonts();
     this->initKeybinds();
+    this->inventory = _p->getInventory();
     this->initButtons();
     this->initItemList();
     this->player = _p;
@@ -102,11 +102,6 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
 
 InventoryState::~InventoryState()
 {
-    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
-    {
-        delete it->second;
-    }
-
     for (auto& button : this->useButtons)
     {
         delete button;
@@ -119,11 +114,11 @@ void InventoryState::initItemList()
     this->itemNames.clear();
     this->itemAmounts.clear();
 
-    for (int i = 0; i < 3/*static_cast<int>(ItemTypes::count)*/; ++i)
+    for (int i = 0; i < this->inventory->size(); ++i)
     {
         sf::Text itemName;
         itemName.setFont(font);
-        itemName.setString("Item" + std::to_string(i));
+        itemName.setString(this->inventory->at(i)->getName());
         itemName.setCharacterSize(20);
         itemName.setFillColor(sf::Color(206, 185, 141));
         itemName.setPosition(325.f, 175.f + i * 40);
@@ -131,18 +126,12 @@ void InventoryState::initItemList()
 
         sf::Text itemAmount;
         itemAmount.setFont(font);
-        itemAmount.setString(std::to_string(i));
+        itemAmount.setString(std::to_string(this->inventory->at(i)->getAmount()));
         itemAmount.setCharacterSize(20);
         itemAmount.setFillColor(sf::Color(206, 185, 141));
         itemAmount.setPosition(425.f, 175.f + i * 40);
         itemAmounts.push_back(itemAmount);
     }
-}
-
-std::string InventoryState::getTooltipMessage(/*JobTypes _jobs*/)
-{
-    //item.getDescription();
-    return std::string();
 }
 
 void InventoryState::updateInput(const float& _dt)
@@ -177,24 +166,7 @@ void InventoryState::updateInput(const float& _dt)
 
 void InventoryState::updateButtons()
 {
-    for (auto& it : this->buttons)
-    {
-        it.second->setTextCharacterSize(27);
-        it.second->update(this->mousePosView);
-
-        if (it.second->getButtonState() == ButtonState::Idle)
-        {
-            it.second->setTexture(this->textures["MenuButtonIdle"]);
-            it.second->setTextFillColor(sf::Color(21, 26, 38));
-        }
-
-        if (it.second->getButtonState() == ButtonState::Hover)
-        {
-            it.second->setTexture(this->textures["MenuButtonHover"]);
-            it.second->setTextFillColor(sf::Color(96, 60, 3));
-        }
-    }
-
+    int i = 0;
     for (auto& button : this->useButtons)
     {
         button->update(this->mousePosView);
@@ -207,15 +179,15 @@ void InventoryState::updateButtons()
         else if (button->getButtonState() == ButtonState::Hover)
         {
             button->setTexture(this->textures["UseButtonHover"]);
-            /*this->itemDescription.setString(this->getTooltipMessage(static_cast<JobTypes>(i)));*/
+            this->itemDescription.setString(this->inventory->at(i)->getDescription());
         }
 
         else if (button->getButtonState() == ButtonState::Pressed)
         {
-            /*this->jobs.collectResources(resources, static_cast<JobTypes>(i));
-            this->initJobList();
-            this->initItemList();*/
+            this->inventory->at(i)->use();
+            this->initItemList();
         }
+        ++i;
     }
 }
 
@@ -228,11 +200,6 @@ void InventoryState::update(const float& _dt)
 
 void InventoryState::renderButtons(sf::RenderTarget* target)
 {
-    for (auto& it : this->buttons)
-    {
-        it.second->render(target);
-    }
-
     for (auto& button : this->useButtons)
     {
         button->render(target);

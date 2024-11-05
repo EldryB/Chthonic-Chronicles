@@ -2,6 +2,8 @@
 
 #include "nlohmann/json.hpp"
 #include "Fighter.hpp"
+#include "Player.hpp"
+#include "Enemy.hpp"
 #include <fstream>
 
 class JsonManagement

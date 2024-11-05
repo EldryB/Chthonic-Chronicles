@@ -7,7 +7,7 @@ class FightState :
     public State
 {
 public:
-    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p, sf::Vector2f _lastPos);
+    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, sf::Vector2f _lastPos);
 
     virtual ~FightState();
 
@@ -19,7 +19,7 @@ public:
 
 
 private:
-    Fighter* player;
+    Player* player;
     std::vector<Fighter*> enemies;
     sf::Font font;
     sf::Text text;
@@ -35,7 +35,7 @@ private:
 
     void initTextures();
 
-    void initFighters(Fighter* _p);
+    void initFighters(Player* _p);
 
     void initBackground();
 

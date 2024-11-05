@@ -48,12 +48,12 @@ void FightState::initTextures()
 	}
 }
 
-void FightState::initFighters(Fighter* _p)
+void FightState::initFighters(Player* _p)
 {
 	this->player = _p;
 	this->player->setLookingDirection(LookingDirection::Right);
 	this->player->setPosition(304.8f, 524.97f);
-	this->enemies.push_back(new Fighter(704.8f, 524.97f, this->textures["Bat1"], "Enemy1", 500, 50));
+	this->enemies.push_back(new Fighter(704.8f, 524.97f, this->textures["Bat1"], "Enemy1", 500, 50, 10 , 8));
 }
 
 void FightState::initBackground()
@@ -62,7 +62,7 @@ void FightState::initBackground()
 	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
-FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p, sf::Vector2f _lastPos)
+FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, sf::Vector2f _lastPos)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initFighters(_p);

@@ -45,7 +45,7 @@ public:
 	virtual void update(const float& _dt);
 
 	virtual void render(sf::RenderTarget* target);
-
+	
 	virtual std::string getName();
 
 	virtual void setAttributes(float _x, float _y, std::string _name);
