@@ -31,6 +31,11 @@ void InventoryState::initTextures()
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
     }
+
+    if (!this->textures["ITEMS_SHEET"].loadFromFile("assets/textures/Player/swords.png"))
+    {
+        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+    }
 }
 
 void InventoryState::initBackground()
@@ -78,24 +83,29 @@ void InventoryState::initKeybinds()
     this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
-void InventoryState::initButtons()
-{
-    for (int i = 0; i < this->inventory->size(); ++i)
-    {
-        this->useButtons.push_back(new Button(475.f, 160.f + i * 40, this->textures["UseButton"], &this->font, ""));
-    }
-}
+//void InventoryState::initButtons()
+//{
+//    for (int i = 0; i < this->inventory->size(); ++i)
+//    {
+//        this->useButtons.push_back(new Button(475.f, 160.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, ""));
+//    }
+//}
 
 InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
     : State(_window, _supportedKeys, _states)
 {
+    Item* item = new Item(this->textures["ITEMS_SHEET"], "Sword", 1, "Amazing sword!");
+    item->addItemIcon("SWORD_2", 77, 0, 43, 23);
+    item->setItemIcon("SWORD_2");
+    _p->addItem(item);
+    
     this->initVariables();
     this->initTextures();
     this->initBackground();
     this->initFonts();
     this->initKeybinds();
     this->inventory = _p->getInventory();
-    this->initButtons();
+    //this->initButtons();
     this->initItemList();
     this->player = _p;
 }
@@ -113,6 +123,7 @@ void InventoryState::initItemList()
 {
     this->itemNames.clear();
     this->itemAmounts.clear();
+    this->useButtons.clear();
 
     for (int i = 0; i < this->inventory->size(); ++i)
     {
@@ -131,6 +142,9 @@ void InventoryState::initItemList()
         itemAmount.setFillColor(sf::Color(206, 185, 141));
         itemAmount.setPosition(425.f, 175.f + i * 40);
         itemAmounts.push_back(itemAmount);
+        
+        Button* button = new Button(475.f, 160.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, "");
+        this->useButtons.push_back(button);
     }
 }
 

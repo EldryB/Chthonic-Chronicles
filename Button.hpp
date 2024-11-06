@@ -16,6 +16,8 @@ class Button
 public:
 	Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::string _text);
 
+	Button(float _x, float _y, sf::Sprite _sprite, sf::Font* _font, std::string _text);
+
 	virtual ~Button();
 
 	const bool isIdle() const;

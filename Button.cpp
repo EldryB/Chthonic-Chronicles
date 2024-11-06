@@ -19,6 +19,24 @@ Button::Button(float _x, float _y, sf::Texture _texture, sf::Font* _font, std::s
 	this->keyCode = " ";
 }
 
+Button::Button(float _x, float _y, sf::Sprite _sprite, sf::Font* _font, std::string _text)
+{
+	this->buttonState = ButtonState::Idle;
+	this->sprite = _sprite;
+	this->sprite.setPosition(_x, _y);
+
+	this->font = _font;
+	this->text.setFont(*this->font);
+	this->text.setString(_text);
+	this->text.setCharacterSize(18);
+	this->text.setFillColor(sf::Color::White);
+	this->text.setPosition(
+		this->sprite.getPosition().x + (this->sprite.getGlobalBounds().width / 2.f) - this->sprite.getGlobalBounds().width / 4.f,
+		this->sprite.getPosition().y + (this->sprite.getGlobalBounds().height / 2.f) - this->sprite.getGlobalBounds().height / 16.f
+	);
+	this->keyCode = " ";
+}
+
 Button::~Button()
 {
 	

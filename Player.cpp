@@ -3,9 +3,6 @@
 Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _attackPower, int _defense, int _initiative)
     : Fighter(_x, _y, texture_sheet, _name, _hp, _attackPower, _defense, _initiative)
 {
-    Item* item = new Item(texture_sheet, "Papa", 10, "Hola");
-    this->addItem(item);
-
     this->jobs = new Jobs();
     this->resources = new Resources();
 }
