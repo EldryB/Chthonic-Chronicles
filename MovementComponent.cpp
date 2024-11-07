@@ -194,7 +194,7 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 {
 	if(stages == CurrentStage::Lvl1R1)
 	{
-		if (getXPos(spr) < 50 && (getYPos(spr) < 328 || getYPos(spr) > 416))
+		if (getXPos(spr) < 50 && (getYPos(spr) < 321 || getYPos(spr) > 414))
 		{
 			spr->setPosition(lastx, lasty);
 		}
@@ -280,7 +280,7 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 			spr->setPosition(lastx, lasty);
 		}
 
-		else if (getXPos(spr) > 770 && (getYPos(spr) < 226 || getYPos(spr) > 331))
+		else if (getXPos(spr) > 770 && (getYPos(spr) < 248 || getYPos(spr) > 331))
 		{
 			spr->setPosition(lastx, lasty);
 		}
@@ -288,7 +288,7 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 
 	else if (stages == CurrentStage::Lvl1R4)
 	{
-		if (getXPos(spr) > 48 && getXPos(spr) <= 91 && (getYPos(spr) < 226 || getYPos(spr) > 331))
+		if (getXPos(spr) > 48 && getXPos(spr) <= 91 && (getYPos(spr) < 248 || getYPos(spr) > 331))
 		{
 			spr->setPosition(lastx, lasty);
 		}
