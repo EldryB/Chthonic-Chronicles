@@ -199,6 +199,7 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 			spr->setPosition(lastx, lasty);
 		}
 
+
 		if (getYPos(spr) < 183 || getYPos(spr) > 509)
 		{
 			spr->setPosition(lastx, lasty);
