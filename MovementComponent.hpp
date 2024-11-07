@@ -48,11 +48,11 @@ public:
 
 	void pushStage(CurrentStage _c);
 
-	void popStage();
-
 	CurrentStage getStage();
 
-	void setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty);
+	void setDefaultLimits(sf::Sprite* spr, float& lastx, float& lasty);
+
+	void setLvl1Limits(sf::Sprite* spr, float& lastx, float& lasty);
 
 	void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 
@@ -63,7 +63,7 @@ private:
 	float deceleration;
 	LookingDirection lookingDirection;
 	sf::Vector2f velocity;
-	std::stack<CurrentStage> stages;
+	CurrentStage stages;
 
 };
 

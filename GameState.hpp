@@ -3,6 +3,7 @@
 #include "InventoryState.hpp"
 #include "FightState.hpp"
 #include "JobMenuState.hpp"
+#include "Dice.hpp"
 
 class GameState :
     public State
@@ -20,11 +21,13 @@ public:
 
     void update(const float& _dt);
 
+    void updateMap(const float& _dt);
+
     void render(sf::RenderTarget* target = nullptr);
 
 private:
     Player* player;
-    std::vector<Item*> items;
+    std::vector<Enemy*> enemies;
     Jobs* jobs;
     Resources* resources;
     int currentFrame;
@@ -36,7 +39,9 @@ private:
     sf::Text message2;
     sf::Text stageText;
     std::stack<sf::Sprite> backgrounds;
-    float dt;
+    std::string check;
+    bool isInLvl1;
+    bool isBackgroundMoving;
 
     void initVariables();
 
@@ -46,11 +51,11 @@ private:
 
     void initFighters();
 
-    void initItems();
-
     void initBackground();
 
     void initFonts();
+
+    void createCombat();
 
     std::string getStringStage(CurrentStage _c);
 };

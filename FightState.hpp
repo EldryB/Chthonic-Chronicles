@@ -7,7 +7,7 @@ class FightState :
     public State
 {
 public:
-    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, sf::Vector2f _lastPos);
+    FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, Enemy* _enemy, sf::Vector2f _lastPos);
 
     virtual ~FightState();
 
@@ -41,8 +41,8 @@ private:
 
     int turnCount;
     int currentTurn;
-
-    void startTurn();
+    sf::Clock clock;
+    float count;
 
     void updateTurnQueue(int turnCount);
 
@@ -54,7 +54,7 @@ private:
 
     void initTextures();
 
-    void initFighters(Player* _p);
+    void initFighters(Player* _p, Enemy* _enemy);
 
     void initBackground();
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.hpp"
-#include "Item.hpp";
+#include "Item.hpp"
 
 class Fighter :
     public Entity

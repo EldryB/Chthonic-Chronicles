@@ -6,7 +6,11 @@ void GameState::initVariables()
 	this->keyCode = " ";
 	this->resources = new Resources();
 	this->jobs = new Jobs();
-	this->dt = 0;
+	check = " ";
+	isBackgroundMoving = false;
+	isInLvl1 = (this->player->getStage() == CurrentStage::Lvl1R1) || (this->player->getStage() == CurrentStage::Lvl1R2) || (this->player->getStage() == CurrentStage::Lvl1R3) || 
+		(this->player->getStage() == CurrentStage::Lvl1R4) || (this->player->getStage() == CurrentStage::Lvl1R5) || (this->player->getStage() == CurrentStage::Lvl1R6) || 
+		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8 || (this->player->getStage() == CurrentStage::Lvl1R9));
 }
 
 void GameState::initKeybinds()
@@ -47,31 +51,12 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 10, 10);
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 15, 10);
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
 }
 
-void GameState::initItems()
-{
-	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!"));
-	this->items[0]->addItemIcon("DAGGER_1", 0, 0, 41, 44);
-	this->items[0]->setItemIcon("DAGGER_1");
-	this->player->addItem(this->items[0]);
-
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "Amazing sword!"));
-	this->items[1]->addItemIcon("SWORD_1", 41, 40, 41, 44);
-	this->items[1]->setItemIcon("SWORD_1");
-	this->player->addItem(this->items[1]);
-
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Sword", 1, "Amazing sword!"));
-	this->items[2]->addItemIcon("SWORD_2", 82, 40, 41, 44);
-	this->items[2]->setItemIcon("SWORD_2");
-	this->player->addItem(this->items[2]);
-
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Bow and Arrow", 1, "Amazing bow!"));
-	this->items[3]->addItemIcon("BOW_AND_ARROW_1", 0, 0, 41, 44);
-	this->items[3]->setItemIcon("BOW_AND_ARROW_1");
-	this->player->addItem(this->items[3]);*/
-}
 
 void GameState::initBackground()
 {
@@ -91,9 +76,9 @@ void GameState::initFonts()
 
 	this->message.setFont(this->font);
 	this->message.setString("Press 'C' to show controls");
-	this->message.setCharacterSize(24);
+	this->message.setCharacterSize(18);
 	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+	this->message.setPosition((Settings::WINDOW_WIDTH/2), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
 
 	this->message2.setFont(this->font);
 	this->message2.setString("Press E to enter");
@@ -112,6 +97,21 @@ void GameState::initFonts()
 	this->stageText.setPosition(700, 30);
 }
 
+void GameState::createCombat()
+{
+
+	for(auto enemy: enemies)
+	{
+		if (enemy->isAlive())
+		{
+			sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, enemy, lastPos));
+			return;
+		}
+	}
+	
+}
+
 std::string GameState::getStringStage(CurrentStage _c)
 {
 	switch (_c)
@@ -121,7 +121,23 @@ std::string GameState::getStringStage(CurrentStage _c)
 
 	case CurrentStage::Combat:return "Combat";
 
-	case CurrentStage::Lvl1:return "Lvl1";
+	case CurrentStage::Lvl1R1:return "Lvl1R1";
+
+	case CurrentStage::Lvl1R2:return "Lvl1R2";
+
+	case CurrentStage::Lvl1R3:return "Lvl1R3";
+
+	case CurrentStage::Lvl1R4:return "Lvl1R4";
+
+	case CurrentStage::Lvl1R5:return "Lvl1R5";
+
+	case CurrentStage::Lvl1R6:return "Lvl1R6";
+
+	case CurrentStage::Lvl1R7:return "Lvl1R7";
+
+	case CurrentStage::Lvl1R8:return "Lvl1R8";
+
+	case CurrentStage::Lvl1R9:return "Lvl1R9";
 
 	default: return " ";
 	}
@@ -133,7 +149,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initVariables();
 	this->initTextures();
-	this->initItems();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -147,7 +162,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initVariables();
 	this->initTextures();
-	this->initItems();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -250,7 +264,7 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->player->setPosition(Settings::WINDOW_WIDTH - this->player->getSprite()->getGlobalBounds().width, Settings::WINDOW_HEIGHT/2);
-			this->player->pushStage(CurrentStage::Lvl1);
+			this->player->pushStage(CurrentStage::Lvl1R1);
 			sf::Sprite spr{ this->textures["Lvl1"] };
 			spr.setPosition(-2044.86f, -1214.11f);
 			this->backgrounds.push(spr);
@@ -260,34 +274,52 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) )
+	Dice dice;
+	
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
 		this->player->move(-1.f, 0.f, _dt);
-		if(this->backgrounds.top().getPosition().x <= 0)
+
+		if (dice.roll(2147483646/ 1000) == 50)
 		{
-			this->backgrounds.top().move(80 * _dt, 0);
+			this->createCombat();
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) )
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !isBackgroundMoving)
 	{
 		this->player->move(1.f, 0.f, _dt);
-		if(this->backgrounds.top().getPosition().x >= -this->backgrounds.top().getGlobalBounds().width)
+
+		if (dice.roll(2147483646/ 1000) == 50)
 		{
-			this->backgrounds.top().move(-80 * _dt, 0);
+			this->createCombat();
 		}
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
 	{
 		this->player->move(0.f, -1.f, _dt);
-		this->backgrounds.top().move(0, 80 * _dt);
+
+		if (dice.roll(2147483646/ 1000) == 50)
+		{
+			this->createCombat();
+		}
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
 	{
 		this->player->move(0.f, 1.f, _dt);
-		this->backgrounds.top().move(0, -80 * _dt);
+
+		if (dice.roll(2147483646/1000) == 50)
+		{
+			this->createCombat();
+		}
 	}
 
-	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x >= -10)
+	if (this->player->getSprite()->getPosition().x < 500 && this->player->getStage() == CurrentStage::Lvl1R1 && this->enemies[this->enemies.size() - 1]->isAlive())
+	{
+		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, this->enemies[this->enemies.size() - 1], lastPos));
+	}
+
+	if (this->player->getSprite()->getPosition().x > 800 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x <= -2020)
 	{
 		this->keyCode = "ACTION2";
 	}
@@ -296,45 +328,44 @@ void GameState::updateInput2(const float& _dt)
 		if (this->keyCode == "ACTION2")
 		{
 			this->keyCode = " ";
-			this->player->setPosition(780, 360);
-			this->player->popStage();
+			this->player->setPosition(200, 360);
+			this->player->pushStage(CurrentStage::MainStage);
 			this->backgrounds.pop();
 		}
-	}
-
-	if (this->player->getSprite()->getPosition().x < 500 && this->player->getStage() == CurrentStage::Lvl1)
-	{
-		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
-		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
 	}
 }
 
 void GameState::update(const float& _dt)
 {
+	isInLvl1 = (this->player->getStage() == CurrentStage::Lvl1R1) || (this->player->getStage() == CurrentStage::Lvl1R2) || (this->player->getStage() == CurrentStage::Lvl1R3) ||
+		(this->player->getStage() == CurrentStage::Lvl1R4) || (this->player->getStage() == CurrentStage::Lvl1R5) || (this->player->getStage() == CurrentStage::Lvl1R6) ||
+		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8 || (this->player->getStage() == CurrentStage::Lvl1R9));
+
 	this->updateMousePositions();
 	if(this->player->getStage() == CurrentStage::MainStage)
 	{
 		this->updateInput(_dt);
 	}
-	else if (this->player->getStage() == CurrentStage::Lvl1)
+	else if (isInLvl1)
 	{
 		this->updateInput2(_dt);
 	}
 
 	this->player->update(_dt);
 
-	if(this->player->getStage() == CurrentStage::MainStage)
-	{
-		std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
-		text.setString(textString);
-	}
-	else if (this->player->getStage() == CurrentStage::Lvl1)
+	
+	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
+	text.setString(textString);
+	
+	if(isInLvl1)
 	{
 		std::string textString = "Position: X = " + std::to_string(this->backgrounds.top().getPosition().x) + ", Y = " + std::to_string(this->backgrounds.top().getPosition().y);
-		text.setString(textString);
+		message.setString(textString);;
 	}
 
+	updateMap(_dt);
 	this->stageText.setString(this->getStringStage(this->player->getStage()));
+
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -360,4 +391,305 @@ void GameState::render(sf::RenderTarget* target)
 	{
 		target->draw(this->message2);
 	}
+}
+
+void GameState::updateMap(const float& dtt)
+{
+	float _dt = dtt * 3;
+
+
+	if (this->player->getStage() == CurrentStage::Lvl1R1 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R1R";
+	}
+	if (check == "L1R1R")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(125 * _dt, 0);
+		this->player->moveS(120.f, 0.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R2);
+		if (this->player->getSprite()->getPosition().x > 940)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R2 && this->player->getSprite()->getPosition().x > 940 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R2L";
+	}
+	if (check == "L1R2L")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(-125 * _dt, 0);
+		this->player->moveS(-120.f, 0.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R1);
+		if (this->player->getSprite()->getPosition().x < 50)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R2 && this->player->getSprite()->getPosition().y < 10 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R2U";
+	}
+	if (check == "L1R2U")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, 150 * _dt);
+		this->player->moveS(0, 120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R3);
+		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R3 &&
+		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height
+		&& sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
+	{
+		check = "L1R3D";
+	}
+	if (check == "L1R3D")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, -150 * _dt);
+		this->player->moveS(0, -120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R2);
+		if (this->player->getSprite()->getPosition().y < 10)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R3 && this->player->getSprite()->getPosition().x > 940 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R3R";
+	}
+	if (check == "L1R3R")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(-125 * _dt, 0);
+		this->player->moveS(-120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R4);
+		if (this->player->getSprite()->getPosition().x < 50)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R4 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT"))&& 
+		!isBackgroundMoving)
+	{
+		check = "L1R4L";
+	}
+	if (check == "L1R4L")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(125 * _dt, 0);
+		this->player->moveS(120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R3);
+		if (this->player->getSprite()->getPosition().x > 940)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R3 && 
+		(this->player->getSprite()->getPosition().x > 187 && this->player->getSprite()->getPosition().x < 328) && this->player->getSprite()->getPosition().y < 145 &&
+		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
+	{
+		check = "L1R3U";
+	}
+	if (check == "L1R3U")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, 250 * _dt);
+		this->player->moveS(0, 120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R5);
+		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R5 &&
+		(this->player->getSprite()->getPosition().x > 187 && this->player->getSprite()->getPosition().x < 328) && 
+		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height &&
+		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
+	{
+		check = "L1R5D";
+	}
+	if (check == "L1R5D")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, -250 * _dt);
+		this->player->moveS(0, -120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R3);
+		if (this->player->getSprite()->getPosition().y < 145)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R5 && this->player->getSprite()->getPosition().x > 940 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R5R";
+	}
+	if (check == "L1R5R")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(-125 * _dt, 0);
+		this->player->moveS(-120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R6);
+		if (this->player->getSprite()->getPosition().x < 50)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R6 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) &&
+		!isBackgroundMoving)
+	{
+		check = "L1R6L";
+	}
+	if (check == "L1R6L")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(125 * _dt, 0);
+		this->player->moveS(120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R5);
+		if (this->player->getSprite()->getPosition().x > 940)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R5 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) &&
+		!isBackgroundMoving)
+	{
+		check = "L1R5L";
+	}
+	if (check == "L1R5L")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(145 * _dt, 0);
+		this->player->moveS(120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R7);
+		if (this->player->getSprite()->getPosition().x > 940)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R7 && this->player->getSprite()->getPosition().x > 940 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R7R";
+	}
+	if (check == "L1R7R")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(-145 * _dt, 0);
+		this->player->moveS(-120.f, 0, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R5);
+		if (this->player->getSprite()->getPosition().x < 50)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R7 &&
+		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5
+		&& sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
+	{
+		check = "L1R7D";
+	}
+	if (check == "L1R7D")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, -150 * _dt);
+		this->player->moveS(0, -120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R8);
+		if (this->player->getSprite()->getPosition().y < 10)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R8 && this->player->getSprite()->getPosition().y < 10 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R8U";
+	}
+	if (check == "L1R8U")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, 150 * _dt);
+		this->player->moveS(0, 120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R7);
+		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R8 &&
+		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5
+		&& sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
+	{
+		check = "L1R8D";
+	}
+	if (check == "L1R8D")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, -170 * _dt);
+		this->player->moveS(0, -120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R9);
+		if (this->player->getSprite()->getPosition().y < 10)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
+	if (this->player->getStage() == CurrentStage::Lvl1R9 && this->player->getSprite()->getPosition().y < 10 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP"))
+		&& !isBackgroundMoving)
+	{
+		check = "L1R9U";
+	}
+	if (check == "L1R9U")
+	{
+		this->isBackgroundMoving = true;
+		this->backgrounds.top().move(0, 170 * _dt);
+		this->player->moveS(0, 120.f, _dt);
+		this->player->pushStage(CurrentStage::Lvl1R8);
+		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5)
+		{
+			this->isBackgroundMoving = false;
+			check = " ";
+		}
+	}
+
 }

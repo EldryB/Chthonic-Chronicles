@@ -32,8 +32,6 @@ public:
 
 	void pushStage(CurrentStage _c);
 
-	void popStage();
-
 	CurrentStage getStage();
 
 	virtual void setPosition(const float _x, const float _y);
@@ -41,6 +39,8 @@ public:
 	virtual void setName(std::string _name);
 
 	virtual void move(const float dir_x, const float dir_y, const float& _dt);
+
+	virtual void moveS(const float dir_x, const float dir_y, const float& _dt);
 
 	virtual void update(const float& _dt);
 

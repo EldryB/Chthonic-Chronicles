@@ -7,7 +7,7 @@ MovementComponent::MovementComponent(sf::Sprite& _sprite,
 	maxVelocity{_maxVelocity}, acceleration{_aceleration}, deceleration{_deceleration}
 {
 	this->velocity.x = this->velocity.y = 0.f;
-	this->stages.push(CurrentStage::MainStage);
+	this->stages = (CurrentStage::MainStage);
 }
 
 MovementComponent::~MovementComponent()
@@ -60,17 +60,12 @@ void MovementComponent::setLookingDirection(LookingDirection _l)
 
 void MovementComponent::pushStage(CurrentStage _c)
 {
-	this->stages.push(_c);
-}
-
-void MovementComponent::popStage()
-{
-	this->stages.pop();
+	stages = _c;
 }
 
 CurrentStage MovementComponent::getStage()
 {
-	return this->stages.top();
+	return this->stages;
 }
 
 void MovementComponent::move(const float dir_x, const float dir_y, const float& _dt)
@@ -147,14 +142,17 @@ void MovementComponent::update(const float& _dt)
 	this->sprite.move(this->velocity * _dt);
 
 	sf::Sprite* spr = &this->sprite;
-	if (this->stages.top() == CurrentStage::MainStage)
+	if (this->stages == CurrentStage::MainStage)
 	{
 		this->setMainStageLimits(spr, lastX, lastY);
 	}
-	else if (this->stages.top() == CurrentStage::Lvl1)
+	else if (this->stages == CurrentStage::Lvl1R1)
 	{
-		this->setStage2Limits(spr, lastX, lastY);
+		this->setDefaultLimits(spr, lastX, lastY);
 	}
+
+	this->setLvl1Limits(spr, lastX, lastY);
+	this->setDefaultLimits(spr, lastX, lastY);
 	this->sprite = *spr;
 }
 
@@ -179,7 +177,7 @@ void MovementComponent::setYPos(float _y, sf::Sprite* sprite)
 	sprite->setPosition(_x, _y);
 }
 
-void MovementComponent::setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty)
+void MovementComponent::setDefaultLimits(sf::Sprite* spr, float& lastx, float& lasty)
 {
 	if (getYPos(spr) < 0 || getYPos(spr) > Settings::WINDOW_HEIGHT - spr->getGlobalBounds().height)
 	{
@@ -189,6 +187,136 @@ void MovementComponent::setStage2Limits(sf::Sprite* spr, float& lastx, float& la
 	if (getXPos(spr) < 0 || getXPos(spr) > Settings::WINDOW_WIDTH - spr->getGlobalBounds().width)
 	{
 		spr->setPosition(lastx, lasty);
+	}
+}
+
+void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& lasty)
+{
+	if(stages == CurrentStage::Lvl1R1)
+	{
+		if (getXPos(spr) < 50 && (getYPos(spr) < 328 || getYPos(spr) > 416))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		if (getYPos(spr) < 183 || getYPos(spr) > 509)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+
+	else if (stages == CurrentStage::Lvl1R2)
+	{
+		if (getXPos(spr) > 718 && getXPos(spr) < 941 && (getYPos(spr) < 321 || getYPos(spr) > 414) )
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 660 && getXPos(spr) <= 718 && (getYPos(spr) < 277 || getYPos(spr) > 414))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 600 && getXPos(spr) <= 660 && (getYPos(spr) < 229 || getYPos(spr) > 461))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 430 && getXPos(spr) <= 600 && (getYPos(spr) < 179 || getYPos(spr) > 508))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 335 && getXPos(spr) <= 430 && (getYPos(spr) > 508))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 160 && getXPos(spr) <= 335 && (getYPos(spr) < 179 || getYPos(spr) > 508))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 99 && getXPos(spr) <= 160 && (getYPos(spr) < 229 || getYPos(spr) > 461))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 43 && getXPos(spr) <= 99 && (getYPos(spr) < 277 || getYPos(spr) > 414))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) <= 43)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+
+	else if (stages == CurrentStage::Lvl1R3)
+	{
+		if (getXPos(spr) <= 41)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 41 && getXPos(spr) <= 186 && (getYPos(spr) < 154 || getYPos(spr) > 425))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 186 && getXPos(spr) <= 335 && (getYPos(spr) > 425))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 335 && getXPos(spr) <= 430 && (getYPos(spr) < 154))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 430 && getXPos(spr) <= 770 && (getYPos(spr) < 154 || getYPos(spr) > 425))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 770 && (getYPos(spr) < 226 || getYPos(spr) > 331))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+
+	else if (stages == CurrentStage::Lvl1R4)
+	{
+		if (getXPos(spr) > 48 && getXPos(spr) <= 91 && (getYPos(spr) < 226 || getYPos(spr) > 331))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 91 && getXPos(spr) <= 178 && (getYPos(spr) < 248 || getYPos(spr) > 422))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 178 && getXPos(spr) <= 602 && (getYPos(spr) < 341 || getYPos(spr) > 422))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 602 && getXPos(spr) <= 684 && (getYPos(spr) < 295 || getYPos(spr) > 422))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 684 && getXPos(spr) <= 900 && (getYPos(spr) < 295 || getYPos(spr) > 375))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) >  900)
+		{
+			spr->setPosition(lastx, lasty);
+		}
 	}
 }
 

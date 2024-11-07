@@ -1,48 +1,5 @@
 #include "FightState.hpp"
 
-void FightState::startTurn()
-{
-	while (!isFightOver())
-	{
-		turnCount++;
-		updateTurnQueue(turnCount);
-
-
-		if (isFightOver())
-		{
-			std::cout << "El Fighte ha terminado." << std::endl;
-			return;
-		}
-
-		if (!turnQueue.empty())
-		{
-			currentTurn++;
-			auto currentFighter = turnQueue.front();
-			std::string stringText = "Turno " + std::to_string(currentTurn) + " " + currentFighter->getName() + " empieza su turno " + "Vida: " + std::to_string(currentFighter->getHp());;
-			this->textBox.setString(stringText);
-
-			if (Player* p = dynamic_cast<Player*>(currentFighter))
-			{
-				this->playerTurn = true;
-				//p->attack(fighters[1]);
-			}
-			
-			if(!playerTurn)
-			{
-				this->enemy->attack(this->player);
-
-				if (isFightOver())
-				{
-				//std::cout << "El Fighte ha terminado." << std::endl;
-				return;
-				}
-
-			turnQueue.pop();
-			}
-		}
-	}
-}
-
 bool FightState::isFightOver()
 {
 	return (!this->player->isAlive()) || (!this->enemy->isAlive());
@@ -54,6 +11,7 @@ void FightState::initVariables()
 	this->keyCode = " ";
 	this->hpMax.push_back(this->player->getHp());
 	this->hpMax.push_back(this->enemy->getHp());
+	this->count = 0;
 }
 
 void FightState::initKeybinds()
@@ -86,9 +44,9 @@ void FightState::initFonts()
 
 	this->textBox.setFont(this->font);
 	this->textBox.setString(" ");
-	this->textBox.setCharacterSize(20);
+	this->textBox.setCharacterSize(17);
 	this->textBox.setFillColor(sf::Color::White);
-	this->textBox.setPosition(20, 20);
+	this->textBox.setPosition(450, 550);
 }
 
 void FightState::initTextures()
@@ -124,12 +82,12 @@ void FightState::initButtons()
 	this->buttons["ATTACK"] = new Button(100, 470.f, this->textures["AttackMenuButtonIdle"], &this->font, "ATTACK");
 }
 
-void FightState::initFighters(Player* _p)
+void FightState::initFighters(Player* _p, Enemy* _enemy)
 {
 	this->player = _p;
 	this->player->setLookingDirection(LookingDirection::Right);
 	this->player->setPosition(304.8f, 394.97f);
-	this->enemy = new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 1000, 10, 10 , 5);
+	this->enemy = _enemy;
 }
 
 void FightState::initBackground()
@@ -138,11 +96,11 @@ void FightState::initBackground()
 	this->background.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 }
 
-FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, sf::Vector2f _lastPos)
+FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, Enemy* _enemy, sf::Vector2f _lastPos)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initTextures();
-	this->initFighters(_p);
+	this->initFighters(_p, _enemy);
 	this->initVariables();
 	this->initBackground();
 	this->initKeybinds();
@@ -236,22 +194,22 @@ void FightState::updateButtons()
 	}
 
 
-	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed)
+	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
 		//this->enemy->takeDamage(this->player->getDamage());
-		this->enemy->setHp(this->enemy->getHp() - 50.f);
-		if (this->enemy->getHp() < 0)
-		{
-			this->enemy->setHp(0);
-		}
+		this->enemy->takeDamage(this->player->getDamage());
 
 		this->playerTurn = false;
 		this->turnQueue.pop();
+		count = 0;
 	}
 }
 
 void FightState::update(const float& _dt)
 {
+
+	count += this->clock.restart().asSeconds();
+
 	this->updateMousePositions();
 	this->updateInput(_dt);
 	this->player->update(_dt);
@@ -277,7 +235,7 @@ void FightState::update(const float& _dt)
 
 	if (!this->enemy->isAlive())
 	{
-		this->player->setPosition(lastPosition.x + 10.f, lastPosition.y);
+		this->player->setPosition(lastPosition.x, lastPosition.y);
 		this->states->pop();
 	}
 
@@ -288,7 +246,7 @@ void FightState::update(const float& _dt)
 	{
 		currentTurn++;
 		auto currentFighter = turnQueue.front();
-		std::string stringText = "Turno " + std::to_string(currentTurn) + " " + currentFighter->getName() + " empieza su turno " + "Vida: " + std::to_string(currentFighter->getHp());;
+		std::string stringText = currentFighter->getName() + " empieza su turno ";
 		this->textBox.setString(stringText);
 
 		if (Player* p = dynamic_cast<Player*>(currentFighter))
@@ -299,13 +257,11 @@ void FightState::update(const float& _dt)
 
 		if (!this->playerTurn)
 		{
-			//this->player->takeDamage(this->enemy->getDamage());
-			this->player->setHp(this->player->getHp() - 10.f);
-			if (this->player->getHp() < 0)
+			if(count > 3.f)
 			{
-				this->player->setHp(0);
+				this->player->takeDamage(this->enemy->getDamage());
+				turnQueue.pop();
 			}
-			turnQueue.pop();
 		}
 	}
 	
@@ -347,6 +303,7 @@ void FightState::render(sf::RenderTarget* target)
 	}
 	target->draw(this->message);
 	target->draw(this->message2);
+	target->draw(this->textBox);
 
 }
 

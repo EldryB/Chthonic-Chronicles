@@ -55,7 +55,7 @@ void Fighter::attack(Fighter* target)
 
 void Fighter::takeDamage(float _attackPower)
 {
-	float takeDamage = _attackPower * (100 / (100 + this->defense));
+	float takeDamage = _attackPower * (100.f / (100.f + this->defense));
 	this->hp -= takeDamage;
 
 	if (this->hp < 0)

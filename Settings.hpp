@@ -18,7 +18,15 @@ enum class CurrentStage
 {
 	MainStage,
 	Combat,
-	Lvl1
+	Lvl1R1,
+	Lvl1R2,
+	Lvl1R3,
+	Lvl1R4,
+	Lvl1R5,
+	Lvl1R6,
+	Lvl1R7,
+	Lvl1R8,
+	Lvl1R9
 };
 
 enum class CurrentState

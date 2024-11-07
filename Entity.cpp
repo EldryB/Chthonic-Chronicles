@@ -67,10 +67,6 @@ void Entity::pushStage(CurrentStage _c)
 	this->movementComponent->pushStage(_c);
 }
 
-void Entity::popStage()
-{
-	this->movementComponent->popStage();
-}
 
 CurrentStage Entity::getStage()
 {
@@ -93,6 +89,11 @@ void Entity::move(const float dir_x, const float dir_y, const float& _dt)
 	{
 		this->movementComponent->move(dir_x, dir_y, _dt);
 	}
+}
+
+void Entity::moveS(const float dir_x, const float dir_y, const float& _dt)
+{
+	this->sprite->move(dir_x * _dt, dir_y * _dt);
 }
 
 void Entity::update(const float& _dt)
