@@ -12,16 +12,6 @@ void InventoryState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
     }
 
-    if (!this->textures["UseButton"].loadFromFile("assets/textures/Buttons/useButton.png"))
-    {
-        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
-    }
-
-    if (!this->textures["UseButtonHover"].loadFromFile("assets/textures/Buttons/useButtonHover.png"))
-    {
-        throw "ERROR::MENU_STATE::COULD_NOT_LOAD_SUBSTRACT_BUTTON_TEXTURE!";
-    }
-
     if (!this->textures["MenuButtonIdle"].loadFromFile("assets/textures/Buttons/MenuButtonIdle.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_IDLE_TEXTURE!";
@@ -32,7 +22,7 @@ void InventoryState::initTextures()
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_MENU_BUTTON_HOVER_TEXTURE!";
     }
 
-    if (!this->textures["ITEMS_SHEET"].loadFromFile("assets/textures/Player/swords.png"))
+    if (!this->textures["ITEMS_SHEET"].loadFromFile("assets/textures/Player/weapons.png"))
     {
         throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
     }
@@ -83,31 +73,50 @@ void InventoryState::initKeybinds()
     this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
 }
 
-//void InventoryState::initButtons()
-//{
-//    for (int i = 0; i < this->inventory->size(); ++i)
-//    {
-//        this->useButtons.push_back(new Button(475.f, 160.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, ""));
-//    }
-//}
+void InventoryState::initButtons()
+{
+    this->useButtons.clear();
+    
+    for (int i = 0; i < this->inventory->size(); ++i)
+    {
+        this->useButtons.push_back(new Button(325.f, 150.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, ""));
+    }
+}
 
 InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
     : State(_window, _supportedKeys, _states)
-{
-    Item* item = new Item(this->textures["ITEMS_SHEET"], "Sword", 1, "Amazing sword!");
-    item->addItemIcon("SWORD_2", 77, 0, 43, 23);
-    item->setItemIcon("SWORD_2");
-    _p->addItem(item);
-    
+{    
     this->initVariables();
     this->initTextures();
     this->initBackground();
     this->initFonts();
     this->initKeybinds();
-    this->inventory = _p->getInventory();
-    //this->initButtons();
-    this->initItemList();
+
+    Item* item1 = new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!");
+    item1->addItemIcon("DAGGER_1", 0, 0, 41, 42);
+    item1->setItemIcon("DAGGER_1");
+    _p->addItem(item1);
+    this->textures["UseButton"] = item1->getTexture();
+
+    Item* item2 = new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "Amazing sword!");
+    item2->addItemIcon("SWORD_1", 41, 41, 41, 42);
+    item2->setItemIcon("SWORD_1");
+    _p->addItem(item2);
+
+    Item* item3 = new Item(this->textures["ITEMS_SHEET"], "Blue Sword", 1, "Amazing sword!");
+    item3->addItemIcon("SWORD_2", 82, 41, 41, 42);
+    item3->setItemIcon("SWORD_2");
+    _p->addItem(item3);
+
+    //Item* item4 = new Item(this->textures["ITEMS_SHEET"], "Bow and Arrow", 1, "Amazing bow!");
+    //item4->addItemIcon("BOW_AND_ARROW_1", 0, 0, 41, 44);
+    //item4->setItemIcon("BOW_AND_ARROW_1");
+    //_p->addItem(item4);
+
     this->player = _p;
+    this->inventory = player->getInventory();
+    this->initButtons();
+    this->initItemList();
 }
 
 InventoryState::~InventoryState()
@@ -123,7 +132,6 @@ void InventoryState::initItemList()
 {
     this->itemNames.clear();
     this->itemAmounts.clear();
-    this->useButtons.clear();
 
     for (int i = 0; i < this->inventory->size(); ++i)
     {
@@ -132,19 +140,16 @@ void InventoryState::initItemList()
         itemName.setString(this->inventory->at(i)->getName());
         itemName.setCharacterSize(20);
         itemName.setFillColor(sf::Color(206, 185, 141));
-        itemName.setPosition(325.f, 175.f + i * 40);
+        itemName.setPosition(400.f, 185.f + i * 40);
         itemNames.push_back(itemName);
 
         sf::Text itemAmount;
         itemAmount.setFont(font);
-        itemAmount.setString(std::to_string(this->inventory->at(i)->getAmount()));
+        itemAmount.setString("x" + std::to_string(this->inventory->at(i)->getAmount()));
         itemAmount.setCharacterSize(20);
         itemAmount.setFillColor(sf::Color(206, 185, 141));
-        itemAmount.setPosition(425.f, 175.f + i * 40);
+        itemAmount.setPosition(700.f, 185.f + i * 40);
         itemAmounts.push_back(itemAmount);
-        
-        Button* button = new Button(475.f, 160.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, "");
-        this->useButtons.push_back(button);
     }
 }
 
@@ -187,12 +192,13 @@ void InventoryState::updateButtons()
 
         if (button->getButtonState() == ButtonState::Idle)
         {
+            //sf::Texture tex = this->inventory->at(i)->getTexture();
             button->setTexture(this->textures["UseButton"]);
         }
 
         else if (button->getButtonState() == ButtonState::Hover)
         {
-            button->setTexture(this->textures["UseButtonHover"]);
+            button->setTexture(this->textures["UseButton"]);
             this->itemDescription.setString(this->inventory->at(i)->getDescription());
         }
 

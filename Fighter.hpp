@@ -16,6 +16,8 @@ public:
 
     float getDamage() const ; 
 
+    int getInitiative() const;
+
     void setHp(float _hp);
 
     virtual void setAttributes(float _x, float _y, std::string _name, float _hp, float _damage);
@@ -25,7 +27,6 @@ public:
     void takeDamage(float _attackPower);
 
     bool isAlive() const;
-
     
 
 protected:

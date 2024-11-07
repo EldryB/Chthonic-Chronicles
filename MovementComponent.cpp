@@ -6,6 +6,7 @@ MovementComponent::MovementComponent(sf::Sprite& _sprite,
 	: sprite{_sprite}, 
 	maxVelocity{_maxVelocity}, acceleration{_aceleration}, deceleration{_deceleration}
 {
+	this->velocity.x = this->velocity.y = 0.f;
 	this->stages.push(CurrentStage::MainStage);
 }
 
@@ -150,7 +151,7 @@ void MovementComponent::update(const float& _dt)
 	{
 		this->setMainStageLimits(spr, lastX, lastY);
 	}
-	else if (this->stages.top() == CurrentStage::Stage2)
+	else if (this->stages.top() == CurrentStage::Lvl1)
 	{
 		this->setStage2Limits(spr, lastX, lastY);
 	}
@@ -180,12 +181,12 @@ void MovementComponent::setYPos(float _y, sf::Sprite* sprite)
 
 void MovementComponent::setStage2Limits(sf::Sprite* spr, float& lastx, float& lasty)
 {
-	if (getYPos(spr) < 202 || getYPos(spr) > 353)
+	if (getYPos(spr) < 0 || getYPos(spr) > Settings::WINDOW_HEIGHT - spr->getGlobalBounds().height)
 	{
 		spr->setPosition(lastx, lasty);
 	}
 
-	if (getXPos(spr) < 20 || getXPos(spr) > 484.5f)
+	if (getXPos(spr) < 0 || getXPos(spr) > Settings::WINDOW_WIDTH - spr->getGlobalBounds().width)
 	{
 		spr->setPosition(lastx, lasty);
 	}

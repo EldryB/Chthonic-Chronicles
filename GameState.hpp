@@ -24,6 +24,7 @@ public:
 
 private:
     Player* player;
+    std::vector<Item*> items;
     Jobs* jobs;
     Resources* resources;
     int currentFrame;
@@ -44,6 +45,8 @@ private:
     void initTextures();
 
     void initFighters();
+
+    void initItems();
 
     void initBackground();
 

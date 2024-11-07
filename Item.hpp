@@ -9,6 +9,7 @@ public:
 	Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description);
 	virtual ~Item();
 
+	sf::Texture getTexture() const;
 	sf::Sprite* getSprite() const;
 	std::string getName() const;
 	int getAmount() const;

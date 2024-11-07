@@ -13,18 +13,6 @@ Fighter::Fighter(float _x, float _y, sf::Texture& texture_sheet, std::string _na
 {
 	this->initVariables(_name, _hp, _attackPower, _defense, _initiative);
 	this->setPosition(_x, _y);
-
-	this->createMovementComponent(120.5f, 10.f, 5.f);
-	this->createAnimationComponent(texture_sheet);
-	
-	this->animationComponent->addAnimation("IDLE_LEFT", 40.f, 0, 0, 1, 0, 46, 46);
-	this->animationComponent->addAnimation("WALK_LEFT", 10.f, 2, 0, 5, 0, 46, 46);
-	this->animationComponent->addAnimation("IDLE_RIGHT", 40.f, 6, 0, 7, 0, 46, 46);
-	this->animationComponent->addAnimation("WALK_RIGHT", 10.f, 8, 0, 11, 0, 46, 46);
-	this->animationComponent->addAnimation("IDLE_UP", 40.f, 12, 0, 12, 0, 46, 46);
-	this->animationComponent->addAnimation("WALK_UP", 10.f, 13, 0, 16, 0, 46, 46);
-	this->animationComponent->addAnimation("IDLE_DOWN", 40.f, 17, 0, 18, 0, 46, 46);
-	this->animationComponent->addAnimation("WALK_DOWN", 10.f, 19, 0, 22, 0, 46, 46);
 }
 
 Fighter::~Fighter()
@@ -42,6 +30,11 @@ float Fighter::getDamage() const
 	return this->attackPower;
 }
 
+int Fighter::getInitiative() const
+{
+	return this->initiative;
+}
+
 void Fighter::setHp(float _hp)
 {
 	this->hp = _hp;
@@ -57,13 +50,18 @@ void Fighter::setAttributes(float _x, float _y, std::string _name, float _hp, fl
 
 void Fighter::attack(Fighter* target)
 {
-
+	target->takeDamage(this->attackPower);
 }
 
 void Fighter::takeDamage(float _attackPower)
 {
 	float takeDamage = _attackPower * (100 / (100 + this->defense));
 	this->hp -= takeDamage;
+
+	if (this->hp < 0)
+	{
+		this->hp = 0;
+	}
 }
 
 bool Fighter::isAlive() const
@@ -73,38 +71,5 @@ bool Fighter::isAlive() const
 
 void Fighter::update(const float& _dt)
 {
-	this->movementComponent->update(_dt);
-
-	if (this->movementComponent->isIdle(LookingDirection::Left))
-	{
-		this->animationComponent->play("IDLE_LEFT", _dt);
-	}
-	else if (this->movementComponent->isIdle(LookingDirection::Right))
-	{
-		this->animationComponent->play("IDLE_RIGHT", _dt);
-	}
-	else if (this->movementComponent->isIdle(LookingDirection::Up))
-	{
-		this->animationComponent->play("IDLE_UP", _dt);
-	}
-	else if (this->movementComponent->isIdle(LookingDirection::Down))
-	{
-		this->animationComponent->play("IDLE_DOWN", _dt);
-	}
-	else if (this->movementComponent->isMoving(LookingDirection::Left))
-	{
-		this->animationComponent->play("WALK_LEFT", _dt);
-	}
-	else if (this->movementComponent->isMoving(LookingDirection::Right))
-	{
-		this->animationComponent->play("WALK_RIGHT", _dt);
-	}
-	else if (this->movementComponent->isMoving(LookingDirection::Up))
-	{
-		this->animationComponent->play("WALK_UP", _dt);
-	}
-	else if (this->movementComponent->isMoving(LookingDirection::Down))
-	{
-		this->animationComponent->play("WALK_DOWN", _dt);
-	}
+	
 }

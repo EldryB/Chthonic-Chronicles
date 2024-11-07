@@ -8,6 +8,7 @@
 #include <sstream>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <unordered_map>
 
 #include <SFML/Graphics.hpp>
@@ -17,7 +18,7 @@ enum class CurrentStage
 {
 	MainStage,
 	Combat,
-	Stage2
+	Lvl1
 };
 
 enum class CurrentState

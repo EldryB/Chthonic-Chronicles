@@ -29,7 +29,7 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
 	}
 
-	if (!this->textures["Stage2"].loadFromFile("assets/textures/Backgrounds/stage2.png"))
+	if (!this->textures["Lvl1"].loadFromFile("assets/textures/Backgrounds/lvl1.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
 	}
@@ -38,11 +38,39 @@ void GameState::initTextures()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
 	}
+
+	if (!this->textures["ITEMS_SHEET"].loadFromFile("assets/textures/Player/weapons.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
 }
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 10, 8);
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 10, 10);
+}
+
+void GameState::initItems()
+{
+	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!"));
+	this->items[0]->addItemIcon("DAGGER_1", 0, 0, 41, 44);
+	this->items[0]->setItemIcon("DAGGER_1");
+	this->player->addItem(this->items[0]);
+
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "Amazing sword!"));
+	this->items[1]->addItemIcon("SWORD_1", 41, 40, 41, 44);
+	this->items[1]->setItemIcon("SWORD_1");
+	this->player->addItem(this->items[1]);
+
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Sword", 1, "Amazing sword!"));
+	this->items[2]->addItemIcon("SWORD_2", 82, 40, 41, 44);
+	this->items[2]->setItemIcon("SWORD_2");
+	this->player->addItem(this->items[2]);
+
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Bow and Arrow", 1, "Amazing bow!"));
+	this->items[3]->addItemIcon("BOW_AND_ARROW_1", 0, 0, 41, 44);
+	this->items[3]->setItemIcon("BOW_AND_ARROW_1");
+	this->player->addItem(this->items[3]);*/
 }
 
 void GameState::initBackground()
@@ -93,7 +121,7 @@ std::string GameState::getStringStage(CurrentStage _c)
 
 	case CurrentStage::Combat:return "Combat";
 
-	case CurrentStage::Stage2:return "Stage2";
+	case CurrentStage::Lvl1:return "Lvl1";
 
 	default: return " ";
 	}
@@ -105,6 +133,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initVariables();
 	this->initTextures();
+	this->initItems();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -118,6 +147,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initFighters();
 	this->initVariables();
 	this->initTextures();
+	this->initItems();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -210,7 +240,7 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x > 771.f)
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->player->getSprite()->getPosition().x < 180.f)
 	{
 		this->keyCode = "ACTION2";
 	}
@@ -219,9 +249,10 @@ void GameState::updateInput(const float& _dt)
 		if (this->keyCode == "ACTION2")
 		{
 			this->keyCode = " ";
-			this->player->setPosition(200,300);
-			this->player->pushStage(CurrentStage::Stage2);
-			sf::Sprite spr{ this->textures["Stage2"] };
+			this->player->setPosition(Settings::WINDOW_WIDTH - this->player->getSprite()->getGlobalBounds().width, Settings::WINDOW_HEIGHT/2);
+			this->player->pushStage(CurrentStage::Lvl1);
+			sf::Sprite spr{ this->textures["Lvl1"] };
+			spr.setPosition(-2044.86f, -1214.11f);
 			this->backgrounds.push(spr);
 		}
 	}
@@ -240,7 +271,7 @@ void GameState::updateInput2(const float& _dt)
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) )
 	{
 		this->player->move(1.f, 0.f, _dt);
-		if(true)
+		if(this->backgrounds.top().getPosition().x >= -this->backgrounds.top().getGlobalBounds().width)
 		{
 			this->backgrounds.top().move(-80 * _dt, 0);
 		}
@@ -248,10 +279,12 @@ void GameState::updateInput2(const float& _dt)
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")))
 	{
 		this->player->move(0.f, -1.f, _dt);
+		this->backgrounds.top().move(0, 80 * _dt);
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")))
 	{
 		this->player->move(0.f, 1.f, _dt);
+		this->backgrounds.top().move(0, -80 * _dt);
 	}
 
 	if (this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x >= -10)
@@ -269,15 +302,10 @@ void GameState::updateInput2(const float& _dt)
 		}
 	}
 
-	if (this->player->getSprite()->getPosition().x > 400 && this->player->getStage() == CurrentStage::Stage2)
+	if (this->player->getSprite()->getPosition().x < 500 && this->player->getStage() == CurrentStage::Lvl1)
 	{
 		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
 		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, lastPos));
-	}
-
-	if (this->player->getSprite()->getPosition().x > 865)
-	{	
-		
 	}
 }
 
@@ -288,14 +316,24 @@ void GameState::update(const float& _dt)
 	{
 		this->updateInput(_dt);
 	}
-	else if (this->player->getStage() == CurrentStage::Stage2)
+	else if (this->player->getStage() == CurrentStage::Lvl1)
 	{
 		this->updateInput2(_dt);
 	}
 
 	this->player->update(_dt);
-	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
-	text.setString(textString);
+
+	if(this->player->getStage() == CurrentStage::MainStage)
+	{
+		std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
+		text.setString(textString);
+	}
+	else if (this->player->getStage() == CurrentStage::Lvl1)
+	{
+		std::string textString = "Position: X = " + std::to_string(this->backgrounds.top().getPosition().x) + ", Y = " + std::to_string(this->backgrounds.top().getPosition().y);
+		text.setString(textString);
+	}
+
 	this->stageText.setString(this->getStringStage(this->player->getStage()));
 }
 
@@ -321,10 +359,5 @@ void GameState::render(sf::RenderTarget* target)
 	if ((isInDoor || this->player->getSprite()->getPosition().x > 771.f) && this->player->getStage() == CurrentStage::MainStage)
 	{
 		target->draw(this->message2);
-	}
-
-	if (this->player->getStage() == CurrentStage::Stage2)
-	{
-		//renderizar minimapa
 	}
 }

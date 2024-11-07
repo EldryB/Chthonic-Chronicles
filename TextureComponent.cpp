@@ -19,7 +19,7 @@ void TextureComponent::setTexture(const std::string& key)
 {
     if (this->textures.find(key) != this->textures.end())
     {
-        this->sprite.setTexture(textureSheet);
+        this->sprite.setTexture(textureSheet, true);
         this->sprite.setTextureRect(textures[key]);
     }
 }

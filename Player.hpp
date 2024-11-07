@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Fighter.hpp"
+#include "Enemy.hpp"
 #include "Jobs.hpp"
 
 class Player :
@@ -18,7 +19,7 @@ public:
 
     void addItem(Item* _item);
 
-    void attack(Fighter* _p);
+    void update(const float& _dt);
 
 protected:
     Resources* resources;

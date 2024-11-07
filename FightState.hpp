@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LostFightState.hpp"
-#include <vector>
+#include "Fight.hpp"
 
 class FightState :
     public State
@@ -13,21 +13,40 @@ public:
 
     void updateInput(const float& _dt);
 
+    void updateButtons();
+
     void update(const float& _dt);
 
     void render(sf::RenderTarget* target = nullptr);
 
+    void renderButtons(sf::RenderTarget* target = nullptr);
+
 
 private:
     Player* player;
-    std::vector<Fighter*> enemies;
+    Enemy* enemy;
     sf::Font font;
     sf::Text text;
     sf::Text message;
+    sf::Text message2;
+    sf::Text textBox;
     std::vector<sf::RectangleShape> hpBar;
     std::vector<float> hpMax;
     sf::Vector2f lastPosition;
+    std::queue<Fighter*> turnQueue;
+    std::vector<Fighter*> fighters;
+    bool playerTurn = true;
+    std::unordered_map<std::string, Button*> buttons;
+    int selectedButtonIndex;
 
+    int turnCount;
+    int currentTurn;
+
+    void startTurn();
+
+    void updateTurnQueue(int turnCount);
+
+    bool isFightOver();
 
     void initVariables();
 
@@ -40,5 +59,7 @@ private:
     void initBackground();
 
     void initFonts();
+
+    void initButtons();
 };
 

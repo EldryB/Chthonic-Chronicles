@@ -17,6 +17,11 @@ Item::~Item()
     delete this->textureComponent;
 }
 
+sf::Texture Item::getTexture() const
+{
+    return *this->sprite->getTexture();
+}
+
 sf::Sprite* Item::getSprite() const
 {
     return this->sprite;

@@ -63,7 +63,6 @@ void MainMenuState::initButtons()
 {
 	this->buttons["LOAD_GAME_STATE"] = new Button(700.f, 175.f, this->textures["MainMenuButtonIdle"], &this->font, "LOAD GAME");
 	this->buttons["NEW_GAME_STATE"] = new Button(125.f, 175.f, this->textures["MainMenuButtonIdle"], &this->font, "NEW GAME");
-	
 }
 
 MainMenuState::MainMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
