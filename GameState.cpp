@@ -43,6 +43,11 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
 	}
 
+	if (!this->textures["ENEMIES_IDLE_SHEET"].loadFromFile("assets/textures/enemy_1/enemiesIdle.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
+	}
+
 	if (!this->textures["ITEMS_SHEET"].loadFromFile("assets/textures/Player/weapons.png"))
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
@@ -52,9 +57,28 @@ void GameState::initTextures()
 void GameState::initFighters()
 {
 	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 15, 10);
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["Bat"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+}
+
+void GameState::initItems()
+{
+	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));*/
+	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));
+	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "IncREDible!", sf::IntRect(41, 40, 41, 42)));
+
+	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Dagger", 1, "IncREDible!"));
+
+	this->player->addItem(this->items[1]);
+
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Dagger", 1, "Amazing sword!"));
+
+	this->player->addItem(this->items[2]);
+
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Green Dagger", 1, "Greenlandagger!"));
+
+	this->player->addItem(this->items[3]);*/
 }
 
 
@@ -147,6 +171,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	: State(_window, _supportedKeys, _states)
 {
 	this->initFighters();
+	this->initItems();
 	this->initVariables();
 	this->initTextures();
 	this->initBackground();

@@ -1,10 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <unordered_map>
-
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include "Settings.hpp"
 
 class AnimationComponent
 {
@@ -50,7 +46,7 @@ private:
 
 		void play(const float& _dt)
 		{
-			this->timer += 50.f * _dt;
+			this->timer += 100.f * _dt;
 			if (this->timer >= this->animationTimer)
 			{
 				this->timer = 0.f;

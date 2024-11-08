@@ -1,12 +1,11 @@
 #pragma once
 
-#include "Settings.hpp"
-#include "TextureComponent.hpp"
+#include "AnimationComponent.hpp"
 
 class Item
 {
 public:
-	Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description);
+	Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description, sf::IntRect iconRect);
 	virtual ~Item();
 
 	sf::Texture getTexture() const;
@@ -21,19 +20,14 @@ public:
 	void setName(std::string _name);
 	void setAmount(int _amount);
 	void setDescription(std::string _description);
+	void setIconRect(sf::IntRect icon_rect);
 
-	void createTextureComponent(sf::Texture& texture_sheet);
-
-	void addItemIcon(const std::string& key, int start_frame_x, int start_frame_y, int width, int height);
-	void setItemIcon(const std::string& key);
-	
 	virtual void use();
 
 	virtual void render(sf::RenderTarget* target);
 
 private:
 	sf::Sprite* sprite = new sf::Sprite();
-	TextureComponent* textureComponent;
 	
 	std::string name;
 	int amount;

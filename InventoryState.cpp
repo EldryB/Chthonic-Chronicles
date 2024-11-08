@@ -92,29 +92,9 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->initFonts();
     this->initKeybinds();
 
-    Item* item1 = new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!");
-    item1->addItemIcon("DAGGER_1", 0, 0, 41, 42);
-    item1->setItemIcon("DAGGER_1");
-    _p->addItem(item1);
-    this->textures["UseButton"] = item1->getTexture();
-
-    Item* item2 = new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "Amazing sword!");
-    item2->addItemIcon("SWORD_1", 41, 41, 41, 42);
-    item2->setItemIcon("SWORD_1");
-    _p->addItem(item2);
-
-    Item* item3 = new Item(this->textures["ITEMS_SHEET"], "Blue Sword", 1, "Amazing sword!");
-    item3->addItemIcon("SWORD_2", 82, 41, 41, 42);
-    item3->setItemIcon("SWORD_2");
-    _p->addItem(item3);
-
-    //Item* item4 = new Item(this->textures["ITEMS_SHEET"], "Bow and Arrow", 1, "Amazing bow!");
-    //item4->addItemIcon("BOW_AND_ARROW_1", 0, 0, 41, 44);
-    //item4->setItemIcon("BOW_AND_ARROW_1");
-    //_p->addItem(item4);
 
     this->player = _p;
-    this->inventory = player->getInventory();
+    this->inventory = this->player->getInventory();
     this->initButtons();
     this->initItemList();
 }
@@ -148,7 +128,7 @@ void InventoryState::initItemList()
         itemAmount.setString("x" + std::to_string(this->inventory->at(i)->getAmount()));
         itemAmount.setCharacterSize(20);
         itemAmount.setFillColor(sf::Color(206, 185, 141));
-        itemAmount.setPosition(700.f, 185.f + i * 40);
+        itemAmount.setPosition(650.f, 185.f + i * 40);
         itemAmounts.push_back(itemAmount);
     }
 }
@@ -180,7 +160,6 @@ void InventoryState::updateInput(const float& _dt)
             this->states->pop();
         }
     }
-
 }
 
 void InventoryState::updateButtons()
@@ -192,13 +171,12 @@ void InventoryState::updateButtons()
 
         if (button->getButtonState() == ButtonState::Idle)
         {
-            //sf::Texture tex = this->inventory->at(i)->getTexture();
-            button->setTexture(this->textures["UseButton"]);
+            button->setSprite(*this->inventory->at(i)->getSprite());
         }
 
         else if (button->getButtonState() == ButtonState::Hover)
         {
-            button->setTexture(this->textures["UseButton"]);
+            button->setSprite(*this->inventory->at(i)->getSprite());
             this->itemDescription.setString(this->inventory->at(i)->getDescription());
         }
 

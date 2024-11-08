@@ -1,7 +1,6 @@
 #pragma once
 
 #include "LostFightState.hpp"
-#include "Fight.hpp"
 
 class FightState :
     public State
@@ -45,8 +44,6 @@ private:
     float count;
 
     void updateTurnQueue(int turnCount);
-
-    bool isFightOver();
 
     void initVariables();
 

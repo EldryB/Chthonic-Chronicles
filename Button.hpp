@@ -30,6 +30,8 @@ public:
 
 	void setTexture(const sf::Texture& _texture);
 
+	void setSprite(const sf::Sprite& _sprite);
+
 	void setTextCharacterSize(unsigned int size);
 	
 	void setTextFillColor(const sf::Color& color);

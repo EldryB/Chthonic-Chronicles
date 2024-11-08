@@ -1,10 +1,5 @@
 #include "FightState.hpp"
 
-bool FightState::isFightOver()
-{
-	return (!this->player->isAlive()) || (!this->enemy->isAlive());
-}
-
 void FightState::initVariables()
 {
 	this->selectedButtonIndex = 0;
@@ -54,16 +49,6 @@ void FightState::initTextures()
 	if (!this->textures["FightStage"].loadFromFile("assets/textures/Backgrounds/cave.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
-	}
-
-	if (!this->textures["player"].loadFromFile("assets/textures/Player/frontSpark.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
-	}
-
-	if (!this->textures["Bat"].loadFromFile("assets/textures/enemy_1/at1.png"))
-	{
-		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_PLAYER_TEXTURE!";
 	}
 
 	if (!this->textures["AttackMenuButtonIdle"].loadFromFile("assets/textures/Buttons/MenuButtonIdle.png"))
@@ -257,7 +242,7 @@ void FightState::update(const float& _dt)
 
 		if (!this->playerTurn)
 		{
-			if(count > 3.f)
+			if (count > 3.f)
 			{
 				this->player->takeDamage(this->enemy->getDamage());
 				turnQueue.pop();

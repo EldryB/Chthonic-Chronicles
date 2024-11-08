@@ -2,19 +2,19 @@
 
 void Item::initVariables()
 {
-    this->textureComponent = NULL;
+
 }
 
-Item::Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description)
+Item::Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description, sf::IntRect icon_rect)
     : name(_name), amount(_amount), description(_description)
 {
     this->setTexture(_texture);
-    this->createTextureComponent(_texture);
+    this->setIconRect(icon_rect);
 }
 
 Item::~Item()
 {
-    delete this->textureComponent;
+    
 }
 
 sf::Texture Item::getTexture() const
@@ -72,19 +72,9 @@ void Item::setDescription(std::string _description)
     this->description = _description;
 }
 
-void Item::createTextureComponent(sf::Texture& texture_sheet)
+void Item::setIconRect(sf::IntRect icon_rect)
 {
-    this->textureComponent = new TextureComponent(*this->sprite, texture_sheet);
-}
-
-void Item::addItemIcon(const std::string& key, int start_frame_x, int start_frame_y, int width, int height)
-{
-    this->textureComponent->addTexture(key, start_frame_x, start_frame_y, width, height);
-}
-
-void Item::setItemIcon(const std::string& key)
-{
-    this->textureComponent->setTexture(key);
+    this->sprite->setTextureRect(icon_rect);
 }
 
 void Item::use()
@@ -94,8 +84,7 @@ void Item::use()
 
 void Item::render(sf::RenderTarget* target)
 {
-    this->textureComponent->render(target);
-    //target->draw(*this->sprite);
+    target->draw(*this->sprite);
 }
 
 

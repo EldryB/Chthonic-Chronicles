@@ -82,6 +82,11 @@ void Button::setTexture(const sf::Texture& _texture)
 	this->sprite.setTexture(_texture);
 }
 
+void Button::setSprite(const sf::Sprite& _sprite)
+{
+	this->sprite = _sprite;
+}
+
 void Button::setTextCharacterSize(unsigned int size)
 {
 	this->text.setCharacterSize(size);

@@ -6,7 +6,7 @@ Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name
     this->jobs = new Jobs();
     this->resources = new Resources();
 
-	this->createMovementComponent(120.5f, 10.f, 5.f);
+	this->createMovementComponent(150.f, 10.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
 
 	this->animationComponent->addAnimation("IDLE_LEFT", 40.f, 0, 0, 1, 0, 46, 46);

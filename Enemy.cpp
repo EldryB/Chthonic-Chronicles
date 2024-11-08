@@ -5,8 +5,11 @@ Enemy::Enemy(float _x, float _y, sf::Texture& texture_sheet, std::string _name, 
 {
 	this->setTexture(texture_sheet);
 	
-	/*this->createAnimationComponent(texture_sheet);
-	this->animationComponent->addAnimation("ENEMY_IDLE_LEFT", 40.f, 0, 40, 3, 0, 40, 40);*/
+	this->createAnimationComponent(texture_sheet);
+	this->animationComponent->addAnimation("RAT_IDLE_LEFT", 40.f, 0, 0, 3, 0, 40, 40);
+	this->animationComponent->addAnimation("SKELETON_IDLE_LEFT", 40.f, 4, 0, 7, 0, 40, 40);
+	this->animationComponent->addAnimation("BAT_IDLE_LEFT", 40.f, 8, 0, 11, 0, 40, 40);
+	this->animationComponent->addAnimation("SLIME_IDLE_LEFT", 40.f, 12, 0, 15, 0, 40, 40);
 }
 
 Enemy::~Enemy()
@@ -24,7 +27,7 @@ Item* Enemy::dropItem()
 
 void Enemy::update(const float& _dt)
 {
-	/*this->animationComponent->play("ENEMY_IDLE_LEFT", _dt);*/
+	this->animationComponent->play("BAT_IDLE_LEFT", _dt);
 }
 
 

@@ -28,11 +28,13 @@ public:
 private:
     Player* player;
     std::vector<Enemy*> enemies;
+    std::vector<Item*> items;
     Jobs* jobs;
     Resources* resources;
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
+
     sf::Font font;
     sf::Text text;
     sf::Text message;
@@ -50,6 +52,8 @@ private:
     void initTextures();
 
     void initFighters();
+
+    void initItems();
 
     void initBackground();
 
