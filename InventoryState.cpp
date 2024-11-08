@@ -75,8 +75,6 @@ void InventoryState::initKeybinds()
 
 void InventoryState::initButtons()
 {
-    this->useButtons.clear();
-    
     for (int i = 0; i < this->inventory->size(); ++i)
     {
         this->useButtons.push_back(new Button(325.f, 150.f + i * 40, *this->inventory->at(i)->getSprite(), &this->font, ""));
@@ -172,11 +170,13 @@ void InventoryState::updateButtons()
         if (button->getButtonState() == ButtonState::Idle)
         {
             button->setSprite(*this->inventory->at(i)->getSprite());
+            button->setPosition(325.f, 150.f + i * 40);
         }
 
         else if (button->getButtonState() == ButtonState::Hover)
         {
             button->setSprite(*this->inventory->at(i)->getSprite());
+            button->setPosition(325.f, 150.f + i * 40);
             this->itemDescription.setString(this->inventory->at(i)->getDescription());
         }
 

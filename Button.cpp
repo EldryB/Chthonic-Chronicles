@@ -97,6 +97,11 @@ void Button::setTextFillColor(const sf::Color& color)
 	this->text.setFillColor(color);
 }
 
+void Button::setPosition(float _x, float _y)
+{
+	this->sprite.setPosition(_x, _y);
+}
+
 void Button::update(const sf::Vector2f mousePos)
 {
 	this->buttonState = ButtonState::Idle;

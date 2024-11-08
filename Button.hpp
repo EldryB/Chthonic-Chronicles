@@ -36,6 +36,8 @@ public:
 	
 	void setTextFillColor(const sf::Color& color);
 
+	void setPosition(float _x, float _y);
+
 	void update(const sf::Vector2f mousePos);
 
 	void render(sf::RenderTarget* target);
