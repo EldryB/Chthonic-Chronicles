@@ -5,7 +5,7 @@
 class Item
 {
 public:
-	Item(sf::Texture& _texture, std::string _name, std::string _description, sf::IntRect iconRect);
+	Item(sf::Texture& _texture, std::string _name, std::string _description);
 	virtual ~Item();
 
 	sf::Texture getTexture() const;
@@ -22,14 +22,12 @@ public:
 
 	virtual void use();
 
-	virtual void render(sf::RenderTarget* target);
+	void render(sf::RenderTarget* target);
 
 private:
 	sf::Sprite* sprite = new sf::Sprite();
 	
 	std::string name;
 	std::string description;
-
-	void initVariables();
 };
 

@@ -50,8 +50,4 @@ void Resources::subtractResource(ResourceTypes resource, int amount)
     {
         setResourceAmount(resource, getResourceAmount(resource) - amount);
     }
-    else
-    {
-        //nada por el momento
-    }
 }

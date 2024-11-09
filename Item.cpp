@@ -1,15 +1,9 @@
 #include "Item.hpp"
 
-void Item::initVariables()
-{
-
-}
-
-Item::Item(sf::Texture& _texture, std::string _name, std::string _description, sf::IntRect icon_rect)
+Item::Item(sf::Texture& _texture, std::string _name, std::string _description)
     : name(_name), description(_description)
 {
     this->setTexture(_texture);
-    this->setIconRect(icon_rect);
 }
 
 Item::~Item()

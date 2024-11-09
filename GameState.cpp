@@ -64,21 +64,21 @@ void GameState::initFighters()
 
 void GameState::initItems()
 {
-	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));*/
-	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Dagger", "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));
-	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Red Sword", "IncREDible!", sf::IntRect(41, 40, 41, 42)));
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", "Amazing dagger!"));
+	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
+	this->player->addItem(this->items[0]);
 
-	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Dagger", 1, "IncREDible!"));
-
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Sword", "IncREDible sword!"));
+	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
 	this->player->addItem(this->items[1]);
 
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Dagger", 1, "Amazing sword!"));
-
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Sword", "InBaLUEble sword!"));
+	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Green Dagger", 1, "Greenlandagger!"));
-
-	this->player->addItem(this->items[3]);*/
+	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Green Dagger", "Greenlandagger!"));
+	this->items[3]->setIconRect(sf::IntRect(123, 0, 41, 42));
+	this->player->addItem(this->items[3]);
 }
 
 

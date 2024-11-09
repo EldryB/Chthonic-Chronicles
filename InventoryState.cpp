@@ -90,8 +90,6 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->initBackground();
     this->initFonts();
     this->initKeybinds();
-
-
     this->player = _p;
     this->inventory = this->player->getInventory();
     this->initButtons();

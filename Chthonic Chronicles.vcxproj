@@ -135,11 +135,13 @@
   <ItemGroup>
     <ClInclude Include="AnimationComponent.hpp" />
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Consumable.hpp" />
     <ClInclude Include="ControlsState.hpp" />
     <ClInclude Include="Dice.hpp" />
     <ClInclude Include="DiceAnimation.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Equipable.hpp" />
     <ClInclude Include="Fighter.hpp" />
     <ClInclude Include="FightState.hpp" />
     <ClInclude Include="Game.hpp" />
@@ -162,11 +164,13 @@
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ControlsState.cpp" />
     <ClCompile Include="Dice.cpp" />
     <ClCompile Include="DiceAnimation.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Equipable.cpp" />
     <ClCompile Include="Fighter.cpp" />
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Game.cpp" />
