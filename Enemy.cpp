@@ -27,7 +27,7 @@ Item* Enemy::dropItem()
 
 void Enemy::update(const float& _dt)
 {
-	this->animationComponent->play("BAT_IDLE_LEFT", _dt);
+	this->animationComponent->play("SLIME_IDLE_LEFT", _dt);
 }
 
 
