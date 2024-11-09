@@ -8,7 +8,7 @@ void JsonManagement::toJson(nlohmann::json& _j, Fighter* _fighter)
         {"positionX", _fighter->getSprite()->getPosition().x}, 
         {"positionY", _fighter->getSprite()->getPosition().y},
         {"hp", _fighter->getHp() },
-        {"damage", _fighter->getDamage() }
+        {"damage", _fighter->getAttackPower() }
     
     };
 }

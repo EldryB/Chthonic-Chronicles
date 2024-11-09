@@ -187,7 +187,7 @@ void InventoryState::updateButtons()
 
         else if (button->getButtonState() == ButtonState::Pressed)
         {
-            this->inventory->at(i)->use();
+            this->inventory->at(i)->use(this->player);
             this->initItemList();
         }
         ++i;
