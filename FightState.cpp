@@ -192,7 +192,7 @@ void FightState::updateButtons()
 
 void FightState::update(const float& _dt)
 {
-
+	this->player->setLookingDirection(LookingDirection::Right);
 	count += this->clock.restart().asSeconds();
 
 	this->updateMousePositions();
@@ -237,7 +237,6 @@ void FightState::update(const float& _dt)
 		if (Player* p = dynamic_cast<Player*>(currentFighter))
 		{
 			this->playerTurn = true;
-			//p->attack(fighters[1]);
 		}
 
 		if (!this->playerTurn)
