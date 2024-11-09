@@ -65,8 +65,8 @@ void GameState::initFighters()
 void GameState::initItems()
 {
 	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));*/
-	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Dagger", 1, "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));
-	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Red Sword", 1, "IncREDible!", sf::IntRect(41, 40, 41, 42)));
+	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Dagger", "Amazing dagger!", sf::IntRect(0, 0, 41, 42)));
+	this->player->addItem(new Item(this->textures["ITEMS_SHEET"], "Red Sword", "IncREDible!", sf::IntRect(41, 40, 41, 42)));
 
 	/*this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Dagger", 1, "IncREDible!"));
 

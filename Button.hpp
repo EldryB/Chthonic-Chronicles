@@ -1,8 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
+#include "Settings.hpp"
 
 enum class ButtonState
 {

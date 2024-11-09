@@ -5,8 +5,8 @@ void Item::initVariables()
 
 }
 
-Item::Item(sf::Texture& _texture, std::string _name, int _amount, std::string _description, sf::IntRect icon_rect)
-    : name(_name), amount(_amount), description(_description)
+Item::Item(sf::Texture& _texture, std::string _name, std::string _description, sf::IntRect icon_rect)
+    : name(_name), description(_description)
 {
     this->setTexture(_texture);
     this->setIconRect(icon_rect);
@@ -32,11 +32,6 @@ std::string Item::getName() const
     return this->name;
 }
 
-int Item::getAmount() const
-{
-    return this->amount;
-}
-
 std::string Item::getDescription() const
 {
     return this->description;
@@ -60,11 +55,6 @@ void Item::setPosition(float _x, float _y)
 void Item::setName(std::string _name)
 {
     this->name = _name;
-}
-
-void Item::setAmount(int _amount)
-{
-    this->amount = _amount;
 }
 
 void Item::setDescription(std::string _description)

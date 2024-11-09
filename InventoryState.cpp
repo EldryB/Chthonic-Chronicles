@@ -54,10 +54,11 @@ void InventoryState::initFonts()
     this->itemDescription.setString(" ");
     this->itemDescription.setCharacterSize(12);
     this->itemDescription.setFillColor(sf::Color::Black);
-    this->itemDescription.setPosition
-    (
-        this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f) - this->backgroundItemDescription.getGlobalBounds().width / 2.7f,
-        this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.5f) - this->backgroundItemDescription.getGlobalBounds().height / 23.f
+
+    sf::FloatRect itemDescriptionBounds = this->itemDescription.getGlobalBounds();
+    this->itemDescription.setPosition(
+        this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f)  - (itemDescriptionBounds.width / 2.f),
+        this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
     );
 
     this->message.setFont(this->font);
@@ -121,13 +122,13 @@ void InventoryState::initItemList()
         itemName.setPosition(400.f, 185.f + i * 40);
         itemNames.push_back(itemName);
 
-        sf::Text itemAmount;
-        itemAmount.setFont(font);
-        itemAmount.setString("x" + std::to_string(this->inventory->at(i)->getAmount()));
-        itemAmount.setCharacterSize(20);
-        itemAmount.setFillColor(sf::Color(206, 185, 141));
-        itemAmount.setPosition(650.f, 185.f + i * 40);
-        itemAmounts.push_back(itemAmount);
+        //sf::Text itemAmount;
+        //itemAmount.setFont(font);
+        //itemAmount.setString("x" + std::to_string(this->inventory->at(i)->getAmount()));
+        //itemAmount.setCharacterSize(20);
+        //itemAmount.setFillColor(sf::Color(206, 185, 141));
+        //itemAmount.setPosition(650.f, 185.f + i * 40);
+        //itemAmounts.push_back(itemAmount);
     }
 }
 
@@ -178,6 +179,12 @@ void InventoryState::updateButtons()
             button->setSprite(*this->inventory->at(i)->getSprite());
             button->setPosition(325.f, 150.f + i * 40);
             this->itemDescription.setString(this->inventory->at(i)->getDescription());
+            
+            sf::FloatRect itemDescriptionBounds = this->itemDescription.getGlobalBounds();
+            this->itemDescription.setPosition(
+                this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f) - (itemDescriptionBounds.width / 2.f),
+                this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
+            );
         }
 
         else if (button->getButtonState() == ButtonState::Pressed)
@@ -232,11 +239,11 @@ void InventoryState::render(sf::RenderTarget* target)
         target->draw(itemName);
     }
 
-    if (this->itemAmounts[0].getString() != "-1")
+    /*if (this->itemAmounts[0].getString() != "-1")
     {
         for (const auto& itemAmount : itemAmounts)
         {
             target->draw(itemAmount);
         }
-    }
+    }*/
 }
