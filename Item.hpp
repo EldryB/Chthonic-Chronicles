@@ -25,7 +25,7 @@ public:
 
 	void render(sf::RenderTarget* target);
 
-private:
+protected:
 	sf::Sprite* sprite = new sf::Sprite();
 	
 	std::string name;

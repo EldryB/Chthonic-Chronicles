@@ -16,7 +16,7 @@ public:
 
     virtual void use(Fighter* target);
 
-private:
+protected:
     int amount;
 };
 
