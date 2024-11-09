@@ -56,7 +56,7 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 100.f, 15, 10);
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 1000.f, 15, 10);
 	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
@@ -552,7 +552,7 @@ void GameState::updateMap(const float& dtt)
 	}
 
 	if (this->player->getStage() == CurrentStage::Lvl1R5 &&
-		(this->player->getSprite()->getPosition().x > 187 && this->player->getSprite()->getPosition().x < 328) && 
+		(this->player->getSprite()->getPosition().x > 174 && this->player->getSprite()->getPosition().x < 328) && 
 		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height &&
 		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
 	{

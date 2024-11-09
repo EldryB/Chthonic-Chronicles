@@ -184,7 +184,6 @@ void InventoryState::updateButtons()
                 this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
             );
         }
-
         else if (button->getButtonState() == ButtonState::Pressed)
         {
             this->inventory->at(i)->use(this->player);

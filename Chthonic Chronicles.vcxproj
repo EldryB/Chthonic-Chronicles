@@ -151,6 +151,7 @@
     <ClInclude Include="JobMenuState.hpp" />
     <ClInclude Include="Jobs.hpp" />
     <ClInclude Include="JsonManagement.hpp" />
+    <ClInclude Include="Limit.hpp" />
     <ClInclude Include="LostFightState.hpp" />
     <ClInclude Include="MainMenuState.hpp" />
     <ClInclude Include="MenuState.hpp" />
