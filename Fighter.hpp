@@ -1,6 +1,5 @@
 #pragma once
 #include "Entity.hpp"
-#include "Item.hpp"
 
 class Fighter :
     public Entity
@@ -12,13 +11,19 @@ public:
 
     virtual void update(const float& _dt);
 
-    float getHp() const ;
+    float getHp() const;
 
-    float getDamage() const ; 
+    float getAttackPower() const; 
+
+    int getDefense() const;
 
     int getInitiative() const;
 
     void setHp(float _hp);
+
+    void setAttackPower(float attack_power);
+
+    void setDefense(int _defense);
 
     virtual void setAttributes(float _x, float _y, std::string _name, float _hp, float _damage);
 

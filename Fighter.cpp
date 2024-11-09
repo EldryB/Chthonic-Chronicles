@@ -25,9 +25,14 @@ float Fighter::getHp() const
 	return this->hp;
 }
 
-float Fighter::getDamage() const
+float Fighter::getAttackPower() const
 {
 	return this->attackPower;
+}
+
+int Fighter::getDefense() const
+{
+	return this->defense;
 }
 
 int Fighter::getInitiative() const
@@ -38,6 +43,16 @@ int Fighter::getInitiative() const
 void Fighter::setHp(float _hp)
 {
 	this->hp = _hp;
+}
+
+void Fighter::setAttackPower(float attack_power)
+{
+	this->attackPower = attack_power;
+}
+
+void Fighter::setDefense(int _defense)
+{
+	this->defense = _defense;
 }
 
 void Fighter::setAttributes(float _x, float _y, std::string _name, float _hp, float _damage)

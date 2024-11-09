@@ -61,7 +61,7 @@ void Item::setIconRect(sf::IntRect icon_rect)
     this->sprite->setTextureRect(icon_rect);
 }
 
-void Item::use()
+void Item::use(Fighter* target)
 {
 
 }

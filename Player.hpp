@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Fighter.hpp"
 #include "Enemy.hpp"
 #include "Jobs.hpp"
 

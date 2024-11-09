@@ -34,9 +34,28 @@ void Consumable::substractAmount(int _amount)
 	}
 }
 
-void Consumable::use()
+void Consumable::use(Fighter* target)
 {
 
 }
 
+Potion::Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description)
+	: hp(), Consumable(_texture, _name, _amount, _description)
+{
 
+}
+
+Potion::~Potion()
+{
+
+}
+
+float Potion::getHp() const
+{
+	return this->hp;
+}
+
+void Potion::use(Fighter* target)
+{
+	target->setHp(target->getHp() + this->getHp());
+}

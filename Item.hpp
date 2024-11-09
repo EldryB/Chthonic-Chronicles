@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Settings.hpp"
+#include "Fighter.hpp"
 
 class Item
 {
@@ -20,7 +21,7 @@ public:
 	void setDescription(std::string _description);
 	void setIconRect(sf::IntRect icon_rect);
 
-	virtual void use();
+	virtual void use(Fighter* target);
 
 	void render(sf::RenderTarget* target);
 

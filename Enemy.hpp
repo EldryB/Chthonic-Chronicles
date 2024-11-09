@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Fighter.hpp"
+#include "Item.hpp"
 #include "Dice.hpp"
 
 class Enemy : 

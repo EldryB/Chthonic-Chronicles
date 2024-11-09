@@ -14,9 +14,23 @@ public:
     void addAmount(int _amount);
     void substractAmount(int _amount);
 
-    virtual void use();
+    virtual void use(Fighter* target);
 
 private:
     int amount;
 };
 
+class Potion :
+    public Consumable
+{
+public:
+    Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description);
+    ~Potion();
+
+    float getHp() const;
+
+    void use(Fighter* target);
+
+private:
+    float hp;
+};
