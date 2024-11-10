@@ -4,6 +4,8 @@
 class Dice
 {
 public:
+    Dice(int _sides);
+    
     Dice(sf::Texture& texture_sheet, int _sides);
 
     void createAnimationComponent(sf::Texture& texture_sheet);
@@ -18,11 +20,15 @@ public:
 
     void setSides(int _sides);
 
-    void loadSprite(const std::string& textureFile);
-    void roll(int _sides, float animationt_time);
-    void update(const float& _dt);
-    void render(sf::RenderTarget* target);
+    int getFace();
+    
+    void roll();
+
     bool isRolling() const;
+
+    void update(const float& _dt);
+
+    void render(sf::RenderTarget* target);
 
 private:
     std::mt19937 generator;
@@ -31,10 +37,10 @@ private:
     int sides;
     float animationTime;
     float elapsedTime;
-    int finalValue;
+    int finalFace;
     bool rolling;
 
     void initVariables();
     
-    void setSpriteFace(int value);
+    void setSpriteFace(int face);
 };

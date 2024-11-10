@@ -15,8 +15,8 @@ Enemy::~Enemy()
 
 Item* Enemy::dropItem()
 {
-	Dice dice;
-	int index = dice.roll(2);
+	Dice dice = Dice(2);
+	int index = dice.getFace();
 
 	return this->items[index - 1];
 }
