@@ -138,7 +138,6 @@
     <ClInclude Include="Consumable.hpp" />
     <ClInclude Include="ControlsState.hpp" />
     <ClInclude Include="Dice.hpp" />
-    <ClInclude Include="DiceAnimation.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="Equipable.hpp" />
@@ -167,7 +166,6 @@
     <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="ControlsState.cpp" />
     <ClCompile Include="Dice.cpp" />
-    <ClCompile Include="DiceAnimation.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Equipable.cpp" />
