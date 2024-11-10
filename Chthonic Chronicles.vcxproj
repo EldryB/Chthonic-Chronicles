@@ -160,7 +160,6 @@
     <ClInclude Include="Resources.hpp" />
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="State.hpp" />
-    <ClInclude Include="TextureComponent.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
@@ -189,7 +188,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="State.cpp" />
-    <ClCompile Include="TextureComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

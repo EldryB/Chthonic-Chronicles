@@ -7,14 +7,14 @@ class Enemy :
     public Fighter
 {
 public:
-    Enemy(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _attackPower, int _defense, int _initiative);
+    Enemy(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
     virtual ~Enemy();
 
     Item* dropItem();
 
-    void update(const float& _dt);
+    virtual void update(const float& _dt);
 
-private:
+protected:
     std::vector<Item*> items;
 };
 
@@ -22,27 +22,39 @@ class Skeleton :
     public Enemy
 {
 public:
-    Skeleton();
+    Skeleton(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
+    virtual ~Skeleton();
+
+    void update(const float& _dt);
 };
 
 class Slime : 
     public Enemy
 {
 public:
-    Slime();
+    Slime(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
+    virtual ~Slime();
+
+    void update(const float& _dt);
 };
 
 class Bat : 
     public Enemy
 {
 public:
-    Bat();
+    Bat(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
+    virtual ~Bat();
+
+    void update(const float& _dt);
 };
 
 class Rat : 
     public Enemy
 {
 public:
-    Rat();
+    Rat(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
+    virtual ~Rat();
+
+    void update(const float& _dt);
 };
 
