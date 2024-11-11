@@ -9,7 +9,7 @@ void MainMenuState::initVariables()
 
 void MainMenuState::initTextures()
 {
-	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/mainMenu.jpg"))
+	if (!this->textures["Background"].loadFromFile("assets/textures/Backgrounds/mainMenu.png"))
 	{
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_BACKGROUND_TEXTURE!";
 	}

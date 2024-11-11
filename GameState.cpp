@@ -206,14 +206,14 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	this->timeSinceLastUpdate += _dt;
-	bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
-	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
+	//bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
+	//bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !(isInLadder))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
 		this->player->move(-1.f, 0.f, _dt);
 	}
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")) && !(isInLadder))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT")))
 	{
 		this->player->move(1.f, 0.f, _dt);
 	}
@@ -299,13 +299,13 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice;
+	Dice dice(2147483646 / 1000);
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
 		this->player->move(-1.f, 0.f, _dt);
 
-		if (dice.roll(2147483646/ 1000) == 50)
+		if (dice.getFace() == 50)
 		{
 			this->createCombat();
 		}
@@ -314,7 +314,7 @@ void GameState::updateInput2(const float& _dt)
 	{
 		this->player->move(1.f, 0.f, _dt);
 
-		if (dice.roll(2147483646/ 1000) == 50)
+		if (dice.getFace() == 50)
 		{
 			this->createCombat();
 		}
@@ -323,7 +323,7 @@ void GameState::updateInput2(const float& _dt)
 	{
 		this->player->move(0.f, -1.f, _dt);
 
-		if (dice.roll(2147483646/ 1000) == 50)
+		if (dice.getFace() == 50)
 		{
 			this->createCombat();
 		}
@@ -332,7 +332,7 @@ void GameState::updateInput2(const float& _dt)
 	{
 		this->player->move(0.f, 1.f, _dt);
 
-		if (dice.roll(2147483646/1000) == 50)
+		if (dice.getFace() == 50)
 		{
 			this->createCombat();
 		}

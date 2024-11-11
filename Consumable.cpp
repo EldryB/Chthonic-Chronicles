@@ -28,7 +28,7 @@ void Consumable::addAmount(int _amount)
 
 void Consumable::substractAmount(int _amount)
 {
-	if (this->getAmount() - _amount >= 0)
+	if (this->getAmount() - _amount > 0)
 	{
 		this->setAmount(this->getAmount() - _amount);
 	}
@@ -57,5 +57,6 @@ float Potion::getHp() const
 
 void Potion::use(Fighter* target)
 {
+	this->substractAmount(1);
 	target->setHp(target->getHp() + this->getHp());
 }

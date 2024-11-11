@@ -178,10 +178,8 @@ void FightState::updateButtons()
 		}
 	}
 
-
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
-		//this->enemy->takeDamage(this->player->getDamage());
 		this->enemy->takeDamage(this->player->getAttackPower());
 
 		this->playerTurn = false;

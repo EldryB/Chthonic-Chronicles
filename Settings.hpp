@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <random>
 #include <vector>
 #include <stack>
 #include <queue>
