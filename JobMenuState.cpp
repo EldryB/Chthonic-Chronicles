@@ -367,6 +367,13 @@ void JobMenuState::updateButtons()
 
 void JobMenuState::update(const float& _dt)
 {
+    if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
+    {
+        this->jobs.collectResourcesAutomatically(resources);
+        this->collectionClock.restart();
+        this->initResourceList();
+    }
+
     this->updateMousePositions();
     this->updateInput(_dt);
     this->updateButtons();

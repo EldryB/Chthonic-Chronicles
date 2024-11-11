@@ -31,7 +31,7 @@ public:
 
     void processJob(Resources &resources, JobTypes job, ResourceTypes inputResource, int inputAmount, ResourceTypes outputResource, int outputAmount) const;
     void collectResources(Resources &resources, JobTypes _jobs);
-
+    void collectResourcesAutomatically(Resources& resources);
 private:
     std::vector<std::tuple<std::string, int>> jobs;
 };

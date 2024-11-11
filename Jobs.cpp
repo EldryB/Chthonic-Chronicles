@@ -110,3 +110,12 @@ void Jobs::collectResources(Resources& resources, JobTypes _jobs)
         break;
     }
 }
+
+void Jobs::collectResourcesAutomatically(Resources& resources)
+{
+    for (int i = static_cast<int>(JobTypes::coinMaker); i < static_cast<int>(JobTypes::count); ++i)
+    {
+        JobTypes currentJob = static_cast<JobTypes>(i);
+        collectResources(resources, currentJob);
+    }
+}
