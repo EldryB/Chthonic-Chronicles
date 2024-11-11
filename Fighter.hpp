@@ -25,6 +25,8 @@ public:
 
     void setDefense(int _defense);
 
+    void setInitiative(int _initiative);
+
     virtual void setAttributes(float _x, float _y, std::string _name, float _hp, float _damage);
 
     virtual void attack(Fighter* target);

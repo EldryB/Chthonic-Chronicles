@@ -11,10 +11,13 @@ public:
 
     int getInitiative() const;
 
+    bool isEquipped() const;
+
     virtual void use(Fighter* target);
 
 protected:
     int initiative;
+    bool equipped;
 };
 
 class Weapon :
