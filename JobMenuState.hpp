@@ -45,7 +45,7 @@
         sf::Sprite backgroundTooltip;
 
         sf::Clock collectionClock;
-        int availableVillagers = 100;
+        int availableVillagers = 5;
 
         void initVariables();
     

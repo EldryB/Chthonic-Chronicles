@@ -14,7 +14,6 @@ Jobs::Jobs()
         {"Iron Miner", -1},
         {"Gold Miner", -1}
     };
-
 }
 
 int Jobs::getJobAmount(JobTypes job) const
