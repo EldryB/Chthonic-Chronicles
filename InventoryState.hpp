@@ -31,6 +31,9 @@ private:
 
     sf::Text message;
 
+    sf::Sprite equip;
+    sf::Text equipText;
+
     std::vector<sf::Text> itemNames;
     std::vector<sf::Text> itemAmounts;
     sf::Text itemDescription;

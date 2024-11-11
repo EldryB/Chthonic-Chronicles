@@ -16,6 +16,10 @@ public:
 
     Resources* getResources() const;
 
+    Weapon* getWeapon() const;
+
+    Armor* getArmor() const;
+
     void addItem(Item* _item);
 
     void removeItem(Item* _item);
@@ -25,6 +29,8 @@ public:
 protected:
     Resources* resources;
     Jobs* jobs;
+    Armor* armor;
+    Weapon* weapon;
 
     std::vector<Item*>* inventory = new std::vector<Item*>();
 };

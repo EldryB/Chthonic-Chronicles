@@ -46,19 +46,26 @@ void InventoryState::initFonts()
     this->title.setFillColor(sf::Color(206, 185, 141));
     this->title.setPosition(100, 30);
 
-    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
-    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f, 
-        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
-
     this->itemDescription.setFont(this->font);
     this->itemDescription.setString(" ");
     this->itemDescription.setCharacterSize(12);
     this->itemDescription.setFillColor(sf::Color::Black);
 
+    this->equipText.setFont(this->font);
+    this->equipText.setString(" ");
+    this->equipText.setCharacterSize(12);
+    this->equipText.setFillColor(sf::Color::Black);
+
     sf::FloatRect itemDescriptionBounds = this->itemDescription.getGlobalBounds();
     this->itemDescription.setPosition(
         this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f)  - (itemDescriptionBounds.width / 2.f),
         this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
+    );
+
+    sf::FloatRect equipTextBounds = this->equipText.getGlobalBounds();
+    this->itemDescription.setPosition(
+        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (itemDescriptionBounds.width / 2.f),
+        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
     );
 
     this->message.setFont(this->font);
@@ -88,6 +95,15 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->initVariables();
     this->initTextures();
     this->initBackground();
+
+    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
+    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
+
+    this->equip.setTexture(this->textures["MenuButtonIdle"]);
+    this->equip.setPosition(10,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
+
     this->initFonts();
     this->initKeybinds();
     this->player = _p;
@@ -192,6 +208,13 @@ void InventoryState::updateButtons()
             this->inventory->at(i)->use(this->player);
             this->initItemList();
         }
+
+        if (this->inventory->at(i)->isEquipped())
+        {
+            std::string textString = this->inventory->at(i)->getDescription();
+            this->equipText.setString(textString);
+        }
+
         ++i;
     }
 }
@@ -245,4 +268,6 @@ void InventoryState::render(sf::RenderTarget* target)
         target->draw(itemamount);
     }
     
+    target->draw(this->equip);
+    target->draw(this->equipText);
 }

@@ -39,6 +39,16 @@ Resources* Player::getResources() const
     return this->resources;
 }
 
+Weapon* Player::getWeapon() const
+{
+	return this->weapon;
+}
+
+Armor* Player::getArmor() const
+{
+	return this->armor;
+}
+
 void Player::update(const float& _dt)
 {
 	this->movementComponent->update(_dt);

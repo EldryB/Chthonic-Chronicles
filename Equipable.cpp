@@ -3,7 +3,7 @@
 Equipable::Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description) 
 	: initiative(_initiative), equipped(false), Item(_texture, _name, _description)
 {
-
+	this->equipped = false;
 }
 
 Equipable::~Equipable()
@@ -44,8 +44,19 @@ float Weapon::getAttackPower() const
 
 void Weapon::use(Fighter* target)
 {
-	target->setAttackPower(target->getAttackPower() + this->getAttackPower());
-	target->setInitiative(target->getInitiative() + this->getInitiative());
+	target->setHp(10);
+	if(!this->equipped)
+	{
+		this->equipped = true;
+		target->setAttackPower(target->getAttackPower() + this->getAttackPower());
+		target->setInitiative(target->getInitiative() + this->getInitiative());
+	}
+	else 
+	{
+		this->equipped = false;
+		target->setAttackPower(target->getAttackPower() - this->getAttackPower());
+		target->setInitiative(target->getInitiative() - this->getInitiative());
+	}
 }
 
 Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description)
@@ -66,6 +77,17 @@ int Armor::getDefense() const
 
 void Armor::use(Fighter* target)
 {
-	target->setDefense(target->getDefense() + this->getDefense());
-	target->setInitiative(target->getInitiative() + this->getInitiative());
+
+	if (!this->equipped)
+	{
+		this->equipped = true;
+		target->setDefense(target->getDefense() + this->getDefense());
+		target->setInitiative(target->getInitiative() + this->getInitiative());
+	}
+	else
+	{
+		this->equipped = false;
+		target->setDefense(target->getDefense() - this->getDefense());
+		target->setInitiative(target->getInitiative() - this->getInitiative());
+	}
 }

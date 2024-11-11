@@ -25,6 +25,8 @@ public:
 
 	void render(sf::RenderTarget* target);
 
+	virtual bool isEquipped() const;
+
 protected:
 	sf::Sprite* sprite = new sf::Sprite();
 	

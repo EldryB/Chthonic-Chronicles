@@ -71,6 +71,11 @@ void Item::render(sf::RenderTarget* target)
     target->draw(*this->sprite);
 }
 
+bool Item::isEquipped() const
+{
+    return false;
+}
+
 
 
 
