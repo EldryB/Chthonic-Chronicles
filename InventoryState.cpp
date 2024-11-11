@@ -120,13 +120,16 @@ void InventoryState::initItemList()
         itemName.setPosition(400.f, 185.f + i * 40);
         itemNames.push_back(itemName);
 
-        //sf::Text itemAmount;
-        //itemAmount.setFont(font);
-        //itemAmount.setString("x" + std::to_string(this->inventory->at(i)->getAmount()));
-        //itemAmount.setCharacterSize(20);
-        //itemAmount.setFillColor(sf::Color(206, 185, 141));
-        //itemAmount.setPosition(650.f, 185.f + i * 40);
-        //itemAmounts.push_back(itemAmount);
+        if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+        {
+            sf::Text itemAmount;
+            itemAmount.setFont(font);
+            itemAmount.setString("x" + std::to_string(consumable->getAmount()));
+            itemAmount.setCharacterSize(20);
+            itemAmount.setFillColor(sf::Color(206, 185, 141));
+            itemAmount.setPosition(650.f, 185.f + i * 40);
+            itemAmounts.push_back(itemAmount);
+        }
     }
 }
 
@@ -236,11 +239,10 @@ void InventoryState::render(sf::RenderTarget* target)
         target->draw(itemName);
     }
 
-    /*if (this->itemAmounts[0].getString() != "-1")
+    
+    for (const auto& itemamount : itemAmounts)
     {
-        for (const auto& itemAmount : itemAmounts)
-        {
-            target->draw(itemAmount);
-        }
-    }*/
+        target->draw(itemamount);
+    }
+    
 }

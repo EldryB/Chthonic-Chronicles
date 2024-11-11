@@ -52,33 +52,47 @@ void GameState::initTextures()
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
 	}
+
+	if (!this->textures["ARMORS_SHEET"].loadFromFile("assets/textures/Player/armor.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["POTION_SHEET"].loadFromFile("assets/textures/Player/potion.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
 }
 
 void GameState::initFighters()
 {
 	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 1000.f, 15, 10);
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Enemy(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 }
 
 void GameState::initItems()
 {
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Dagger", "Amazing dagger!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 50.f, 3, "Amazing dagger!"));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
 
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Red Sword", "IncREDible sword!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 100.f, -2, "IncREDible sword!"));
 	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
 	this->player->addItem(this->items[1]);
 
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Blue Sword", "InBaLUEble sword!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 90.f, -1, "InBaLUEble sword!"));
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
-	this->items.push_back(new Item(this->textures["ITEMS_SHEET"], "Green Dagger", "Greenlandagger!"));
-	this->items[3]->setIconRect(sf::IntRect(123, 0, 41, 42));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!"));
+	this->items[3]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[3]);
+
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!"));
+	this->items[4]->setIconRect(sf::IntRect(0, 0, 41, 42));
+	this->player->addItem(this->items[4]);
 }
 
 
