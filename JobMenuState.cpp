@@ -366,12 +366,6 @@ void JobMenuState::updateButtons()
                 this->initJobList();
             }
         }
-        /*else if (this->collectButtons[i]->getButtonState() == ButtonState::Pressed)
-        {
-            this->jobs.collectResources(resources,static_cast<JobTypes>(i));
-            this->initJobList();
-            this->initResourceList();
-        }*/
     }
 }
 
