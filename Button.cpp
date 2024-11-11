@@ -37,7 +37,7 @@ Button::Button(float _x, float _y, sf::Sprite _sprite, sf::Font* _font, std::str
 	sf::FloatRect textBounds = this->text.getGlobalBounds();
 	this->text.setPosition(
 		this->sprite.getPosition().x + (this->sprite.getGlobalBounds().width / 2.f) - (textBounds.width / 2.f),
-		this->sprite.getPosition().y + (this->sprite.getGlobalBounds().height / 2.f) - (textBounds.height / 2.f)
+		this->sprite.getPosition().y + (this->sprite.getGlobalBounds().height / 2.f) - (textBounds.height / 5.f)
 	);
 
 	this->keyCode = " ";
