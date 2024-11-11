@@ -257,3 +257,82 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 	}
 
 }
+
+void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty)
+{
+	if (false)
+	{
+		if(false)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+
+	else
+	{
+		if (getXPos(spr) > 868 && getXPos(spr) <= 990 && ((getYPos(spr) > 268 && getYPos(spr) < 318) || (getYPos(spr) < 194) || getYPos(spr) > 443))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 817 && getXPos(spr) <= 868 && ((getYPos(spr) > 268 && getYPos(spr) < 318) || (getYPos(spr) < 194) || getYPos(spr) > 424))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 768 && getXPos(spr) <= 817 && ((getYPos(spr) > 268 && getYPos(spr) < 318) || (getYPos(spr) < 194) || getYPos(spr) > 407))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 722 && getXPos(spr) <= 768 && ((getYPos(spr) < 194) || getYPos(spr) > 390))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 629 && getXPos(spr) <= 722 && ((getYPos(spr) > 268 && getYPos(spr) < 318) || (getYPos(spr) < 194) || getYPos(spr) > 370))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 603 && getXPos(spr) <= 629 && ((getYPos(spr) > 192 && getYPos(spr) < 318)) )
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 546 && getXPos(spr) <= 603 && ((getYPos(spr) < 252 || getYPos(spr) > 369)))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 516 && getXPos(spr) <= 546 && ((getYPos(spr) > 192 && getYPos(spr) < 306)))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 380 && getXPos(spr) <= 516 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 372))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 280 && getXPos(spr) <= 380 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 408))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 230 && getXPos(spr) <= 280 && ((getYPos(spr) < 194) || getYPos(spr) > 426))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 41 && getXPos(spr) <= 230 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 445))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) <= 41 && ((getYPos(spr) < 305) || getYPos(spr) > 386))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+}
