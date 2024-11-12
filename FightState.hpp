@@ -26,10 +26,13 @@ private:
     Player* player;
     Enemy* enemy;
     sf::Font font;
+
     sf::Text text;
     sf::Text message;
     sf::Text message2;
     sf::Text textBox;
+    sf::Text playerStats;
+
     std::vector<sf::RectangleShape> hpBar;
     std::vector<float> hpMax;
     sf::Vector2f lastPosition;

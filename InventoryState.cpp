@@ -63,10 +63,16 @@ void InventoryState::initFonts()
     );
 
     sf::FloatRect equipTextBounds = this->equipText.getGlobalBounds();
-    this->itemDescription.setPosition(
-        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (itemDescriptionBounds.width / 2.f),
-        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
+    this->equipText.setPosition(
+        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (equipTextBounds.width / 2.f),
+        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (equipTextBounds.height / 2.f)
     );
+
+    this->equipText2.setFont(this->font);
+    this->equipText2.setString(" ");
+    this->equipText2.setCharacterSize(12);
+    this->equipText2.setFillColor(sf::Color::Black);
+    this->equipText2.setPosition(this->equipText.getPosition().x, this->equipText.getPosition().y + 15);
 
     this->message.setFont(this->font);
     this->message.setString("Press 'C' to show controls");
@@ -234,12 +240,59 @@ void InventoryState::updateButtons()
         {
             this->inventory->at(i)->use(this->player);
             this->initItemList();
-        }
 
-        if (this->inventory->at(i)->isEquipped())
-        {
-            std::string textString = this->inventory->at(i)->getDescription();
-            this->equipText.setString(textString);
+            if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(i)))
+            {
+                if (this->inventory->at(i)->isEquipped())
+                {
+
+                    //Aqui desequipo las otras armas que tenga equipadas
+                    for (int j = 0; j < this->inventory->size(); ++j)
+                    {
+                        if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(j)))
+                        {
+                            if (this->inventory->at(j)->isEquipped() && (this->inventory->at(j)->getName() != this->inventory->at(i)->getName()))
+                            {
+                                this->inventory->at(j)->use(this->player);
+                                this->equipText.setString(" ");
+                            }
+                        }
+                    }
+
+                    std::string textString = this->inventory->at(i)->getDescription();
+                    this->equipText.setString(textString);
+                }
+                else
+                {
+                    this->equipText.setString(" ");
+                }
+            }
+
+            if (Armor* a = dynamic_cast<Armor*>(this->inventory->at(i)))
+            {
+                if (this->inventory->at(i)->isEquipped())
+                {
+                    //Aqui desequipo las otras armaduras que tenga equipadas
+                   for (int j = 0; j < this->inventory->size(); ++j)
+                   {
+                        if (Armor* c = dynamic_cast<Armor*>(this->inventory->at(j)))
+                        {
+                            if (this->inventory->at(j)->isEquipped() && (this->inventory->at(j)->getName() != this->inventory->at(i)->getName()))
+                            {
+                                this->inventory->at(j)->use(this->player);
+                                this->equipText2.setString(" ");
+                            }
+                        }
+                   }
+
+                    std::string textString = this->inventory->at(i)->getDescription();
+                    this->equipText2.setString(textString);
+                }
+                else
+                {
+                    this->equipText2.setString(" ");
+                }
+            }
         }
 
         ++i;
@@ -297,4 +350,5 @@ void InventoryState::render(sf::RenderTarget* target)
     
     target->draw(this->equip);
     target->draw(this->equipText);
+    target->draw(this->equipText2);
 }

@@ -43,6 +43,12 @@ void FightState::initFonts()
 	this->textBox.setCharacterSize(17);
 	this->textBox.setFillColor(sf::Color::White);
 	this->textBox.setPosition(550, 550);
+
+	this->playerStats.setFont(this->font);
+	this->playerStats.setString(" ");
+	this->playerStats.setCharacterSize(17);
+	this->playerStats.setFillColor(sf::Color::White);
+	this->playerStats.setPosition(Settings::WINDOW_WIDTH - this->playerStats.getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->playerStats.getGlobalBounds().height);
 }
 
 void FightState::initTextures()
@@ -258,6 +264,10 @@ void FightState::update(const float& _dt)
 		}
 	}
 	
+	std::string text2 = "AttackPower: " + std::to_string(this->player->getAttackPower()) + "\n" + "Defense: " + std::to_string(this->player->getDefense()) 
+		+ "\n" + "Initiative: " + std::to_string(this->player->getInitiative());
+	this->playerStats.setString(text2);
+	this->playerStats.setPosition(Settings::WINDOW_WIDTH - this->playerStats.getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->playerStats.getGlobalBounds().height);
 }
 
 void FightState::updateTurnQueue(int turnCount)
@@ -297,6 +307,7 @@ void FightState::render(sf::RenderTarget* target)
 	target->draw(this->message);
 	target->draw(this->message2);
 	target->draw(this->textBox);
+	target->draw(this->playerStats);
 
 }
 

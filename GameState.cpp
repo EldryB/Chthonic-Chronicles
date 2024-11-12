@@ -70,6 +70,9 @@ void GameState::initFighters()
 	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 }
 
 void GameState::initItems()
@@ -313,13 +316,14 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice(2147483646 / 1000);
+	Dice dice(3000);
+	Dice dice2(3000);
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
 		this->player->move(-1.f, 0.f, _dt);
 
-		if (dice.getFace() == 50)
+		if (dice.getFace() == dice2.getFace())
 		{
 			this->createCombat();
 		}
@@ -330,7 +334,7 @@ void GameState::updateInput2(const float& _dt)
 
 		if (dice.getFace() == 50)
 		{
-			this->createCombat();
+			//this->createCombat();
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
@@ -339,7 +343,7 @@ void GameState::updateInput2(const float& _dt)
 
 		if (dice.getFace() == 50)
 		{
-			this->createCombat();
+			//this->createCombat();
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
@@ -348,7 +352,7 @@ void GameState::updateInput2(const float& _dt)
 
 		if (dice.getFace() == 50)
 		{
-			this->createCombat();
+			//this->createCombat();
 		}
 	}
 
