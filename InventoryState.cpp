@@ -40,45 +40,35 @@ void InventoryState::initFonts()
         throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
     }
 
-    this->title.setFont(this->font);
-    this->title.setString("Inventory");
-    this->title.setCharacterSize(36);
-    this->title.setFillColor(sf::Color(206, 185, 141));
-    this->title.setPosition(100, 30);
+    this->texts["Title"].setFont(this->font);
+    this->texts["Title"].setString("Inventory");
+    this->texts["Title"].setCharacterSize(36);
+    this->texts["Title"].setFillColor(sf::Color(206, 185, 141));
+    this->texts["Title"].setPosition(100, 30);
 
-    this->itemDescription.setFont(this->font);
-    this->itemDescription.setString(" ");
-    this->itemDescription.setCharacterSize(12);
-    this->itemDescription.setFillColor(sf::Color::Black);
-
-    this->equipText.setFont(this->font);
-    this->equipText.setString(" ");
-    this->equipText.setCharacterSize(12);
-    this->equipText.setFillColor(sf::Color::Black);
-
-    sf::FloatRect itemDescriptionBounds = this->itemDescription.getGlobalBounds();
-    this->itemDescription.setPosition(
-        this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f)  - (itemDescriptionBounds.width / 2.f),
-        this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
+    this->texts["ItemDescription"].setFont(this->font);
+    this->texts["ItemDescription"].setString(" ");
+    this->texts["ItemDescription"].setCharacterSize(12);
+    this->texts["ItemDescription"].setFillColor(sf::Color::Black);
+    this->texts["ItemDescription"].setPosition(
+        this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().width / 2.f),
+        this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().height / 2.f)
     );
 
-    sf::FloatRect equipTextBounds = this->equipText.getGlobalBounds();
-    this->equipText.setPosition(
-        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (equipTextBounds.width / 2.f),
-        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (equipTextBounds.height / 2.f)
+    this->texts["EquippedWeapon"].setFont(this->font);
+    this->texts["EquippedWeapon"].setString(" ");
+    this->texts["EquippedWeapon"].setCharacterSize(12);
+    this->texts["EquippedWeapon"].setFillColor(sf::Color::Black);
+    this->texts["EquippedWeapon"].setPosition(
+        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().width / 2.f),
+        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().height / 2.f)
     );
 
-    this->equipText2.setFont(this->font);
-    this->equipText2.setString(" ");
-    this->equipText2.setCharacterSize(12);
-    this->equipText2.setFillColor(sf::Color::Black);
-    this->equipText2.setPosition(this->equipText.getPosition().x, this->equipText.getPosition().y + 15);
-
-    this->message.setFont(this->font);
-    this->message.setString("Press 'C' to show controls");
-    this->message.setCharacterSize(24);
-    this->message.setFillColor(sf::Color::White);
-    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
+    this->texts["EquippedArmor"].setFont(this->font);
+    this->texts["EquippedArmor"].setString(" ");
+    this->texts["EquippedArmor"].setCharacterSize(12);
+    this->texts["EquippedArmor"].setFillColor(sf::Color::Black);
+    this->texts["EquippedArmor"].setPosition(this->texts["EquippedWeapon"].getPosition().x, this->texts["EquippedWeapon"].getPosition().y + 15);
 }
 
 void InventoryState::initKeybinds()
@@ -140,7 +130,7 @@ void InventoryState::initItemList()
         itemName.setCharacterSize(20);
         itemName.setFillColor(sf::Color(206, 185, 141));
         itemName.setPosition(400.f, 185.f + i * 40);
-        itemNames.push_back(itemName);
+        this->texts[itemName.getString()] = itemName;
 
         if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
         {
@@ -150,7 +140,7 @@ void InventoryState::initItemList()
             itemAmount.setCharacterSize(20);
             itemAmount.setFillColor(sf::Color(206, 185, 141));
             itemAmount.setPosition(650.f, 185.f + i * 40);
-            itemAmounts.push_back(itemAmount);
+            this->texts[itemAmount.getString()] = itemAmount;
         }
     }
 }
@@ -228,12 +218,10 @@ void InventoryState::updateButtons()
         {
             button->setSprite(*this->inventory->at(i)->getSprite());
             button->setPosition(325.f, 150.f + i * 40);
-            this->itemDescription.setString(this->inventory->at(i)->getDescription());
-            
-            sf::FloatRect itemDescriptionBounds = this->itemDescription.getGlobalBounds();
-            this->itemDescription.setPosition(
-                this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f) - (itemDescriptionBounds.width / 2.f),
-                this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (itemDescriptionBounds.height / 2.f)
+            this->texts["ItemDescription"].setString(this->inventory->at(i)->getDescription());
+            this->texts["ItemDescription"].setPosition(
+                this->backgroundItemDescription.getPosition().x + (this->backgroundItemDescription.getGlobalBounds().width / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().width / 2.f),
+                this->backgroundItemDescription.getPosition().y + (this->backgroundItemDescription.getGlobalBounds().height / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().height / 2.f)
             );
         }
         else if (button->getButtonState() == ButtonState::Pressed)
@@ -254,17 +242,21 @@ void InventoryState::updateButtons()
                             if (this->inventory->at(j)->isEquipped() && (this->inventory->at(j)->getName() != this->inventory->at(i)->getName()))
                             {
                                 this->inventory->at(j)->use(this->player);
-                                this->equipText.setString(" ");
+                                this->texts["EquippedWeapon"].setString(" ");
                             }
                         }
                     }
 
-                    std::string textString = this->inventory->at(i)->getDescription();
-                    this->equipText.setString(textString);
+                    std::string textString = this->inventory->at(i)->getName() + " Equipped";
+                    this->texts["EquippedWeapon"].setString(textString);
+                    this->texts["EquippedWeapon"].setPosition(
+                        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().width / 2.f),
+                        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().height / 2.f)
+                    );
                 }
                 else
                 {
-                    this->equipText.setString(" ");
+                    this->texts["EquippedWeapon"].setString(" ");
                 }
             }
 
@@ -280,17 +272,17 @@ void InventoryState::updateButtons()
                             if (this->inventory->at(j)->isEquipped() && (this->inventory->at(j)->getName() != this->inventory->at(i)->getName()))
                             {
                                 this->inventory->at(j)->use(this->player);
-                                this->equipText2.setString(" ");
+                                this->texts["EquippedArmor"].setString(" ");
                             }
                         }
                    }
 
-                    std::string textString = this->inventory->at(i)->getDescription();
-                    this->equipText2.setString(textString);
+                    std::string textString = this->inventory->at(i)->getName() + "Equipped";
+                    this->texts["EquippedArmor"].setString(textString);
                 }
                 else
                 {
-                    this->equipText2.setString(" ");
+                    this->texts["EquippedArmor"].setString(" ");
                 }
             }
         }
@@ -325,30 +317,25 @@ void InventoryState::render(sf::RenderTarget* target)
 
     this->renderButtons(target);
 
-    target->draw(this->title);
-    target->draw(this->message);
+    target->draw(this->equip);
+
+    for (auto text : this->texts)
+    {
+        if (text.first != "ItemDescription")
+        {
+            target->draw(text.second);
+        }
+    }
 
     for (auto& button : this->useButtons)
     {
         if (button->getButtonState() == ButtonState::Hover)
         {
             target->draw(this->backgroundItemDescription);
-            target->draw(this->itemDescription);
+            target->draw(this->texts["ItemDescription"]);
         }
     }
-
-    for (const auto& itemName : itemNames)
-    {
-        target->draw(itemName);
-    }
-
     
-    for (const auto& itemamount : itemAmounts)
-    {
-        target->draw(itemamount);
-    }
-    
-    target->draw(this->equip);
-    target->draw(this->equipText);
-    target->draw(this->equipText2);
+    /*target->draw(this->equipText);
+    target->draw(this->equipText2);*/
 }

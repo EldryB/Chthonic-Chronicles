@@ -115,33 +115,26 @@ void GameState::initFonts()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
 
-	this->message.setFont(this->font);
-	this->message.setString("Press 'C' to show controls");
-	this->message.setCharacterSize(18);
-	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH/2), (Settings::WINDOW_HEIGHT - this->message.getGlobalBounds().height));
+	this->texts["Message"].setFont(this->font);
+	this->texts["Message"].setString("Press 'C' to show controls");
+	this->texts["Message"].setCharacterSize(18);
+	this->texts["Message"].setFillColor(sf::Color(206, 185, 141));
+	this->texts["Message"].setPosition((Settings::WINDOW_WIDTH/2), (Settings::WINDOW_HEIGHT - this->texts["Message"].getGlobalBounds().height));
 
-	this->message2.setFont(this->font);
-	this->message2.setString("Press E to enter");
-	this->message2.setCharacterSize(24);
-	this->message2.setFillColor(sf::Color::White);
-	this->message2.setPosition(600,250);
+	this->texts["PlayerPosition"].setFont(this->font);
+	this->texts["PlayerPosition"].setCharacterSize(20);
+	this->texts["PlayerPosition"].setFillColor(sf::Color(206, 185, 141));
+	this->texts["PlayerPosition"].setPosition(30, 30);
 
-	this->text.setFont(this->font);
-	this->text.setCharacterSize(20);
-	this->text.setFillColor(sf::Color(206, 185, 141));
-	text.setPosition(30, 30);
-
-	this->stageText.setFont(this->font);
-	this->stageText.setCharacterSize(24);
-	this->stageText.setFillColor(sf::Color::White);
-	this->stageText.setPosition(700, 30);
+	this->texts["CurrentStage"].setFont(this->font);
+	this->texts["CurrentStage"].setCharacterSize(24);
+	this->texts["CurrentStage"].setFillColor(sf::Color(206, 185, 141));
+	this->texts["CurrentStage"].setPosition(700, 30);
 }
 
 void GameState::createCombat()
 {
-
-	for(auto enemy: enemies)
+	for (auto enemy: enemies)
 	{
 		if (enemy->isAlive())
 		{
@@ -223,8 +216,6 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	this->timeSinceLastUpdate += _dt;
-	//bool isInLadder = ((player->getSprite()->getPosition().y > 307.260651f && player->getSprite()->getPosition().y < 339.698334f) && (player->getSprite()->getPosition().x > 350 && player->getSprite()->getPosition().x < 400));
-	//bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
@@ -398,16 +389,16 @@ void GameState::update(const float& _dt)
 
 	
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
-	text.setString(textString);
+	this->texts["PlayerPosition"].setString(textString);
 	
 	if(isInLvl1)
 	{
 		std::string textString = "Position: X = " + std::to_string(this->backgrounds.top().getPosition().x) + ", Y = " + std::to_string(this->backgrounds.top().getPosition().y);
-		message.setString(textString);;
+		this->texts["Message"].setString(textString);
 	}
 
 	updateMap(_dt);
-	this->stageText.setString(this->getStringStage(this->player->getStage()));
+	this->texts["CurrentStage"].setString(this->getStringStage(this->player->getStage()));
 
 }
 
@@ -423,16 +414,10 @@ void GameState::render(sf::RenderTarget* target)
 	target->draw(this->backgrounds.top());
 	
 	this->player->render(target);
-	
-	target->draw(this->text);
 
-	target->draw(this->message);
-
-	target->draw(this->stageText);
-
-	if ((isInDoor || this->player->getSprite()->getPosition().x > 771.f) && this->player->getStage() == CurrentStage::MainStage)
+	for (auto text : this->texts)
 	{
-		target->draw(this->message2);
+		target->draw(text.second);
 	}
 }
 

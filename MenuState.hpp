@@ -25,13 +25,10 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    sf::Font font;
     std::unordered_map<std::string, Button*> buttons;
     Fighter* player;
     JsonManagement dataManagement;
     int selectedButtonIndex;
-
-    sf::Text message;
 
     void initVariables();
 

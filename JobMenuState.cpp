@@ -66,40 +66,40 @@ void JobMenuState::initFonts()
         throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
     }
 
-    this->title.setFont(this->font);
-    this->title.setString("Settlement Management");
-    this->title.setCharacterSize(36);
-    this->title.setFillColor(sf::Color(206, 185, 141));
-    this->title.setPosition(100, 30);
+    this->texts["Title"].setFont(this->font);
+    this->texts["Title"].setString("Settlement Management");
+    this->texts["Title"].setCharacterSize(36);
+    this->texts["Title"].setFillColor(sf::Color(206, 185, 141));
+    this->texts["Title"].setPosition(100, 30);
 
     this->backgroundTooltip.setTexture(this->textures["MenuButtonIdle"]);
     this->backgroundTooltip.setPosition(700.f, 450.f);
 
-    this->tooltip.setFont(this->font);
-    this->tooltip.setString(" ");
-    this->tooltip.setCharacterSize(12);
-    this->tooltip.setFillColor(sf::Color::Black);
-    this->tooltip.setPosition
+    this->texts["Tooltip"].setFont(this->font);
+    this->texts["Tooltip"].setString(" ");
+    this->texts["Tooltip"].setCharacterSize(12);
+    this->texts["Tooltip"].setFillColor(sf::Color(21, 26, 38));
+    this->texts["Tooltip"].setPosition
     (
-        this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - this->backgroundTooltip.getGlobalBounds().width / 2.7f,
-        this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.5f) - this->backgroundTooltip.getGlobalBounds().height / 23.f
+        this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - (this->texts["Tooltip"].getGlobalBounds().width / 2.f),
+        this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.f) - (this->texts["Tooltip"].getGlobalBounds().height / 2.f)
     );
 
-    this->message.setFont(this->font);
-    this->message.setString("Press 'C' to show controls");
-    this->message.setCharacterSize(24);
-    this->message.setFillColor(sf::Color::White);
-    this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
+    this->texts["ControlsMessage"].setFont(this->font);
+    this->texts["ControlsMessage"].setString("Press 'C' to show controls");
+    this->texts["ControlsMessage"].setCharacterSize(24);
+    this->texts["ControlsMessage"].setFillColor(sf::Color::White);
+    this->texts["ControlsMessage"].setPosition((Settings::WINDOW_WIDTH - this->texts["ControlsMessage"].getGlobalBounds().width), 20.f);
 
-    this->availableVillagersText.setFont(this->font);
-    this->availableVillagersText.setCharacterSize(24);
-    this->availableVillagersText.setFillColor(sf::Color::White);
-    this->availableVillagersText.setPosition(100, Settings::WINDOW_HEIGHT - 20.f);
+    this->texts["AvailableVillagers"].setFont(this->font);
+    this->texts["AvailableVillagers"].setCharacterSize(24);
+    this->texts["AvailableVillagers"].setFillColor(sf::Color::White);
+    this->texts["AvailableVillagers"].setPosition(100, Settings::WINDOW_HEIGHT - 20.f);
 
-    this->collectionClockText.setFont(this->font);
-    this->collectionClockText.setCharacterSize(24);
-    this->collectionClockText.setFillColor(sf::Color::White);
-    this->collectionClockText.setPosition(Settings::WINDOW_WIDTH / 2, 80.f);
+    this->texts["CollectTimer"].setFont(this->font);
+    this->texts["CollectTimer"].setCharacterSize(24);
+    this->texts["CollectTimer"].setFillColor(sf::Color::White);
+    this->texts["CollectTimer"].setPosition(Settings::WINDOW_WIDTH / 2, 80.f);
 }
 
 void JobMenuState::initKeybinds()
@@ -110,8 +110,7 @@ void JobMenuState::initKeybinds()
 
 void JobMenuState::initButtons()
 {
-    //recicle el boton unlock para en su lugar hacer el upgrade
-    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UPGRADE         ");
+    this->buttons["UPGRADE"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UPGRADE         ");
 
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
@@ -163,7 +162,6 @@ JobMenuState::~JobMenuState()
 
 void JobMenuState::initJobList()
 {
-    this->jobTexts.clear();
     this->jobAmount.clear();
 
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
@@ -174,7 +172,7 @@ void JobMenuState::initJobList()
         jobText.setCharacterSize(20);
         jobText.setFillColor(sf::Color(206, 185, 141));
         jobText.setPosition(100.f, 70.f + i * 40);
-        jobTexts.push_back(jobText);
+        this->texts[jobText.getString()] = jobText;
 
         sf::Text amountText;
         amountText.setFont(font);
@@ -188,8 +186,7 @@ void JobMenuState::initJobList()
 
 void JobMenuState::initResourceList()
 {
-    this->resourceTexts.clear();
-    this->amountTexts.clear();
+    this->resourceAmount.clear();
 
     for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
     {
@@ -199,7 +196,7 @@ void JobMenuState::initResourceList()
         resourceText.setCharacterSize(20);
         resourceText.setFillColor(sf::Color(206, 185, 141));
         resourceText.setPosition(800.f, 70.f + i * 40);
-        resourceTexts.push_back(resourceText);
+        this->texts[resourceText.getString()] = resourceText;
 
         sf::Text amountText;
         amountText.setFont(font);
@@ -207,7 +204,7 @@ void JobMenuState::initResourceList()
         amountText.setCharacterSize(20);
         amountText.setFillColor(sf::Color(206, 185, 141));
         amountText.setPosition(950.f, 70.f + i * 40);
-        amountTexts.push_back(amountText);
+        resourceAmount.push_back(amountText);
     }
 }
 
@@ -215,26 +212,25 @@ std::string JobMenuState::getTooltipMessage(JobTypes _jobs)
 {
     switch (_jobs)
     {
-    case JobTypes::coinMaker: return "CoinMaker\nNecesita 1 oro\nProduce 11 monedas";
-        
-    case JobTypes::farmer:return "Farmer\nNo necesita nada\nProduce 1 trigo";
-       
-    case JobTypes::baker:return "Baker\nNecesita 2 trigos\nProduce 1 pan";
-       
-    case JobTypes::tanner:return "Tanner\nNecesita 2 panes\nProduce 1 cuero";
-       
-    case JobTypes::weaver:return "Weaver\nNecesita 1 pan\nProduce 1 ropa";
-      
-    case JobTypes::silkFarmer:return "SilkFarmer\nNecesita 15 ropa\nProduce 1 seda";
- 
-    case JobTypes::stoneMason:return "StoneMason\nNecesita 1 pan\nProduce 3 piedras";
+    case JobTypes::coinMaker: return "Coin Maker\nNeeds 1 gold\nProduces 11 coins";
 
-    case JobTypes::woodCutter:return "WoodCutter\nNecesita 1 pan\nProduce 3 maderas";
+    case JobTypes::farmer: return "Farmer\nNeeds nothing\nProduces 1 wheat";
 
-    case JobTypes::ironMiner:return "IronMiner\nNecesita 2 pan\nProduce 1 hierro";
+    case JobTypes::baker: return "Baker\nNeeds 2 wheats\nProduces 1 bread";
 
-    case JobTypes::goldMiner:return "GoldMiner\nNecesita 10 pan\nProduce 1 oro";
+    case JobTypes::tanner: return "Tanner\nNeeds 2 breads\nProduces 1 leather";
 
+    case JobTypes::weaver: return "Weaver\nNeeds 1 bread\nProduces 1 cloth";
+
+    case JobTypes::silkFarmer: return "Silk Farmer\nNeeds 15 cloths\nProduces 1 silk";
+
+    case JobTypes::stoneMason: return "Stone Mason\nNeeds 1 bread\nProduces 3 stones";
+
+    case JobTypes::woodCutter: return "Wood Cutter\nNeeds 1 bread\nProduces 3 wood";
+
+    case JobTypes::ironMiner: return "Iron Miner\nNeeds 2 breads\nProduces 1 iron";
+
+    case JobTypes::goldMiner: return "Gold Miner\nNeeds 10 breads\nProduces 1 gold";
 
     default:
         break;
@@ -292,8 +288,7 @@ void JobMenuState::updateButtons()
         }
     }
 
-    //Ahora es botton upgrade
-    if (this->buttons["UNLOCK"]->getButtonState() == ButtonState::Pressed)
+    if (this->buttons["UPGRADE"]->getButtonState() == ButtonState::Pressed)
     {
         this->availableVillagers += 5;
     }
@@ -333,7 +328,12 @@ void JobMenuState::updateButtons()
         if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
         {
             this->collectButtons[i]->setTexture(this->textures["CollectButtonHover"]);
-            this->tooltip.setString(this->getTooltipMessage(static_cast<JobTypes>(i)));
+            this->texts["Tooltip"].setString(this->getTooltipMessage(static_cast<JobTypes>(i)));
+            this->texts["Tooltip"].setPosition
+            (
+                this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - (this->texts["Tooltip"].getGlobalBounds().width / 2.f),
+                this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.f) - (this->texts["Tooltip"].getGlobalBounds().height / 2.f)
+            );
         }
  
         if (this->addButtons[i]->getButtonState() == ButtonState::Pressed)
@@ -359,7 +359,6 @@ void JobMenuState::updateButtons()
 
 void JobMenuState::update(const float& _dt)
 {
-    //colecta automatica
     if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
     {
         this->jobs.collectResourcesAutomatically(resources);
@@ -367,8 +366,8 @@ void JobMenuState::update(const float& _dt)
         this->initResourceList();
     }
 
-    this->availableVillagersText.setString("Aldeanos disponibles: " + std::to_string(this->availableVillagers));
-    this->collectionClockText.setString("Cosecha en: " + std::to_string(10 - static_cast<int>(this->collectionClock.getElapsedTime().asSeconds())));
+    this->texts["AvailableVillagers"].setString("Available Villagers: " + std::to_string(this->availableVillagers));
+    this->texts["CollectTimer"].setString("Collect in: " + std::to_string(10 - static_cast<int>(this->collectionClock.getElapsedTime().asSeconds())));
 
     this->updateMousePositions();
     this->updateInput(_dt);
@@ -401,23 +400,22 @@ void JobMenuState::render(sf::RenderTarget* target)
 
     this->renderButtons(target);
 
-    target->draw(this->title);
-    target->draw(this->message);
+    for (auto text : this->texts)
+    {
+        if (text.first != "Tooltip")
+        {
+            target->draw(text.second);
+        }
+    }
 
     for (size_t i = 0; i < addButtons.size(); i++)
     {
         if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
         {
             target->draw(this->backgroundTooltip);
-            target->draw(this->tooltip);
+            target->draw(this->texts["Tooltip"]);
         }
     }
-
-    for (const auto& jobText : jobTexts)
-    {
-        target->draw(jobText);
-    }
-
 
     if(this->jobAmount[0].getString() != "-1")
     {
@@ -427,19 +425,11 @@ void JobMenuState::render(sf::RenderTarget* target)
         }
     }
 
-    for (const auto& resourceText : resourceTexts)
+    if (this->resourceAmount[0].getString() != "-1")
     {
-        target->draw(resourceText);
-    }
-
-    if (this->amountTexts[0].getString() != "-1")
-    {
-        for (const auto& amountText : amountTexts)
+        for (const auto& amountText : resourceAmount)
         {
             target->draw(amountText);
         }
     }
-
-    target->draw(this->availableVillagersText);
-    target->draw(this->collectionClockText);
 }

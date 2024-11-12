@@ -19,12 +19,6 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    sf::Font font;
-
-    sf::Text title;
-
-    sf::Text message;
-
     std::vector<sf::Text> controls;
 
     void initVariables();

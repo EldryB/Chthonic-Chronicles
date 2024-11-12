@@ -34,10 +34,6 @@ private:
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
 
-    sf::Text text;
-    sf::Text message;
-    sf::Text message2;
-    sf::Text stageText;
     std::stack<sf::Sprite> backgrounds;
     std::string check;
     bool isInLvl1;

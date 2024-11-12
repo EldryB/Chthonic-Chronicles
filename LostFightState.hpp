@@ -22,13 +22,8 @@ public:
 
 private:
     Fighter* player;
-    sf::Font font;
     std::unordered_map<std::string, Button*> buttons;
     int selectedButtonIndex;
-
-    sf::Text title;
-
-    sf::Text message;
 
     void initVariables();
 

@@ -21,14 +21,9 @@ public:
     void render(sf::RenderTarget* target = nullptr);
 
 private:
-    sf::Font font;
     std::vector<Button*> useButtons;
     Player* player;
     std::vector<Item*>* inventory = new std::vector<Item*>();
-
-    sf::Text title;
-
-    sf::Text message;
 
     sf::Sprite equip;
     sf::Text equipText;
@@ -36,7 +31,6 @@ private:
 
     std::vector<sf::Text> itemNames;
     std::vector<sf::Text> itemAmounts;
-    sf::Text itemDescription;
     sf::Sprite backgroundItemDescription;
 
     void initVariables();

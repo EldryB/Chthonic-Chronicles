@@ -22,7 +22,6 @@
         void render(sf::RenderTarget* target = nullptr);
 
     private:
-        sf::Font font;
         std::vector<Button*> addButtons;
         std::vector<Button*> substractButtons;
         std::vector<Button*> collectButtons;
@@ -31,21 +30,13 @@
         Resources& resources;
         Fighter* player;
 
-        sf::Text title;
-        sf::Text message;
-
-        std::vector<sf::Text> jobTexts;
         std::vector<sf::Text> jobAmount;
-        std::vector<sf::Text> resourceTexts;
-        std::vector<sf::Text> amountTexts;
-        sf::Text tooltip;
+        std::vector<sf::Text> resourceAmount;
         sf::Sprite backgroundTooltip;
 
         sf::Clock collectionClock;
-        sf::Text collectionClockText;
 
         int availableVillagers = 5;
-        sf::Text availableVillagersText;
 
         void initVariables();
     

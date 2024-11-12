@@ -37,11 +37,11 @@ void MenuState::initFonts()
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_FONT";
 	}
 
-	this->message.setFont(this->font);
-	this->message.setString("Press 'C' to show controls");
-	this->message.setCharacterSize(24);
-	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
+	this->texts["ControlsMessage"].setFont(this->font);
+	this->texts["ControlsMessage"].setString("Press 'C' to show controls");
+	this->texts["ControlsMessage"].setCharacterSize(24);
+	this->texts["ControlsMessage"].setFillColor(sf::Color::White);
+	this->texts["ControlsMessage"].setPosition((Settings::WINDOW_WIDTH - this->texts["ControlsMessage"].getGlobalBounds().width), 20.f);
 }
 
 void MenuState::initKeybinds()
@@ -245,5 +245,8 @@ void MenuState::render(sf::RenderTarget* target)
 
 	this->renderButtons(target);
 
-	target->draw(this->message);
+	for (auto text : this->texts)
+	{
+		target->draw(text.second);
+	}
 }

@@ -37,17 +37,17 @@ void LostFightState::initFonts()
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_FONT";
 	}
 
-	this->title.setFont(this->font);
-	this->title.setString("YOU LOST...");
-	this->title.setCharacterSize(42);
-	this->title.setFillColor(sf::Color(206, 185, 141));
-	this->title.setPosition((Settings::WINDOW_WIDTH - this->title.getGlobalBounds().width) / 2, 75);
+	this->texts["Title"].setFont(this->font);
+	this->texts["Title"].setString("YOU LOST...");
+	this->texts["Title"].setCharacterSize(42);
+	this->texts["Title"].setFillColor(sf::Color(206, 185, 141));
+	this->texts["Title"].setPosition((Settings::WINDOW_WIDTH - this->texts["Title"].getGlobalBounds().width) / 2, 75);
 
-	this->message.setFont(this->font);
-	this->message.setString("Press 'C' to show controls");
-	this->message.setCharacterSize(24);
-	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
+	this->texts["ControlsMessage"].setFont(this->font);
+	this->texts["ControlsMessage"].setString("Press 'C' to show controls");
+	this->texts["ControlsMessage"].setCharacterSize(24);
+	this->texts["ControlsMessage"].setFillColor(sf::Color::White);
+	this->texts["ControlsMessage"].setPosition((Settings::WINDOW_WIDTH - this->texts["ControlsMessage"].getGlobalBounds().width), 20.f);
 }
 
 void LostFightState::initKeybinds()
@@ -222,7 +222,8 @@ void LostFightState::render(sf::RenderTarget* target)
 
 	this->renderButtons(target);
 
-	target->draw(this->title);
-
-	target->draw(this->message);
+	for (auto text : this->texts)
+	{
+		target->draw(text.second);
+	}
 }
