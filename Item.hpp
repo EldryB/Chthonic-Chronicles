@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Settings.hpp"
 #include "Fighter.hpp"
 
 class Item

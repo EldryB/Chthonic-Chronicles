@@ -20,6 +20,10 @@ public:
 
     Armor* getArmor() const;
 
+    void setWeapon(Weapon* _weapon);
+    
+    void setArmor(Armor* _armor);
+
     void addItem(Item* _item);
 
     void removeItem(Item* _item);

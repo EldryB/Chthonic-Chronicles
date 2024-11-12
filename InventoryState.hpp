@@ -1,7 +1,6 @@
 #pragma once
 
 #include "MenuState.hpp"
-#include "Player.hpp"
 
 class InventoryState :
     public State

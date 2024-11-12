@@ -34,7 +34,6 @@ private:
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
 
-    sf::Font font;
     sf::Text text;
     sf::Text message;
     sf::Text message2;

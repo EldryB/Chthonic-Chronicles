@@ -27,12 +27,14 @@ protected:
 	std::unordered_map<std::string, sf::Keyboard::Key> keybinds;
 	std::string keyCode{ "" };
 	bool quit;
+	sf::Font font;
 	sf::Sprite background;
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
 	std::unordered_map<std::string, sf::Texture> textures;
+	std::unordered_map<std::string, sf::Text> texts;
 
 	virtual void initVariables() = 0;
 	virtual void initKeybinds() = 0;

@@ -49,6 +49,16 @@ Armor* Player::getArmor() const
 	return this->armor;
 }
 
+void Player::setWeapon(Weapon* _weapon)
+{
+	this->weapon = _weapon;
+}
+
+void Player::setArmor(Armor* _armor)
+{
+	this->armor = _armor;
+}
+
 void Player::update(const float& _dt)
 {
 	this->movementComponent->update(_dt);

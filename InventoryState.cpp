@@ -109,15 +109,7 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->player = _p;
     this->inventory = this->player->getInventory();
     this->initButtons();
-    
-    /*if (this->currentState == CurrentState::Game)
-    {*/
     this->initItemList();
-    //}
-    /*if (this->currentState == CurrentState::Fight)
-    {
-        this->initConsumableList();
-    }*/
 }
 
 InventoryState::~InventoryState()
@@ -165,6 +157,14 @@ void InventoryState::initConsumableList()
     {
         if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
         {
+            sf::Text itemName;
+            itemName.setFont(font);
+            itemName.setString(this->inventory->at(i)->getName());
+            itemName.setCharacterSize(20);
+            itemName.setFillColor(sf::Color(206, 185, 141));
+            itemName.setPosition(400.f, 185.f + i * 40);
+            itemNames.push_back(itemName);
+            
             sf::Text itemAmount;
             itemAmount.setFont(font);
             itemAmount.setString("x" + std::to_string(consumable->getAmount()));
