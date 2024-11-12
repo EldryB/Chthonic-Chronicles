@@ -3,16 +3,16 @@
 Jobs::Jobs()
 {
     jobs = {
-        {"Coin Maker", -1},
-        {"Farmer", -1},
-        {"Baker", -1},
-        {"Tanner", -1},
-        {"Weaver", -1},
-        {"Silk Farmer", -1},
-        {"Stone Mason", -1},
-        {"Woodcutter", -1},
-        {"Iron Miner", -1},
-        {"Gold Miner", -1}
+        {"Coin Maker", 0},
+        {"Farmer", 0},
+        {"Baker", 0},
+        {"Tanner", 0},
+        {"Weaver", 0},
+        {"Silk Farmer", 0},
+        {"Stone Mason", 0},
+        {"Woodcutter", 0},
+        {"Iron Miner", 0},
+        {"Gold Miner", 0}
     };
 }
 

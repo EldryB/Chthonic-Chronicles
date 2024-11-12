@@ -72,11 +72,6 @@ void JobMenuState::initFonts()
     this->title.setFillColor(sf::Color(206, 185, 141));
     this->title.setPosition(100, 30);
 
-    this->villagersAvailable.setFont(this->font);
-    this->villagersAvailable.setCharacterSize(24);
-    this->villagersAvailable.setFillColor(sf::Color(206, 185, 141));
-    this->villagersAvailable.setPosition(500, 80);
-
     this->backgroundTooltip.setTexture(this->textures["MenuButtonIdle"]);
     this->backgroundTooltip.setPosition(700.f, 450.f);
 
@@ -95,6 +90,16 @@ void JobMenuState::initFonts()
     this->message.setCharacterSize(24);
     this->message.setFillColor(sf::Color::White);
     this->message.setPosition((Settings::WINDOW_WIDTH - this->message.getGlobalBounds().width), 20.f);
+
+    this->availableVillagersText.setFont(this->font);
+    this->availableVillagersText.setCharacterSize(24);
+    this->availableVillagersText.setFillColor(sf::Color::White);
+    this->availableVillagersText.setPosition(100, Settings::WINDOW_HEIGHT - 20.f);
+
+    this->collectionClockText.setFont(this->font);
+    this->collectionClockText.setCharacterSize(24);
+    this->collectionClockText.setFillColor(sf::Color::White);
+    this->collectionClockText.setPosition(Settings::WINDOW_WIDTH / 2, 80.f);
 }
 
 void JobMenuState::initKeybinds()
@@ -105,8 +110,9 @@ void JobMenuState::initKeybinds()
 
 void JobMenuState::initButtons()
 {
-    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UNLOCK");
-     
+    //recicle el boton unlock para en su lugar hacer el upgrade
+    this->buttons["UNLOCK"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UPGRADE         ");
+
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
         this->addButtons.push_back(new Button(300.f, 55.f + i * 40, this->textures["AddButton"], &this->font, ""));
@@ -286,28 +292,10 @@ void JobMenuState::updateButtons()
         }
     }
 
-    //aca debo arreglar que sea uno por uno
+    //Ahora es botton upgrade
     if (this->buttons["UNLOCK"]->getButtonState() == ButtonState::Pressed)
     {
-        for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
-        {
-            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) == -1)
-            {
-                this->jobs.unlockJob(static_cast<JobTypes>(i));
-                this->initJobList();
-                this->initResourceList();
-            }
-        }
-
-        for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
-        {
-            if (this->resources.getResourceAmount(static_cast<ResourceTypes>(i)) == -1)
-            {
-                this->resources.unlockResource(static_cast<ResourceTypes>(i));
-                this->initJobList();
-                this->initResourceList();
-            }
-        }
+        this->availableVillagers += 5;
     }
 
     for (size_t i = 0; i < this->addButtons.size(); ++i)
@@ -371,12 +359,16 @@ void JobMenuState::updateButtons()
 
 void JobMenuState::update(const float& _dt)
 {
+    //colecta automatica
     if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
     {
         this->jobs.collectResourcesAutomatically(resources);
         this->collectionClock.restart();
         this->initResourceList();
     }
+
+    this->availableVillagersText.setString("Aldeanos disponibles: " + std::to_string(this->availableVillagers));
+    this->collectionClockText.setString("Cosecha en: " + std::to_string(10 - static_cast<int>(this->collectionClock.getElapsedTime().asSeconds())));
 
     this->updateMousePositions();
     this->updateInput(_dt);
@@ -410,7 +402,6 @@ void JobMenuState::render(sf::RenderTarget* target)
     this->renderButtons(target);
 
     target->draw(this->title);
-    target->draw(this->villagersAvailable);
     target->draw(this->message);
 
     for (size_t i = 0; i < addButtons.size(); i++)
@@ -448,4 +439,7 @@ void JobMenuState::render(sf::RenderTarget* target)
             target->draw(amountText);
         }
     }
+
+    target->draw(this->availableVillagersText);
+    target->draw(this->collectionClockText);
 }

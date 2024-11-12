@@ -32,9 +32,6 @@
         Fighter* player;
 
         sf::Text title;
-
-        sf::Text villagersAvailable;
-
         sf::Text message;
 
         std::vector<sf::Text> jobTexts;
@@ -45,7 +42,10 @@
         sf::Sprite backgroundTooltip;
 
         sf::Clock collectionClock;
+        sf::Text collectionClockText;
+
         int availableVillagers = 5;
+        sf::Text availableVillagersText;
 
         void initVariables();
     

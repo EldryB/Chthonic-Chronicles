@@ -3,16 +3,16 @@
 Resources::Resources()
 {
     resources = {
-        {"Coin", -1},
-        {"Wheat", -1},
-        {"Bread", -1},
-        {"Leather", -1},
-        {"Cloth", -1},
-        {"Silk", -1},
-        {"Stone", -1},
-        {"Wood", -1},
-        {"Iron", -1},
-        {"Gold", -1}
+        {"Coin", 0},
+        {"Wheat", 0},
+        {"Bread", 0},
+        {"Leather", 0},
+        {"Cloth", 0},
+        {"Silk", 0},
+        {"Stone", 0},
+        {"Wood", 0},
+        {"Iron", 0},
+        {"Gold", 0}
     };
 }
 
