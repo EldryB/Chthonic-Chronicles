@@ -1,6 +1,5 @@
 #pragma once
 
-#include "InventoryState.hpp"
 #include "FightState.hpp"
 #include "JobMenuState.hpp"
 #include "Dice.hpp"

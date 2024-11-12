@@ -44,7 +44,6 @@ float Weapon::getAttackPower() const
 
 void Weapon::use(Fighter* target)
 {
-	target->setHp(10);
 	if(!this->equipped)
 	{
 		this->equipped = true;
@@ -77,7 +76,6 @@ int Armor::getDefense() const
 
 void Armor::use(Fighter* target)
 {
-
 	if (!this->equipped)
 	{
 		this->equipped = true;

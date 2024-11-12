@@ -52,6 +52,8 @@ private:
     void initButtons();
 
     void initItemList();
+
+    void initConsumableList();
 };
 
 

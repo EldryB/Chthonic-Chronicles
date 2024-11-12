@@ -2,6 +2,7 @@
 
 void FightState::initVariables()
 {
+	this->currentState = CurrentState::Fight;
 	this->selectedButtonIndex = 0;
 	this->keyCode = " ";
 	this->hpMax.push_back(this->player->getHp());
@@ -41,7 +42,7 @@ void FightState::initFonts()
 	this->textBox.setString(" ");
 	this->textBox.setCharacterSize(17);
 	this->textBox.setFillColor(sf::Color::White);
-	this->textBox.setPosition(450, 550);
+	this->textBox.setPosition(550, 550);
 }
 
 void FightState::initTextures()
@@ -64,7 +65,8 @@ void FightState::initTextures()
 
 void FightState::initButtons()
 {
-	this->buttons["ATTACK"] = new Button(100, 470.f, this->textures["AttackMenuButtonIdle"], &this->font, "ATTACK");
+	this->buttons["ATTACK"] = new Button(100.f, 470.f, this->textures["AttackMenuButtonIdle"], &this->font, "ATTACK");
+	this->buttons["INVENTORY"] = new Button(320.f, 470.f, this->textures["AttackMenuButtonIdle"], &this->font, "INVENTORY");
 }
 
 void FightState::initFighters(Player* _p, Enemy* _enemy)
@@ -181,6 +183,15 @@ void FightState::updateButtons()
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
 		this->enemy->takeDamage(this->player->getAttackPower());
+
+		this->playerTurn = false;
+		this->turnQueue.pop();
+		count = 0;
+	}
+
+	if (this->buttons["INVENTORY"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
+	{
+		this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
 
 		this->playerTurn = false;
 		this->turnQueue.pop();

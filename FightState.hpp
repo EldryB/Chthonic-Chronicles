@@ -1,5 +1,6 @@
 #pragma once
 
+#include "InventoryState.hpp"
 #include "LostFightState.hpp"
 
 class FightState :
