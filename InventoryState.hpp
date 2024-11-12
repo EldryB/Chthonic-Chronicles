@@ -26,8 +26,6 @@ private:
     std::vector<Item*>* inventory = new std::vector<Item*>();
 
     sf::Sprite equip;
-    sf::Text equipText;
-    sf::Text equipText2;
 
     std::vector<sf::Text> itemNames;
     std::vector<sf::Text> itemAmounts;

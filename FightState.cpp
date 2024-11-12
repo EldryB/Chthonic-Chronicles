@@ -26,29 +26,29 @@ void FightState::initFonts()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
 
-	this->message.setFont(this->font);
-	this->message.setString(std::to_string(this->player->getHp()));
-	this->message.setCharacterSize(24);
-	this->message.setFillColor(sf::Color::White);
-	this->message.setPosition(20,20);
+	this->texts["PlayerHp"].setFont(this->font);
+	this->texts["PlayerHp"].setString(std::to_string(this->player->getHp()));
+	this->texts["PlayerHp"].setCharacterSize(24);
+	this->texts["PlayerHp"].setFillColor(sf::Color::White);
+	this->texts["PlayerHp"].setPosition(20,20);
 
-	this->message2.setFont(this->font);
-	this->message2.setString(std::to_string(this->enemy->getHp()));
-	this->message2.setCharacterSize(24);
-	this->message2.setFillColor(sf::Color::White);
-	this->message2.setPosition(20, 20);
+	this->texts["EnemyHp"].setFont(this->font);
+	this->texts["EnemyHp"].setString(std::to_string(this->enemy->getHp()));
+	this->texts["EnemyHp"].setCharacterSize(24);
+	this->texts["EnemyHp"].setFillColor(sf::Color::White);
+	this->texts["EnemyHp"].setPosition(20, 20);
 
-	this->textBox.setFont(this->font);
-	this->textBox.setString(" ");
-	this->textBox.setCharacterSize(17);
-	this->textBox.setFillColor(sf::Color::White);
-	this->textBox.setPosition(550, 550);
+	this->texts["TextBox"].setFont(this->font);
+	this->texts["TextBox"].setString(" ");
+	this->texts["TextBox"].setCharacterSize(17);
+	this->texts["TextBox"].setFillColor(sf::Color::White);
+	this->texts["TextBox"].setPosition(550, 500);
 
-	this->playerStats.setFont(this->font);
-	this->playerStats.setString(" ");
-	this->playerStats.setCharacterSize(17);
-	this->playerStats.setFillColor(sf::Color::White);
-	this->playerStats.setPosition(Settings::WINDOW_WIDTH - this->playerStats.getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->playerStats.getGlobalBounds().height);
+	this->texts["PlayerStats"].setFont(this->font);
+	this->texts["PlayerStats"].setString(" ");
+	this->texts["PlayerStats"].setCharacterSize(17);
+	this->texts["PlayerStats"].setFillColor(sf::Color::White);
+	this->texts["PlayerStats"].setPosition(Settings::WINDOW_WIDTH - this->texts["PlayerStats"].getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->texts["PlayerStats"].getGlobalBounds().height);
 }
 
 void FightState::initTextures()
@@ -105,7 +105,7 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	hpBar1.setPosition(100.f,100.f);
 	hpBar1.setSize(sf::Vector2f(200.0f, 20.0f));
 	hpBar1.setFillColor(sf::Color::Green);
-	this->message.setPosition(hpBar1.getPosition().x, hpBar1.getPosition().y - this->message2.getGlobalBounds().height + 5);
+	this->texts["PlayerHp"].setPosition(hpBar1.getPosition().x, hpBar1.getPosition().y - this->texts["EnemyHp"].getGlobalBounds().height + 5);
 
 	this->hpBar.push_back(hpBar1);
 
@@ -113,7 +113,7 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	hpBar2.setPosition(600.f, 100.f);
 	hpBar2.setSize(sf::Vector2f(200.0f, 20.0f));
 	hpBar2.setFillColor(sf::Color::Green);
-	this->message2.setPosition(hpBar2.getPosition().x, hpBar2.getPosition().y - this->message2.getGlobalBounds().height + 5);
+	this->texts["EnemyHp"].setPosition(hpBar2.getPosition().x, hpBar2.getPosition().y - this->texts["EnemyHp"].getGlobalBounds().height + 5);
 
 	this->hpBar.push_back(hpBar2);
 
@@ -168,7 +168,6 @@ void FightState::updateInput(const float& _dt)
 
 void FightState::updateButtons()
 {
-
 	for (auto& it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -225,8 +224,8 @@ void FightState::update(const float& _dt)
 		this->hpBar[i].setSize(sf::Vector2f(200.0f * bar, 20.0f));
 	}
 
-	this->message.setString(std::to_string(static_cast<int>(this->player->getHp())));
-	this->message2.setString(std::to_string(static_cast<int>(this->enemy->getHp())));
+	this->texts["PlayerHp"].setString(std::to_string(static_cast<int>(this->player->getHp())));
+	this->texts["EnemyHp"].setString(std::to_string(static_cast<int>(this->enemy->getHp())));
 
 	if (!this->player->isAlive())
 	{
@@ -247,7 +246,7 @@ void FightState::update(const float& _dt)
 		currentTurn++;
 		auto currentFighter = turnQueue.front();
 		std::string stringText = currentFighter->getName() + " empieza su turno ";
-		this->textBox.setString(stringText);
+		this->texts["TextBox"].setString(stringText);
 
 		if (Player* p = dynamic_cast<Player*>(currentFighter))
 		{
@@ -266,8 +265,8 @@ void FightState::update(const float& _dt)
 	
 	std::string text2 = "AttackPower: " + std::to_string(this->player->getAttackPower()) + "\n" + "Defense: " + std::to_string(this->player->getDefense()) 
 		+ "\n" + "Initiative: " + std::to_string(this->player->getInitiative());
-	this->playerStats.setString(text2);
-	this->playerStats.setPosition(Settings::WINDOW_WIDTH - this->playerStats.getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->playerStats.getGlobalBounds().height);
+	this->texts["PlayerStats"].setString(text2);
+	this->texts["PlayerStats"].setPosition(Settings::WINDOW_WIDTH - this->texts["PlayerStats"].getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->texts["PlayerStats"].getGlobalBounds().height);
 }
 
 void FightState::updateTurnQueue(int turnCount)
@@ -299,16 +298,15 @@ void FightState::render(sf::RenderTarget* target)
 
 	this->enemy->render(target);
 
-	target->draw(this->text);
 	for (auto item: this->hpBar)
 	{
 		target->draw(item);
 	}
-	target->draw(this->message);
-	target->draw(this->message2);
-	target->draw(this->textBox);
-	target->draw(this->playerStats);
 
+	for (auto text : this->texts)
+	{
+		target->draw(text.second);
+	}
 }
 
 void FightState::renderButtons(sf::RenderTarget* target)

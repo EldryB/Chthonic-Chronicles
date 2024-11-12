@@ -25,7 +25,6 @@ public:
 private:
     Player* player;
     Enemy* enemy;
-    sf::Font font;
 
     sf::Text text;
     sf::Text message;
