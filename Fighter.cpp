@@ -55,6 +55,11 @@ void Fighter::setDefense(int _defense)
 	this->defense = _defense;
 }
 
+void Fighter::setInitiative(int _initiative)
+{
+	this->initiative = _initiative;
+}
+
 void Fighter::setAttributes(float _x, float _y, std::string _name, float _hp, float _damage)
 {
 	this->sprite->setPosition(_x, _y);

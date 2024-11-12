@@ -1,9 +1,9 @@
 #include "Equipable.hpp"
 
-Equipable::Equipable(sf::Texture& _texture, std::string _name, std::string _description)
-	: Item(_texture, _name, _description)
+Equipable::Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description) 
+	: initiative(_initiative), equipped(false), Item(_texture, _name, _description)
 {
-
+	this->equipped = false;
 }
 
 Equipable::~Equipable()
@@ -11,13 +11,23 @@ Equipable::~Equipable()
 
 }
 
+int Equipable::getInitiative() const
+{
+	return this->initiative;
+}
+
+bool Equipable::isEquipped() const
+{
+	return this->equipped;
+}
+
 void Equipable::use(Fighter* target)
 {
 
 }
 
-Weapon::Weapon(sf::Texture& _texture, std::string _name, float attack_power, std::string _description)
-	: attackPower(attack_power), Equipable(_texture, _name, _description)
+Weapon::Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description)
+	: attackPower(attack_power), Equipable(_texture, _name, _initiative, _description)
 {
 
 }
@@ -34,11 +44,23 @@ float Weapon::getAttackPower() const
 
 void Weapon::use(Fighter* target)
 {
-	target->setAttackPower(target->getAttackPower() + this->getAttackPower());
+	target->setHp(10);
+	if(!this->equipped)
+	{
+		this->equipped = true;
+		target->setAttackPower(target->getAttackPower() + this->getAttackPower());
+		target->setInitiative(target->getInitiative() + this->getInitiative());
+	}
+	else 
+	{
+		this->equipped = false;
+		target->setAttackPower(target->getAttackPower() - this->getAttackPower());
+		target->setInitiative(target->getInitiative() - this->getInitiative());
+	}
 }
 
-Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, std::string _description)
-	: defense(_defense), Equipable(_texture, _name, _description)
+Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description)
+	: defense(_defense), Equipable(_texture, _name, _initiative, _description)
 {
 
 }
@@ -55,5 +77,17 @@ int Armor::getDefense() const
 
 void Armor::use(Fighter* target)
 {
-	target->setDefense(target->getDefense() + this->getDefense());
+
+	if (!this->equipped)
+	{
+		this->equipped = true;
+		target->setDefense(target->getDefense() + this->getDefense());
+		target->setInitiative(target->getInitiative() + this->getInitiative());
+	}
+	else
+	{
+		this->equipped = false;
+		target->setDefense(target->getDefense() - this->getDefense());
+		target->setInitiative(target->getInitiative() - this->getInitiative());
+	}
 }
