@@ -130,7 +130,7 @@ void InventoryState::initItemList()
         itemName.setCharacterSize(20);
         itemName.setFillColor(sf::Color(206, 185, 141));
         itemName.setPosition(400.f, 185.f + i * 40);
-        this->texts[itemName.getString()] = itemName;
+        itemNames.push_back(itemName);
 
         if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
         {
@@ -140,7 +140,7 @@ void InventoryState::initItemList()
             itemAmount.setCharacterSize(20);
             itemAmount.setFillColor(sf::Color(206, 185, 141));
             itemAmount.setPosition(650.f, 185.f + i * 40);
-            this->texts[itemAmount.getString()] = itemAmount;
+            itemAmounts.push_back(itemAmount);
         }
     }
 }
@@ -227,7 +227,6 @@ void InventoryState::updateButtons()
         else if (button->getButtonState() == ButtonState::Pressed)
         {
             this->inventory->at(i)->use(this->player);
-            this->initItemList();
 
             if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(i)))
             {
@@ -279,12 +278,14 @@ void InventoryState::updateButtons()
 
                     std::string textString = this->inventory->at(i)->getName() + "Equipped";
                     this->texts["EquippedArmor"].setString(textString);
+                    this->texts["EquippedArmor"].setPosition(this->texts["EquippedWeapon"].getPosition().x, this->texts["EquippedWeapon"].getPosition().y + 15);
                 }
                 else
                 {
                     this->texts["EquippedArmor"].setString(" ");
                 }
             }
+            this->initItemList();
         }
 
         ++i;
@@ -327,15 +328,22 @@ void InventoryState::render(sf::RenderTarget* target)
         }
     }
 
+    int i = 0;
     for (auto& button : this->useButtons)
     {
+        target->draw(itemNames[i]);
+
         if (button->getButtonState() == ButtonState::Hover)
         {
             target->draw(this->backgroundItemDescription);
             target->draw(this->texts["ItemDescription"]);
         }
+        
+        ++i;
     }
-    
-    /*target->draw(this->equipText);
-    target->draw(this->equipText2);*/
+
+    for (auto itemAmount : itemAmounts)
+    {
+        target->draw(itemAmount);
+    }
 }
