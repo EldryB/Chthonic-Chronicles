@@ -228,6 +228,19 @@ void InventoryState::updateButtons()
         {
             this->inventory->at(i)->use(this->player);
 
+            if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+            {
+                if (consumable->getAmount() == 0)
+                {
+                    this->inventory->erase(this->inventory->begin() + i);
+                    delete button; 
+                    this->useButtons.erase(this->useButtons.begin() + i);
+                    --i;
+                    this->initItemList();
+                    continue;
+                }
+            }
+
             if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(i)))
             {
                 if (this->inventory->at(i)->isEquipped())

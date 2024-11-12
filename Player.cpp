@@ -101,12 +101,3 @@ void Player::addItem(Item* _item)
 {
     this->inventory->push_back(_item);
 }
-
-void Player::removeItem(Item* _item)
-{
-	auto it = std::find(this->inventory->begin(), this->inventory->end(), _item);
-	if (it != this->inventory->end()) 
-	{
-		this->inventory->erase(it); 
-	}
-}

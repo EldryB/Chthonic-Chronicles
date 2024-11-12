@@ -26,8 +26,6 @@ public:
 
     void addItem(Item* _item);
 
-    void removeItem(Item* _item);
-
     void update(const float& _dt);
 
 protected:
