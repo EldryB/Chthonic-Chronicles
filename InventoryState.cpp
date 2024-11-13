@@ -3,6 +3,7 @@
 void InventoryState::initVariables()
 {
     this->keyCode = " ";
+    this->check = false;
 }
 
 void InventoryState::initTextures()
@@ -85,8 +86,8 @@ void InventoryState::initButtons()
     }
 }
 
-InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, bool show_consumables_only)
-    : showConsumablesOnly(show_consumables_only), State(_window, _supportedKeys, _states)
+InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
+    : State(_window, _supportedKeys, _states)
 {    
     this->initVariables();
     this->initTextures();
@@ -108,6 +109,31 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->initItemList();
 }
 
+InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::string* isMyTurn)
+    : showConsumablesOnly(false), State(_window, _supportedKeys, _states)
+{
+    this->initVariables();
+    this->initTextures();
+    this->initBackground();
+
+    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
+    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
+
+    this->equip.setTexture(this->textures["MenuButtonIdle"]);
+    this->equip.setPosition(10,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
+
+    this->initFonts();
+    this->initKeybinds();
+    this->player = _p;
+    this->inventory = this->player->getInventory();
+    this->initButtons();
+    this->initItemList();
+
+    this->turn = isMyTurn;
+}
+
 InventoryState::~InventoryState()
 {
     for (auto& button : this->useButtons)
@@ -124,7 +150,7 @@ void InventoryState::initItemList()
 
     for (int i = 0; i < this->inventory->size(); ++i)
     {
-        if (this->showConsumablesOnly)
+        if (false)
         {
             if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
             {
@@ -194,6 +220,14 @@ void InventoryState::updateInput(const float& _dt)
         if (keyCode == "CLOSE")
         {
             keyCode = " ";
+            if (check)
+            {
+                this->turn->assign("N");
+            }
+            else
+            {
+                this->turn->assign("S");
+            }
             this->states->pop();
         }
     }
@@ -225,6 +259,7 @@ void InventoryState::updateButtons()
         else if (button->getButtonState() == ButtonState::Pressed)
         {
             this->inventory->at(i)->use(this->player);
+            this->check = true;
 
             if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
             {

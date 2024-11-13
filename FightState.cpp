@@ -202,11 +202,7 @@ void FightState::updateButtons()
 
 	if (this->buttons["INVENTORY"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
-		this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player, true));
-
-		this->playerTurn = false;
-		this->turnQueue.pop();
-		count = 0;
+		this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player,this->check));
 	}
 }
 
@@ -221,6 +217,14 @@ void FightState::update(const float& _dt)
 	this->enemy->update(_dt);
 	this->updateButtons();
 	//this->dice.update(_dt);
+
+	if (this->check->at(0) == 'N')
+	{
+		this->check->at(0) = 'S';
+		this->playerTurn = false;
+		this->turnQueue.pop();
+		count = 0;
+	}
 
 	float barLife = this->player->getHp() / this->hpMax[0];
 	this->hpBar[0].setSize(sf::Vector2f(200.0f * barLife, 20.0f));

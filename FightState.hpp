@@ -33,7 +33,8 @@ private:
     sf::Vector2f lastPosition;
     std::queue<Fighter*> turnQueue;
     std::vector<Fighter*> fighters;
-    bool playerTurn = true;
+    bool playerTurn;
+    std::string* check = new std::string("S");
     std::unordered_map<std::string, Button*> buttons;
     int selectedButtonIndex;
 
