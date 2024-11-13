@@ -8,9 +8,6 @@ void GameState::initVariables()
 	this->jobs = new Jobs();
 	check = " ";
 	isBackgroundMoving = false;
-	isInLvl1 = (this->player->getStage() == CurrentStage::Lvl1R1) || (this->player->getStage() == CurrentStage::Lvl1R2) || (this->player->getStage() == CurrentStage::Lvl1R3) || 
-		(this->player->getStage() == CurrentStage::Lvl1R4) || (this->player->getStage() == CurrentStage::Lvl1R5) || (this->player->getStage() == CurrentStage::Lvl1R6) || 
-		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8 || (this->player->getStage() == CurrentStage::Lvl1R9));
 }
 
 void GameState::initKeybinds()
@@ -89,23 +86,23 @@ void GameState::initFighters()
 
 void GameState::initItems()
 {
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 50.f, 3, "Amazing dagger!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 50.f, 3, "Amazing dagger!", 10));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 100.f, -2, "IncREDible sword!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 100.f, -2, "IncREDible sword!", 10));
 	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
 	this->player->addItem(this->items[1]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 90.f, 0, "InBaLUEble sword!"));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 90.f, 0, "InBaLUEble sword!", 10));
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
-	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!"));
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!" , 10));
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!"));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
 }
@@ -232,6 +229,9 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& _dt)
 {
+	bool isInHouse1 = (this->player->getSprite()->getPosition().x > 244 && this->player->getSprite()->getPosition().x < 272 && this->player->getSprite()->getPosition().y < 248.5f);
+	bool isInHouse2;
+
 	this->timeSinceLastUpdate += _dt;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
@@ -318,6 +318,19 @@ void GameState::updateInput(const float& _dt)
 			sf::Sprite spr{ this->textures["Lvl1"] };
 			spr.setPosition(-2044.86f, -1214.11f);
 			this->backgrounds.push(spr);
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInHouse1)
+	{
+		this->keyCode = "HOUSE1";
+	}
+	else
+	{
+		if (this->keyCode == "HOUSE1")
+		{
+			this->keyCode = " ";
+			this->states->push(new StoreState(this->window, this->supportedKeys, this->states, this->player, &this->items));
 		}
 	}
 }
@@ -435,8 +448,6 @@ void GameState::update(const float& _dt)
 
 void GameState::render(sf::RenderTarget* target)
 {
-	bool isInDoor = ((player->getSprite()->getPosition().y < 330) && (player->getSprite()->getPosition().x > 852 && player->getSprite()->getPosition().x < 895));
-
 	if (!target)
 	{
 		target = this->window;

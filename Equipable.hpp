@@ -6,7 +6,7 @@ class Equipable :
     public Item
 {
 public:
-    Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description);
+    Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description, int _price);
     virtual ~Equipable();
 
     int getInitiative() const;
@@ -24,7 +24,7 @@ class Weapon :
     public Equipable
 {
 public:
-    Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description);
+    Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description, int _price);
     virtual ~Weapon();
 
     float getAttackPower() const;
@@ -39,7 +39,7 @@ class Armor :
     public Equipable
 {
 public:
-    Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description);
+    Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description, int _price);
     virtual ~Armor();
 
     int getDefense() const;

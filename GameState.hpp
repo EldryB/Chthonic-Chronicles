@@ -3,6 +3,7 @@
 #include "FightState.hpp"
 #include "JobMenuState.hpp"
 #include "Dice.hpp"
+#include "StoreState.hpp"
 
 class GameState :
     public State

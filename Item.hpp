@@ -5,7 +5,7 @@
 class Item
 {
 public:
-	Item(sf::Texture& _texture, std::string _name, std::string _description);
+	Item(sf::Texture& _texture, std::string _name, std::string _description, int _price);
 	virtual ~Item();
 
 	sf::Texture getTexture() const;
@@ -19,6 +19,8 @@ public:
 	void setName(std::string _name);
 	void setDescription(std::string _description);
 	void setIconRect(sf::IntRect icon_rect);
+	void move(const float dir_x, const float dir_y, const float& _dt);
+	int getPrice();
 
 	virtual void use(Fighter* target);
 
@@ -28,8 +30,10 @@ public:
 
 protected:
 	sf::Sprite* sprite = new sf::Sprite();
+	int price;
 	
 	std::string name;
 	std::string description;
+	
 };
 

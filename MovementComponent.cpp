@@ -141,18 +141,25 @@ void MovementComponent::update(const float& _dt)
 	float lastX = this->sprite.getPosition().x;
 	float lastY = this->sprite.getPosition().y;
 	this->sprite.move(this->velocity * _dt);
+	bool isInLvl1 = isInLvl1 = (this->stages == CurrentStage::Lvl1R1) || (this->stages == CurrentStage::Lvl1R2) || (this->stages == CurrentStage::Lvl1R3) ||
+		(this->stages == CurrentStage::Lvl1R4) || (this->stages == CurrentStage::Lvl1R5) || (this->stages == CurrentStage::Lvl1R6) ||
+		(this->stages == CurrentStage::Lvl1R7) || (this->stages == CurrentStage::Lvl1R8 || (this->stages == CurrentStage::Lvl1R9));
 
 	sf::Sprite* spr = &this->sprite;
 	if (this->stages == CurrentStage::MainStage)
 	{
 		this->setMainStageLimits(spr, lastX, lastY);
 	}
-	else if (this->stages == CurrentStage::Lvl1R1)
+	
+	if(isInLvl1)
 	{
-		this->setDefaultLimits(spr, lastX, lastY);
+		this->setLvl1Limits(spr, lastX, lastY);
 	}
 
-	this->setLvl1Limits(spr, lastX, lastY);
+	if (this->stages == CurrentStage::StoreStage || this->stages == CurrentStage::StoreStage2)
+	{
+		this->setStoreLimits(spr, lastX, lastY);
+	}
 	this->setDefaultLimits(spr, lastX, lastY);
 	this->sprite = *spr;
 }

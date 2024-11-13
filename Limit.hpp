@@ -343,3 +343,45 @@ void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float&
 		}
 	}
 }
+
+void MovementComponent::setStoreLimits(sf::Sprite* spr, float& lastx, float& lasty)
+{
+	if(this->stages == CurrentStage::StoreStage)
+	{
+		if (getXPos(spr) < 53)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+		else if (getXPos(spr) > 53 && getXPos(spr) <= 177 && (getYPos(spr) < 18 || getYPos(spr) > 360))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+		else if (getXPos(spr) > 177 && getXPos(spr) <= 282 && (getYPos(spr) < 18 || getYPos(spr) > 560))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 282 && getXPos(spr) <= 1080 && (getYPos(spr) < 18 || getYPos(spr) > 360))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+	
+	else if (this->stages == CurrentStage::StoreStage2)
+	{
+		if (getXPos(spr) < 40)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 40 && getXPos(spr) <= 926 && (getYPos(spr) < 18 || getYPos(spr) > 360))
+		{
+			spr->setPosition(lastx, lasty);
+		}
+
+		else if (getXPos(spr) > 926)
+		{
+			spr->setPosition(lastx, lasty);
+		}
+	}
+}

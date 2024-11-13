@@ -1,7 +1,7 @@
 #include "Consumable.hpp"
 
-Consumable::Consumable(sf::Texture& _texture, std::string _name, int _amount, std::string _description)
-	: amount(_amount), Item(_texture, _name, _description)
+Consumable::Consumable(sf::Texture& _texture, std::string _name, int _amount, std::string _description, int _price)
+	: amount(_amount), Item(_texture, _name, _description, _price)
 {
 
 }
@@ -39,8 +39,8 @@ void Consumable::use(Fighter* target)
 
 }
 
-Potion::Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description)
-	: hp(), Consumable(_texture, _name, _amount, _description)
+Potion::Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description, int _price)
+	: hp(), Consumable(_texture, _name, _amount, _description, _price)
 {
 
 }

@@ -1,8 +1,9 @@
 #include "Item.hpp"
 
-Item::Item(sf::Texture& _texture, std::string _name, std::string _description)
+Item::Item(sf::Texture& _texture, std::string _name, std::string _description, int _price)
     : name(_name), description(_description)
 {
+    this->price = _price;
     this->setTexture(_texture);
 }
 
@@ -59,6 +60,16 @@ void Item::setDescription(std::string _description)
 void Item::setIconRect(sf::IntRect icon_rect)
 {
     this->sprite->setTextureRect(icon_rect);
+}
+
+void Item::move(const float dir_x, const float dir_y, const float& _dt)
+{
+    this->sprite->move(dir_x * _dt, dir_y * _dt);
+}
+
+int Item::getPrice()
+{
+    return this->price;
 }
 
 void Item::use(Fighter* target)

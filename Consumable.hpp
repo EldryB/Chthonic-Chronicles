@@ -6,7 +6,7 @@ class Consumable :
     public Item
 {
 public:
-    Consumable(sf::Texture& _texture, std::string _name, int _amount, std::string _description);
+    Consumable(sf::Texture& _texture, std::string _name, int _amount, std::string _description, int _price);
     virtual ~Consumable();
 
     int getAmount() const;
@@ -24,7 +24,7 @@ class Potion :
     public Consumable
 {
 public:
-    Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description);
+    Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description, int _price);
     ~Potion();
 
     float getHp() const;

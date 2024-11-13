@@ -56,6 +56,8 @@ public:
 
 	void setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty);
 
+	void setStoreLimits(sf::Sprite* spr, float& lastx, float& lasty);
+
 private:
 	sf::Sprite& sprite;
 	float maxVelocity;

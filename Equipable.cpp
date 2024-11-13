@@ -1,7 +1,7 @@
 #include "Equipable.hpp"
 
-Equipable::Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description) 
-	: initiative(_initiative), equipped(false), Item(_texture, _name, _description)
+Equipable::Equipable(sf::Texture& _texture, std::string _name, int _initiative, std::string _description, int _price) 
+	: initiative(_initiative), equipped(false), Item(_texture, _name, _description, _price)
 {
 	this->equipped = false;
 }
@@ -26,8 +26,8 @@ void Equipable::use(Fighter* target)
 
 }
 
-Weapon::Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description)
-	: attackPower(attack_power), Equipable(_texture, _name, _initiative, _description)
+Weapon::Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description, int _price)
+	: attackPower(attack_power), Equipable(_texture, _name, _initiative, _description, _price)
 {
 
 }
@@ -58,8 +58,8 @@ void Weapon::use(Fighter* target)
 	}
 }
 
-Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description)
-	: defense(_defense), Equipable(_texture, _name, _initiative, _description)
+Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description, int _price)
+	: defense(_defense), Equipable(_texture, _name, _initiative, _description, _price)
 {
 
 }
