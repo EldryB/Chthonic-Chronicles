@@ -394,6 +394,7 @@ void GameState::update(const float& _dt)
 	if(this->player->getStage() == CurrentStage::MainStage)
 	{
 		this->updateInput(_dt);
+
 	}
 	else if (isInLvl1)
 	{
