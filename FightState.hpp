@@ -26,11 +26,7 @@ private:
     Player* player;
     Enemy* enemy;
 
-    sf::Text text;
-    sf::Text message;
-    sf::Text message2;
-    sf::Text textBox;
-    sf::Text playerStats;
+    Dice dice{ Dice(this->textures["DICE_SHEET"], 20) };
 
     std::vector<sf::RectangleShape> hpBar;
     std::vector<float> hpMax;

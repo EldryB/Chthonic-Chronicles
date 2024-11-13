@@ -67,6 +67,11 @@ void FightState::initTextures()
 	{
 		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_HOVER_TEXTURE!";
 	}
+
+	if (!this->textures["DICE_SHEET"].loadFromFile("assets/textures/DICE_SHEET.png"))
+	{
+		throw "ERROR::MAIN_MENU_STATE::COULD_NOT_LOAD_MAIN_MENU_BUTTON_HOVER_TEXTURE!";
+	}
 }
 
 void FightState::initButtons()
@@ -91,7 +96,7 @@ void FightState::initBackground()
 
 FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, Enemy* _enemy, sf::Vector2f _lastPos)
 	: State(_window, _supportedKeys, _states)
-{
+{	
 	this->initTextures();
 	this->initFighters(_p, _enemy);
 	this->initVariables();
@@ -187,6 +192,7 @@ void FightState::updateButtons()
 
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
+		//this->dice.roll();
 		this->enemy->takeDamage(this->player->getAttackPower());
 
 		this->playerTurn = false;
@@ -196,7 +202,7 @@ void FightState::updateButtons()
 
 	if (this->buttons["INVENTORY"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
-		this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
+		this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player, true));
 
 		this->playerTurn = false;
 		this->turnQueue.pop();
@@ -214,6 +220,7 @@ void FightState::update(const float& _dt)
 	this->player->update(_dt);
 	this->enemy->update(_dt);
 	this->updateButtons();
+	//this->dice.update(_dt);
 
 	float barLife = this->player->getHp() / this->hpMax[0];
 	this->hpBar[0].setSize(sf::Vector2f(200.0f * barLife, 20.0f));
@@ -292,6 +299,7 @@ void FightState::render(sf::RenderTarget* target)
 	if(playerTurn)
 	{
 		this->renderButtons(target);
+		//this->dice.render(target);
 	}
 
 	this->player->render(target);

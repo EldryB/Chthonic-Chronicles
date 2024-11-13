@@ -51,6 +51,11 @@ int Dice::getSides() const
     return this->sides;
 }
 
+void Dice::setPosition(float _x, float _y)
+{
+    this->sprite->setPosition(_x, _y);
+}
+
 void Dice::setTexture(const sf::Texture& _texture)
 {
     this->sprite->setTexture(_texture);

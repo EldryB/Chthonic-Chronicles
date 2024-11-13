@@ -14,6 +14,8 @@ public:
 
     int getSides() const;
 
+    void setPosition(float _x, float _y);
+
     void setTexture(const sf::Texture& _texture);
 
     void setSprite(sf::Sprite* _sprite);

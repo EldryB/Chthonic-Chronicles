@@ -85,8 +85,8 @@ void InventoryState::initButtons()
     }
 }
 
-InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
-    : State(_window, _supportedKeys, _states)
+InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, bool show_consumables_only)
+    : showConsumablesOnly(show_consumables_only), State(_window, _supportedKeys, _states)
 {    
     this->initVariables();
     this->initTextures();
@@ -124,34 +124,28 @@ void InventoryState::initItemList()
 
     for (int i = 0; i < this->inventory->size(); ++i)
     {
-        sf::Text itemName;
-        itemName.setFont(font);
-        itemName.setString(this->inventory->at(i)->getName());
-        itemName.setCharacterSize(20);
-        itemName.setFillColor(sf::Color(206, 185, 141));
-        itemName.setPosition(400.f, 185.f + i * 40);
-        itemNames.push_back(itemName);
-
-        if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+        if (this->showConsumablesOnly)
         {
-            sf::Text itemAmount;
-            itemAmount.setFont(font);
-            itemAmount.setString("x" + std::to_string(consumable->getAmount()));
-            itemAmount.setCharacterSize(20);
-            itemAmount.setFillColor(sf::Color(206, 185, 141));
-            itemAmount.setPosition(650.f, 185.f + i * 40);
-            itemAmounts.push_back(itemAmount);
+            if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+            {
+                sf::Text itemName;
+                itemName.setFont(font);
+                itemName.setString(consumable->getName());
+                itemName.setCharacterSize(20);
+                itemName.setFillColor(sf::Color(206, 185, 141));
+                itemName.setPosition(400.f, 185.f + i * 40);
+                itemNames.push_back(itemName);
+
+                sf::Text itemAmount;
+                itemAmount.setFont(font);
+                itemAmount.setString("x" + std::to_string(consumable->getAmount()));
+                itemAmount.setCharacterSize(20);
+                itemAmount.setFillColor(sf::Color(206, 185, 141));
+                itemAmount.setPosition(650.f, 185.f + i * 40);
+                itemAmounts.push_back(itemAmount);
+            }
         }
-    }
-}
-
-void InventoryState::initConsumableList()
-{
-    this->itemAmounts.clear();
-
-    for (int i = 0; i < this->inventory->size(); ++i)
-    {
-        if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+        else
         {
             sf::Text itemName;
             itemName.setFont(font);
@@ -160,17 +154,21 @@ void InventoryState::initConsumableList()
             itemName.setFillColor(sf::Color(206, 185, 141));
             itemName.setPosition(400.f, 185.f + i * 40);
             itemNames.push_back(itemName);
-            
-            sf::Text itemAmount;
-            itemAmount.setFont(font);
-            itemAmount.setString("x" + std::to_string(consumable->getAmount()));
-            itemAmount.setCharacterSize(20);
-            itemAmount.setFillColor(sf::Color(206, 185, 141));
-            itemAmount.setPosition(650.f, 185.f + i * 40);
-            itemAmounts.push_back(itemAmount);
+
+            if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
+            {
+                sf::Text itemAmount;
+                itemAmount.setFont(font);
+                itemAmount.setString("x" + std::to_string(consumable->getAmount()));
+                itemAmount.setCharacterSize(20);
+                itemAmount.setFillColor(sf::Color(206, 185, 141));
+                itemAmount.setPosition(650.f, 185.f + i * 40);
+                itemAmounts.push_back(itemAmount);
+            }
         }
     }
 }
+
 
 void InventoryState::updateInput(const float& _dt)
 {
@@ -245,8 +243,6 @@ void InventoryState::updateButtons()
             {
                 if (this->inventory->at(i)->isEquipped())
                 {
-
-                    //Aqui desequipo las otras armas que tenga equipadas
                     for (int j = 0; j < this->inventory->size(); ++j)
                     {
                         if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(j)))
@@ -276,7 +272,6 @@ void InventoryState::updateButtons()
             {
                 if (this->inventory->at(i)->isEquipped())
                 {
-                    //Aqui desequipo las otras armaduras que tenga equipadas
                    for (int j = 0; j < this->inventory->size(); ++j)
                    {
                         if (Armor* c = dynamic_cast<Armor*>(this->inventory->at(j)))

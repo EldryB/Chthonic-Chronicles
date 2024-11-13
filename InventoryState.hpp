@@ -6,7 +6,7 @@ class InventoryState :
     public State
 {
 public:
-    InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
+    InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, bool show_consumables_only = false);
 
     virtual ~InventoryState();
 
@@ -24,6 +24,7 @@ private:
     std::vector<Button*> useButtons;
     Player* player;
     std::vector<Item*>* inventory = new std::vector<Item*>();
+    bool showConsumablesOnly;
 
     sf::Sprite equip;
 
@@ -44,8 +45,6 @@ private:
     void initButtons();
 
     void initItemList();
-
-    void initConsumableList();
 };
 
 
