@@ -295,7 +295,32 @@ void InventoryState::updateButtons()
             }
             this->initItemList();
         }
+        
+        if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(i)))
+        {
+            if (this->inventory->at(i)->isEquipped())
+            {
+                std::string textString = this->inventory->at(i)->getName() + " Equipped";
+                this->texts["EquippedWeapon"].setString(textString);
+                this->texts["EquippedWeapon"].setPosition(
+                    this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().width / 2.f),
+                    this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().height / 2.f)
+                );
+            }
+        }
 
+        if (Armor* a = dynamic_cast<Armor*>(this->inventory->at(i)))
+        {
+            if (this->inventory->at(i)->isEquipped())
+            {        
+                std::string textString = this->inventory->at(i)->getName() + "Equipped";
+                this->texts["EquippedArmor"].setString(textString);
+                this->texts["EquippedArmor"].setPosition(
+                    this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (this->texts["EquippedArmor"].getGlobalBounds().width / 2.f),
+                    this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (this->texts["EquippedArmor"].getGlobalBounds().height / 2.f + 15)
+                );
+            }
+        }
         ++i;
     }
 }

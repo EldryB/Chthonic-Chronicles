@@ -131,7 +131,7 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 
 FightState::~FightState()
 {
-	//delete this->player;
+	this->textures.clear();
 }
 
 void FightState::updateInput(const float& _dt)
@@ -270,10 +270,10 @@ void FightState::update(const float& _dt)
 		}
 	}
 	
-	std::string text2 = "AttackPower: " + std::to_string(this->player->getAttackPower()) + "\n" + "Defense: " + std::to_string(this->player->getDefense()) 
+	std::string text2 = "AttackPower: " + std::to_string(static_cast<int>(this->player->getAttackPower())) + "\n" + "Defense: " + std::to_string(this->player->getDefense())
 		+ "\n" + "Initiative: " + std::to_string(this->player->getInitiative());
 	this->texts["PlayerStats"].setString(text2);
-	this->texts["PlayerStats"].setPosition(Settings::WINDOW_WIDTH - this->texts["PlayerStats"].getGlobalBounds().width, Settings::WINDOW_HEIGHT - this->texts["PlayerStats"].getGlobalBounds().height);
+	this->texts["PlayerStats"].setPosition(this->hpBar[0].getPosition().x, this->hpBar[0].getPosition().y + this->hpBar[0].getGlobalBounds().height + this->texts["PlayerStats"].getGlobalBounds().height);
 }
 
 void FightState::updateTurnQueue(int turnCount)

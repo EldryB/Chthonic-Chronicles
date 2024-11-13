@@ -71,6 +71,10 @@ void GameState::initFighters()
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
 }
 
 void GameState::initItems()
@@ -87,12 +91,12 @@ void GameState::initItems()
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!"));
-	this->items[3]->setIconRect(sf::IntRect(43, 0, 24, 41));
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!"));
+	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!"));
-	this->items[4]->setIconRect(sf::IntRect(0, 0, 41, 42));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!"));
+	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
 }
 
@@ -365,6 +369,19 @@ void GameState::updateInput2(const float& _dt)
 			this->backgrounds.pop();
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
+	{
+		this->keyCode = "INVENTORY";
+	}
+	else
+	{
+		if (this->keyCode == "INVENTORY")
+		{
+			this->keyCode = " ";
+			this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
+		}
+	}
 }
 
 void GameState::update(const float& _dt)
@@ -421,22 +438,23 @@ void GameState::render(sf::RenderTarget* target)
 
 void GameState::updateMap(const float& dtt)
 {
-	float _dt = dtt * 3;
+	float _dt = dtt*3;
 
 
 	if (this->player->getStage() == CurrentStage::Lvl1R1 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT"))
 		&& !isBackgroundMoving)
 	{
-		check = "L1R1R";
+		check = "L1R1L";
 	}
-	if (check == "L1R1R")
+	if (check == "L1R1L")
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(125 * _dt, 0);
 		this->player->moveS(120.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R2);
-		if (this->player->getSprite()->getPosition().x > 940)
+		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
+			this->backgrounds.top().setPosition(-1114.9040f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -445,16 +463,17 @@ void GameState::updateMap(const float& dtt)
 	if (this->player->getStage() == CurrentStage::Lvl1R2 && this->player->getSprite()->getPosition().x > 940 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_RIGHT"))
 		&& !isBackgroundMoving)
 	{
-		check = "L1R2L";
+		check = "L1R2R";
 	}
-	if (check == "L1R2L")
+	if (check == "L1R2R")
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(-125 * _dt, 0);
 		this->player->moveS(-120.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R1);
-		if (this->player->getSprite()->getPosition().x < 50)
+		if (this->backgrounds.top().getPosition().x < -2044.8599f)
 		{
+			this->backgrounds.top().setPosition(-2044.8599f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -471,8 +490,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(0, 150 * _dt);
 		this->player->moveS(0, 120.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
-		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height)
+		if (this->backgrounds.top().getPosition().y > -667.5717f)
 		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -667.5717f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -490,8 +510,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(0, -150 * _dt);
 		this->player->moveS(0, -120.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R2);
-		if (this->player->getSprite()->getPosition().y < 10)
+		if (this->backgrounds.top().getPosition().y < -1214.1099f)
 		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -1214.1099f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -508,8 +529,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(-125 * _dt, 0);
 		this->player->moveS(-120.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R4);
-		if (this->player->getSprite()->getPosition().x < 50)
+		if (this->backgrounds.top().getPosition().x < -2042.2817f)
 		{
+			this->backgrounds.top().setPosition(-2042.2817f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -526,15 +548,16 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(125 * _dt, 0);
 		this->player->moveS(120.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
-		if (this->player->getSprite()->getPosition().x > 940)
+		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
+			this->backgrounds.top().setPosition(-1114.9040f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
 	}
 
 	if (this->player->getStage() == CurrentStage::Lvl1R3 && 
-		(this->player->getSprite()->getPosition().x > 187 && this->player->getSprite()->getPosition().x < 328) && this->player->getSprite()->getPosition().y < 145 &&
+		(this->player->getSprite()->getPosition().x > 185 && this->player->getSprite()->getPosition().x < 328) && this->player->getSprite()->getPosition().y < 145 &&
 		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
 	{
 		check = "L1R3U";
@@ -545,8 +568,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(0, 250 * _dt);
 		this->player->moveS(0, 120.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
-		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height)
+		if (this->backgrounds.top().getPosition().y > -31.7096f)
 		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -31.7096f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -565,8 +589,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(0, -250 * _dt);
 		this->player->moveS(0, -120.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
-		if (this->player->getSprite()->getPosition().y < 145)
+		if (this->backgrounds.top().getPosition().y < -667.5717f)
 		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -667.5717f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -583,8 +608,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(-125 * _dt, 0);
 		this->player->moveS(-120.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R6);
-		if (this->player->getSprite()->getPosition().x < 50)
+		if (this->backgrounds.top().getPosition().x < -2042.2817f)
 		{
+			this->backgrounds.top().setPosition(-2042.2817f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -601,8 +627,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(125 * _dt, 0);
 		this->player->moveS(120.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
-		if (this->player->getSprite()->getPosition().x > 940)
+		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
+			this->backgrounds.top().setPosition(-1114.9040f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -637,8 +664,9 @@ void GameState::updateMap(const float& dtt)
 		this->backgrounds.top().move(-145 * _dt, 0);
 		this->player->moveS(-120.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
-		if (this->player->getSprite()->getPosition().x < 50)
+		if (this->backgrounds.top().getPosition().x < -1114.9040f)
 		{
+			this->backgrounds.top().setPosition(-1114.9040f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
