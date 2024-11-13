@@ -10,7 +10,7 @@ void Dice::initVariables()
 
 void Dice::setSpriteFace(int face)
 {
-    this->sprite->setTextureRect(sf::IntRect(face * 32, 0, 32, 32));
+    this->sprite->setTextureRect(sf::IntRect(face * 64, 0, 64, 64));
 }
 
 Dice::Dice(int _sides)
@@ -32,7 +32,7 @@ Dice::Dice(sf::Texture& texture_sheet, int _sides)
 
     for (int i = 0; i < 20; ++i) 
     {
-        animationComponent->addAnimation("FACE" + std::to_string(i + 1), 0.1f, i, 0, 19, 0, 32, 32);
+        animationComponent->addAnimation("FACE" + std::to_string(i + 1), 0.1f, i, 0, 19, 0, 64, 64);
     }
 }
 

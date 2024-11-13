@@ -73,15 +73,15 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 400.f, 15, 7);
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 200.f, 15, 7);
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
 }
 
 void GameState::initItems()
