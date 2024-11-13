@@ -32,6 +32,14 @@ void InventoryState::initTextures()
 void InventoryState::initBackground()
 {
     this->background.setTexture(this->textures["Background"]);
+
+    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
+    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
+
+    this->equip.setTexture(this->textures["MenuButtonIdle"]);
+    this->equip.setPosition(10,
+        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
 }
 
 void InventoryState::initFonts()
@@ -92,15 +100,6 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
     this->initVariables();
     this->initTextures();
     this->initBackground();
-
-    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
-    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f,
-        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
-
-    this->equip.setTexture(this->textures["MenuButtonIdle"]);
-    this->equip.setPosition(10,
-        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
-
     this->initFonts();
     this->initKeybinds();
     this->player = _p;
@@ -110,20 +109,11 @@ InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std
 }
 
 InventoryState::InventoryState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::string* isMyTurn)
-    : showConsumablesOnly(false), State(_window, _supportedKeys, _states)
+    : State(_window, _supportedKeys, _states)
 {
     this->initVariables();
     this->initTextures();
     this->initBackground();
-
-    this->backgroundItemDescription.setTexture(this->textures["MenuButtonIdle"]);
-    this->backgroundItemDescription.setPosition(Settings::WINDOW_WIDTH - this->backgroundItemDescription.getGlobalBounds().width - 10.f,
-        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
-
-    this->equip.setTexture(this->textures["MenuButtonIdle"]);
-    this->equip.setPosition(10,
-        Settings::WINDOW_HEIGHT - this->backgroundItemDescription.getGlobalBounds().height - 10.f);
-
     this->initFonts();
     this->initKeybinds();
     this->player = _p;
@@ -150,47 +140,23 @@ void InventoryState::initItemList()
 
     for (int i = 0; i < this->inventory->size(); ++i)
     {
-        if (false)
-        {
-            if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
-            {
-                sf::Text itemName;
-                itemName.setFont(font);
-                itemName.setString(consumable->getName());
-                itemName.setCharacterSize(20);
-                itemName.setFillColor(sf::Color(206, 185, 141));
-                itemName.setPosition(400.f, 185.f + i * 40);
-                itemNames.push_back(itemName);
+        sf::Text itemName;
+        itemName.setFont(font);
+        itemName.setString(this->inventory->at(i)->getName());
+        itemName.setCharacterSize(20);
+        itemName.setFillColor(sf::Color(206, 185, 141));
+        itemName.setPosition(400.f, 185.f + i * 40);
+        itemNames.push_back(itemName);
 
-                sf::Text itemAmount;
-                itemAmount.setFont(font);
-                itemAmount.setString("x" + std::to_string(consumable->getAmount()));
-                itemAmount.setCharacterSize(20);
-                itemAmount.setFillColor(sf::Color(206, 185, 141));
-                itemAmount.setPosition(650.f, 185.f + i * 40);
-                itemAmounts.push_back(itemAmount);
-            }
-        }
-        else
+        if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
         {
-            sf::Text itemName;
-            itemName.setFont(font);
-            itemName.setString(this->inventory->at(i)->getName());
-            itemName.setCharacterSize(20);
-            itemName.setFillColor(sf::Color(206, 185, 141));
-            itemName.setPosition(400.f, 185.f + i * 40);
-            itemNames.push_back(itemName);
-
-            if (Consumable* consumable = dynamic_cast<Consumable*>(this->inventory->at(i)))
-            {
-                sf::Text itemAmount;
-                itemAmount.setFont(font);
-                itemAmount.setString("x" + std::to_string(consumable->getAmount()));
-                itemAmount.setCharacterSize(20);
-                itemAmount.setFillColor(sf::Color(206, 185, 141));
-                itemAmount.setPosition(650.f, 185.f + i * 40);
-                itemAmounts.push_back(itemAmount);
-            }
+            sf::Text itemAmount;
+            itemAmount.setFont(font);
+            itemAmount.setString("x" + std::to_string(consumable->getAmount()));
+            itemAmount.setCharacterSize(20);
+            itemAmount.setFillColor(sf::Color(206, 185, 141));
+            itemAmount.setPosition(650.f, 185.f + i * 40);
+            itemAmounts.push_back(itemAmount);
         }
     }
 }
@@ -276,6 +242,7 @@ void InventoryState::updateButtons()
 
             if (Weapon* c = dynamic_cast<Weapon*>(this->inventory->at(i)))
             {
+                //Desequipa las demas armas
                 if (this->inventory->at(i)->isEquipped())
                 {
                     for (int j = 0; j < this->inventory->size(); ++j)
@@ -289,13 +256,6 @@ void InventoryState::updateButtons()
                             }
                         }
                     }
-
-                    std::string textString = this->inventory->at(i)->getName() + " Equipped";
-                    this->texts["EquippedWeapon"].setString(textString);
-                    this->texts["EquippedWeapon"].setPosition(
-                        this->equip.getPosition().x + (this->equip.getGlobalBounds().width / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().width / 2.f),
-                        this->equip.getPosition().y + (this->equip.getGlobalBounds().height / 2.f) - (this->texts["EquippedWeapon"].getGlobalBounds().height / 2.f)
-                    );
                 }
                 else
                 {
@@ -305,6 +265,7 @@ void InventoryState::updateButtons()
 
             if (Armor* a = dynamic_cast<Armor*>(this->inventory->at(i)))
             {
+                //Desequipa las demas armaduras
                 if (this->inventory->at(i)->isEquipped())
                 {
                    for (int j = 0; j < this->inventory->size(); ++j)
@@ -318,10 +279,6 @@ void InventoryState::updateButtons()
                             }
                         }
                    }
-
-                    std::string textString = this->inventory->at(i)->getName() + "Equipped";
-                    this->texts["EquippedArmor"].setString(textString);
-                    this->texts["EquippedArmor"].setPosition(this->texts["EquippedWeapon"].getPosition().x, this->texts["EquippedWeapon"].getPosition().y + 15);
                 }
                 else
                 {

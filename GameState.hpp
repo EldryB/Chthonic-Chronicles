@@ -33,6 +33,7 @@ private:
     int currentFrame;
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
+    std::vector<sf::Sprite> houses;
 
     std::stack<sf::Sprite> backgrounds;
     std::string check;

@@ -27,7 +27,6 @@ private:
     std::vector<Button*> useButtons;
     Player* player;
     std::vector<Item*>* inventory = new std::vector<Item*>();
-    bool showConsumablesOnly;
     std::string* turn = new std::string();
     bool check = false;
     sf::Sprite equip;

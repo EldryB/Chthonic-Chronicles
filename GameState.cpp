@@ -33,6 +33,16 @@ void GameState::initTextures()
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
 	}
 
+	if (!this->textures["House1"].loadFromFile("assets/textures/Backgrounds/casa1.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
+	}
+
+	if (!this->textures["House2"].loadFromFile("assets/textures/Backgrounds/casa2.png"))
+	{
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
+	}
+
 	if (!this->textures["Lvl1"].loadFromFile("assets/textures/Backgrounds/lvl1.png"))
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_MAIN_STAGE_TEXTURE!";
@@ -107,6 +117,11 @@ void GameState::initBackground()
 	back.setTexture(this->textures["MainStage"]);
 	back.setScale(float(Settings::WINDOW_WIDTH) / float(Settings::VIRTUAL_WIDTH), float(Settings::WINDOW_HEIGHT) / float(Settings::VIRTUAL_HEIGHT));
 	this->backgrounds.push(back);
+
+	this->houses.push_back(sf::Sprite(this->textures["House1"]));
+	this->houses[0].setPosition(187.f,140.f);
+	this->houses.push_back(sf::Sprite(this->textures["House2"]));
+	this->houses[1].setPosition(706.f, 174.f);
 
 }
 
@@ -429,12 +444,21 @@ void GameState::render(sf::RenderTarget* target)
 
 	target->draw(this->backgrounds.top());
 	
+	if (this->player->getStage() == CurrentStage::MainStage)
+	{
+		for (auto item : this->houses)
+		{
+			target->draw(item);
+		}
+	}
+
 	this->player->render(target);
 
 	for (auto text : this->texts)
 	{
 		target->draw(text.second);
 	}
+	
 }
 
 void GameState::updateMap(const float& dtt)

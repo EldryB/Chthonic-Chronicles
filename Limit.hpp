@@ -260,13 +260,20 @@ void MovementComponent::setLvl1Limits(sf::Sprite* spr, float& lastx, float& last
 
 void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float& lasty)
 {
-	if (false)
+	if (getXPos(spr) > 667 && getXPos(spr) <= 829 && (getYPos(spr) < 256))
 	{
-		if(false)
-		{
-			spr->setPosition(lastx, lasty);
-		}
+		spr->setPosition(lastx, lasty);
 	}
+
+	if (getXPos(spr) > 180 && getXPos(spr) <= 340 && (getYPos(spr) < 247))
+	{
+		spr->setPosition(lastx, lasty);
+	}
+	if (getXPos(spr) > 150 && getXPos(spr) <= 340 && (getYPos(spr) < 198))
+	{
+		spr->setPosition(lastx, lasty);
+	}
+
 
 	else
 	{
@@ -295,12 +302,12 @@ void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float&
 			spr->setPosition(lastx, lasty);
 		}
 
-		else if (getXPos(spr) > 603 && getXPos(spr) <= 629 && ((getYPos(spr) > 192 && getYPos(spr) < 318)) )
+		else if (getXPos(spr) > 608 && getXPos(spr) <= 629 && (((getYPos(spr) > 192 && getYPos(spr) < 318)) || (getYPos(spr) > 370)))
 		{
 			spr->setPosition(lastx, lasty);
 		}
 
-		else if (getXPos(spr) > 546 && getXPos(spr) <= 603 && ((getYPos(spr) < 252 || getYPos(spr) > 369)))
+		else if (getXPos(spr) > 546 && getXPos(spr) <= 608 && ((getYPos(spr) < 252 || getYPos(spr) > 370)))
 		{
 			spr->setPosition(lastx, lasty);
 		}
@@ -310,7 +317,7 @@ void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float&
 			spr->setPosition(lastx, lasty);
 		}
 
-		else if (getXPos(spr) > 380 && getXPos(spr) <= 516 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 372))
+		else if (getXPos(spr) > 380 && getXPos(spr) <= 516 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 370))
 		{
 			spr->setPosition(lastx, lasty);
 		}
