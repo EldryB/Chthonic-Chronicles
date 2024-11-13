@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <random>
+#include <memory>
 #include <vector>
 #include <stack>
 #include <queue>

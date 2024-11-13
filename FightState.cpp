@@ -98,6 +98,10 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	: State(_window, _supportedKeys, _states)
 {	
 	this->initTextures();
+
+	this->dice = new Dice(this->textures["DICE_SHEET"], 20);
+	this->dice->setPosition(100.f, 400.f);
+
 	this->initFighters(_p, _enemy);
 	this->initVariables();
 	this->initBackground();
@@ -131,6 +135,7 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 
 FightState::~FightState()
 {
+	delete this->dice;
 	this->textures.clear();
 }
 
@@ -192,7 +197,7 @@ void FightState::updateButtons()
 
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
-		//this->dice.roll();
+		this->dice->roll();
 		this->enemy->takeDamage(this->player->getAttackPower());
 
 		this->playerTurn = false;
@@ -215,8 +220,11 @@ void FightState::update(const float& _dt)
 	this->updateInput(_dt);
 	this->player->update(_dt);
 	this->enemy->update(_dt);
-	this->updateButtons();
-	//this->dice.update(_dt);
+	if (this->playerTurn)
+	{
+		this->updateButtons();
+		this->dice->update(_dt);
+	}
 
 	if (this->check->at(0) == 'N')
 	{
@@ -303,7 +311,7 @@ void FightState::render(sf::RenderTarget* target)
 	if(playerTurn)
 	{
 		this->renderButtons(target);
-		//this->dice.render(target);
+		this->dice->render(target);
 	}
 
 	this->player->render(target);

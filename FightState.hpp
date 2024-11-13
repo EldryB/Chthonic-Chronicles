@@ -26,7 +26,7 @@ private:
     Player* player;
     Enemy* enemy;
 
-    Dice dice{ Dice(this->textures["DICE_SHEET"], 20) };
+    Dice* dice;
 
     std::vector<sf::RectangleShape> hpBar;
     std::vector<float> hpMax;

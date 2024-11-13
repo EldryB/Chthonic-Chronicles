@@ -8,6 +8,8 @@ public:
     
     Dice(sf::Texture& texture_sheet, int _sides);
 
+    virtual ~Dice();
+
     void createAnimationComponent(sf::Texture& texture_sheet);
 
     sf::Sprite* getSprite() const;

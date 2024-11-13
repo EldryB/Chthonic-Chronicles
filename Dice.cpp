@@ -2,15 +2,15 @@
 
 void Dice::initVariables()
 {
-    this->animationComponent = NULL;
     this->animationTime = 2.0f;
     this->elapsedTime = 0.0f;
     this->rolling = false;
+    this->animationComponent = nullptr;
 }
 
 void Dice::setSpriteFace(int face)
 {
-    this->sprite->setTextureRect(sf::IntRect((face - 1) * 32, 0, 32, 32));
+    this->sprite->setTextureRect(sf::IntRect(face * 32, 0, 32, 32));
 }
 
 Dice::Dice(int _sides)
@@ -26,7 +26,7 @@ Dice::Dice(sf::Texture& texture_sheet, int _sides)
     this->initVariables();
 
     std::random_device random;
-    generator.seed(random());
+    this->generator.seed(random());
 
     this->createAnimationComponent(texture_sheet);
 
@@ -34,6 +34,12 @@ Dice::Dice(sf::Texture& texture_sheet, int _sides)
     {
         animationComponent->addAnimation("FACE" + std::to_string(i + 1), 0.1f, i, 0, 19, 0, 32, 32);
     }
+}
+
+Dice::~Dice()
+{
+    delete this->animationComponent;
+    this->animationComponent = nullptr;
 }
 
 void Dice::createAnimationComponent(sf::Texture& texture_sheet)
@@ -74,7 +80,7 @@ void Dice::setSides(int _sides)
 int Dice::getFace()
 {
     std::uniform_int_distribution<int> distribution(1, this->sides);
-    return distribution(generator);
+    return distribution(this->generator);
 }
 
 void Dice::roll()
@@ -106,7 +112,7 @@ void Dice::update(const float& _dt)
     else
     {
         int randomFace = this->getFace();
-        this->animationComponent->play("FACE" + std::to_string(randomFace - 1), _dt);
+        this->animationComponent->play("FACE" + std::to_string(randomFace), _dt);
     }
 }
 
