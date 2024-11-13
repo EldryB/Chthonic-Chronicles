@@ -330,7 +330,7 @@ void GameState::updateInput(const float& _dt)
 		if (this->keyCode == "HOUSE1")
 		{
 			this->keyCode = " ";
-			this->states->push(new StoreState(this->window, this->supportedKeys, this->states, this->player, &this->items));
+			this->states->push(new StoreState(this->window, this->supportedKeys, this->states, this->player, this->items));
 		}
 	}
 }

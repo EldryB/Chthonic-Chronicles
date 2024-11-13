@@ -1,10 +1,10 @@
 #include "Player.hpp"
 
 Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float _attackPower, int _defense, int _initiative)
-    : Fighter(_x, _y, texture_sheet, _name, _hp, _attackPower, _defense, _initiative)
+	: Fighter(_x, _y, texture_sheet, _name, _hp, _attackPower, _defense, _initiative)
 {
-    this->jobs = new Jobs();
-    this->resources = new Resources();
+	this->jobs = new Jobs();
+	this->resources = new Resources();
 
 	this->createMovementComponent(150.f, 10.f, 5.f);
 	this->createAnimationComponent(texture_sheet);
@@ -26,17 +26,17 @@ Player::~Player()
 
 std::vector<Item*>* Player::getInventory() const
 {
-    return this->inventory;
+	return this->inventory;
 }
 
 Jobs* Player::getJobs() const
 {
-    return this->jobs;
+	return this->jobs;
 }
 
 Resources* Player::getResources() const
 {
-    return this->resources;
+	return this->resources;
 }
 
 Weapon* Player::getWeapon() const
@@ -99,5 +99,5 @@ void Player::update(const float& _dt)
 
 void Player::addItem(Item* _item)
 {
-    this->inventory->push_back(_item);
+	this->inventory->push_back(_item);
 }

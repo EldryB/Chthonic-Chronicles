@@ -6,7 +6,7 @@ class StoreState :
     public State
 {
 public:
-    StoreState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::vector<Item*>* _items);
+    StoreState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::vector<Item*> _items);
 
     virtual ~StoreState();
 
@@ -21,8 +21,7 @@ public:
 
 private:
 
-    std::vector<Item*>* items = new std::vector<Item*>();
-    std::vector<Item*>* listItems = new std::vector<Item*>();
+    std::vector<Item*> items;
     Player* player;
     bool isBackgroundMoving;
     std::string check;

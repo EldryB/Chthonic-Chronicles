@@ -60,6 +60,11 @@ void StoreState::initFonts()
 	this->texts["CurrentStage"].setCharacterSize(24);
 	this->texts["CurrentStage"].setFillColor(sf::Color(sf::Color::Black));
 	this->texts["CurrentStage"].setPosition(700, 30);
+
+	this->texts["Description"].setFont(this->font);
+	this->texts["Description"].setCharacterSize(12);
+	this->texts["Description"].setFillColor(sf::Color(sf::Color::Black));
+	this->texts["Description"].setPosition(100, 500);
 }
 
 std::string StoreState::getStringStage(CurrentStage _c)
@@ -95,7 +100,7 @@ std::string StoreState::getStringStage(CurrentStage _c)
 
 
 
-StoreState::StoreState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::vector<Item*>* _items)
+StoreState::StoreState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p, std::vector<Item*> _items)
 	: State(_window, _supportedKeys, _states)
 {
 	initVariables();
@@ -167,6 +172,12 @@ void StoreState::update(const float& _dt)
 	this->texts["CurrentStage"].setString(this->getStringStage(this->player->getStage()));
 
 	this->updateMap(_dt);
+	std::string textstr{" "};
+	for (auto item: this->items)
+	{
+		textstr += item->getName() + "\n";
+	}
+	this->texts["Description"].setString(textstr);
 }
 
 void StoreState::render(sf::RenderTarget* target)
@@ -186,7 +197,7 @@ void StoreState::render(sf::RenderTarget* target)
 
 	if (this->player->getStage() == CurrentStage::StoreStage2)
 	{
-		for (auto item: *this->items)
+		for (auto item: this->items)
 		{
 			item->render(target);
 		}
@@ -195,18 +206,33 @@ void StoreState::render(sf::RenderTarget* target)
 
 void StoreState::takeItem()
 {
-	Dice dice(this->items->size());
-	this->listItems->push_back(this->items->at(dice.getFace() - 1));
-	this->listItems->push_back(this->items->at(dice.getFace() - 1));
-	this->listItems->push_back(this->items->at(dice.getFace() - 1));
-	this->listItems->push_back(this->items->at(dice.getFace() - 1));
+	Dice dice(this->items.size());
+	std::vector<Item*> itemList;
+	while (itemList.size() != 4)
+	{
+		bool check = true;
+		Item* item = items[dice.getFace() - 1];
+		for (int j = 0; j < itemList.size(); ++j)
+		{
+			if (item->getName() == itemList[j]->getName())
+			{
+				check = false;
+				break;
+			}
+		}
+		if (check)
+		{
+			itemList.push_back(item);
+		}
+	}
+	items = itemList;
 
-	this->listItems->at(0)->setPosition(100 + 970,100);
-	this->listItems->at(1)->setPosition(200 + 970, 200);
-	this->listItems->at(2)->setPosition(100 + 970, 200);
-	this->listItems->at(3)->setPosition(200 + 970, 100);
 
-	this->items = listItems;
+	items[0]->setPosition(200 + 1100,150);
+	items[1]->setPosition(500 + 1100, 150);
+	items[2]->setPosition(200 + 1100, 250);
+	items[3]->setPosition(500 + 1100, 250);
+
 }
 
 void StoreState::updateMap(const float& dt)
@@ -223,10 +249,12 @@ void StoreState::updateMap(const float& dt)
 		this->background.move(-125 * _dt, 0);
 		this->player->moveS(-110.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::StoreStage2);
-		for (auto item: *this->items)
+		
+		for (auto item: this->items)
 		{
-			item->move(-110.f, 0.f, _dt);
+			item->move(-130.f, 0.f, _dt);
 		}
+		
 		if (this->background.getPosition().x < -970.f)
 		{
 			this->background.setPosition(-970.f, this->background.getPosition().y);
@@ -245,16 +273,18 @@ void StoreState::updateMap(const float& dt)
 		this->isBackgroundMoving = true;
 		this->background.move(125 * _dt, 0);
 		this->player->moveS(110.f, 0.f, _dt);
-		this->player->pushStage(CurrentStage::StoreStage);
-		for (auto item : *this->items)
+
+		for (auto item : this->items)
 		{
-			item->move(110.f, 0.f, _dt);
+			item->move(130.f, 0.f, _dt);
 		}
+
 		if (this->background.getPosition().x > 0)
 		{
 			this->background.setPosition(0, this->background.getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
+			this->player->pushStage(CurrentStage::StoreStage);
 		}
 	}
 }

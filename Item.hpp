@@ -31,9 +31,8 @@ public:
 protected:
 	sf::Sprite* sprite = new sf::Sprite();
 	int price;
-	
+
 	std::string name;
 	std::string description;
-	
-};
 
+};

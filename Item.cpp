@@ -9,7 +9,7 @@ Item::Item(sf::Texture& _texture, std::string _name, std::string _description, i
 
 Item::~Item()
 {
-    
+
 }
 
 sf::Texture Item::getTexture() const
@@ -86,7 +86,3 @@ bool Item::isEquipped() const
 {
     return false;
 }
-
-
-
-
