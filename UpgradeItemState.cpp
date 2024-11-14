@@ -172,5 +172,6 @@ void UpgradeItemState::renderButtons(sf::RenderTarget* target)
 void UpgradeItemState::upgradeItem(Item* it)
 {
 
+
 }
 
