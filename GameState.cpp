@@ -74,7 +74,11 @@ void GameState::initTextures()
 void GameState::initFighters()
 {
 
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 100.f, 16, 5);
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 6.f, 16, 5);
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
 	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
@@ -141,38 +145,7 @@ void GameState::initBackground()
 
 void GameState::initRooms() 
 {
-	sf::Sprite spr{textures["Room1"]};
-	spr.setPosition(0,0);
-
-	sf::Sprite spr2{ textures["Room2"] };
-	spr2.setPosition(0 - spr.getGlobalBounds().width,0);
-
-	sf::Sprite spr3{ textures["Room3"] };
-	spr3.setPosition(spr2.getPosition().x, spr2.getPosition().y - spr2.getGlobalBounds().height);
-
-	sf::Sprite spr4{ textures["Room4"] };
-	spr4.setPosition(spr3.getPosition().x + spr3.getGlobalBounds().width, spr3.getPosition().y);
-
-	sf::Sprite spr5{ textures["Room5"] };
-	spr5.setPosition(spr3.getPosition().x, spr3.getPosition().y - spr3.getGlobalBounds().height);
-
-	sf::Sprite spr6{ textures["Room6"] };
-	spr6.setPosition(spr5.getPosition().x + spr5.getGlobalBounds().width, spr5.getPosition().y);
-
-	sf::Sprite spr7{ textures["Room7"] };
-	spr7.setPosition(spr5.getPosition().x - spr5.getGlobalBounds().width, spr5.getPosition().y);
-
-	sf::Sprite spr8{ textures["Room8"] };
-	spr.setPosition(spr7.getPosition().x, spr7.getPosition().y + spr7.getGlobalBounds().height);
-
-	this->rooms.push_back(spr);
-	this->rooms.push_back(spr2);
-	this->rooms.push_back(spr3);
-	this->rooms.push_back(spr4);
-	this->rooms.push_back(spr5);
-	this->rooms.push_back(spr6);
-	this->rooms.push_back(spr7);
-	this->rooms.push_back(spr8);
+	
 }
 
 void GameState::initFonts()
@@ -246,7 +219,6 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	: State(_window, _supportedKeys, _states)
 {
 	this->initTextures();
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 100.f, 16, 5);
 	this->initFighters();
 	this->initItems();
 	this->initVariables();
@@ -409,8 +381,8 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice(10000);
-	Dice dice2(10000);
+	Dice dice(1100);
+	Dice dice2(1100);
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{

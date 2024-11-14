@@ -34,7 +34,7 @@
         std::vector<sf::Text> resourceAmount;
         sf::Sprite backgroundTooltip;
 
-        int availableVillagers = 5;
+        int availableVillagers;
 
         void initVariables();
     

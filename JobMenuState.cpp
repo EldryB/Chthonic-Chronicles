@@ -354,10 +354,10 @@ void JobMenuState::updateButtons()
  
         if (this->addButtons[i]->getButtonState() == ButtonState::Pressed)
         {
-            if (this->availableVillagers > 0)
+            if (this->player->getVillagers() > 0)
             {
                 this->jobs->assignVillagers(static_cast<JobTypes>(i));
-                this->availableVillagers--;
+                this->player->addVillagers(-1);
                 this->initJobList();
             }
         }
@@ -366,7 +366,7 @@ void JobMenuState::updateButtons()
             if (this->jobs->getJobAmount(static_cast<JobTypes>(i)) > 0)
             {
                 this->jobs->removeVillagers(static_cast<JobTypes>(i));
-                this->availableVillagers++;
+                this->player->addVillagers(1);
                 this->initJobList();
             }
         }
