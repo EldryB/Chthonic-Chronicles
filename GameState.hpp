@@ -36,6 +36,7 @@ private:
     float timeSinceLastUpdate;
     float timeBetweenUpdates;
     std::vector<sf::Sprite> houses;
+    std::vector<sf::Sprite> rooms;
 
     std::stack<sf::Sprite> backgrounds;
     std::string check;
@@ -55,6 +56,8 @@ private:
     void initBackground();
 
     void initFonts();
+
+    void initRooms();
 
     void createCombat();
 

@@ -69,6 +69,46 @@ void GameState::initTextures()
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
 	}
+
+	if (!this->textures["Room1"].loadFromFile("assets/textures/Backgrounds/lvl1/room1.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room2"].loadFromFile("assets/textures/Backgrounds/lvl1/room2.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room3"].loadFromFile("assets/textures/Backgrounds/lvl1/room3.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room4"].loadFromFile("assets/textures/Backgrounds/lvl1/room4.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room5"].loadFromFile("assets/textures/Backgrounds/lvl1/room5.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room6"].loadFromFile("assets/textures/Backgrounds/lvl1/room6.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room7"].loadFromFile("assets/textures/Backgrounds/lvl1/room7.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
+
+	if (!this->textures["Room8"].loadFromFile("assets/textures/Backgrounds/lvl1/room8.png"))
+	{
+		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
+	}
 }
 
 void GameState::initFighters()
@@ -136,6 +176,42 @@ void GameState::initBackground()
 	this->houses.push_back(sf::Sprite(this->textures["House2"]));
 	this->houses[2].setPosition(825.f, 310.f);
 
+}
+
+void GameState::initRooms() 
+{
+	sf::Sprite spr{textures["Room1"]};
+	spr.setPosition(0,0);
+
+	sf::Sprite spr2{ textures["Room2"] };
+	spr2.setPosition(0 - spr.getGlobalBounds().width,0);
+
+	sf::Sprite spr3{ textures["Room3"] };
+	spr3.setPosition(spr2.getPosition().x, spr2.getPosition().y - spr2.getGlobalBounds().height);
+
+	sf::Sprite spr4{ textures["Room4"] };
+	spr4.setPosition(spr3.getPosition().x + spr3.getGlobalBounds().width, spr3.getPosition().y);
+
+	sf::Sprite spr5{ textures["Room5"] };
+	spr5.setPosition(spr3.getPosition().x, spr3.getPosition().y - spr3.getGlobalBounds().height);
+
+	sf::Sprite spr6{ textures["Room6"] };
+	spr6.setPosition(spr5.getPosition().x + spr5.getGlobalBounds().width, spr5.getPosition().y);
+
+	sf::Sprite spr7{ textures["Room7"] };
+	spr7.setPosition(spr5.getPosition().x - spr5.getGlobalBounds().width, spr5.getPosition().y);
+
+	sf::Sprite spr8{ textures["Room8"] };
+	spr.setPosition(spr7.getPosition().x, spr7.getPosition().y + spr7.getGlobalBounds().height);
+
+	this->rooms.push_back(spr);
+	this->rooms.push_back(spr2);
+	this->rooms.push_back(spr3);
+	this->rooms.push_back(spr4);
+	this->rooms.push_back(spr5);
+	this->rooms.push_back(spr6);
+	this->rooms.push_back(spr7);
+	this->rooms.push_back(spr8);
 }
 
 void GameState::initFonts()
