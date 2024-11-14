@@ -44,6 +44,12 @@ void FightState::initFonts()
 	this->texts["TextBox"].setFillColor(sf::Color::White);
 	this->texts["TextBox"].setPosition(550, 500);
 
+	this->texts["AttackText"].setFont(this->font);
+	this->texts["AttackText"].setString(" ");
+	this->texts["AttackText"].setCharacterSize(17);
+	this->texts["AttackText"].setFillColor(sf::Color::White);
+	this->texts["AttackText"].setPosition(304.8f, 364.97f);
+
 	this->texts["PlayerStats"].setFont(this->font);
 	this->texts["PlayerStats"].setString(" ");
 	this->texts["PlayerStats"].setCharacterSize(17);
@@ -235,8 +241,21 @@ void FightState::updateButtons()
 
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
-		this->dice->roll();
-		this->enemy->takeDamage(this->player->getAttackPower() + (this->player->getAttackPower() * (this->dice->getFace() / 100)));
+		std::string stringText;
+
+		if (this->dice->getFace() > 6)
+		{
+			stringText = this->player->getName() + " attacks " + this->enemy->getName();
+
+			this->enemy->takeDamage(this->player->getAttackPower() + (this->player->getAttackPower() * (this->dice->getFace() / 100)));
+		}
+		else
+		{
+			stringText = this->player->getName() + " fails the attack.";
+		}
+
+		this->texts["AttackText"].setString(stringText);
+		this->texts["AttackText"].setPosition(200.f, 364.97f);
 
 		this->playerTurn = false;
 		this->turnQueue.pop();
@@ -321,7 +340,20 @@ void FightState::update(const float& _dt)
 		{
 			if (count > 3.f)
 			{
-				this->player->takeDamage(this->enemy->getAttackPower());
+				if (this->dice->getFace() > 6)
+				{
+					stringText = this->enemy->getName() + " attacks " + this->player->getName();
+
+					this->player->takeDamage(this->enemy->getAttackPower());
+				}
+				else
+				{
+					stringText = this->enemy->getName() + " fails the attack.";
+				}
+
+				this->texts["AttackText"].setString(stringText);
+				this->texts["AttackText"].setPosition(650.f, 364.97f);
+
 				turnQueue.pop();
 			}
 		}
@@ -356,7 +388,7 @@ void FightState::render(sf::RenderTarget* target)
 	if(playerTurn)
 	{
 		this->renderButtons(target);
-		this->dice->render(target);
+		//this->dice->render(target);
 	}
 
 	this->player->render(target);
