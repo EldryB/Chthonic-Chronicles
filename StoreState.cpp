@@ -146,6 +146,19 @@ void StoreState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
+	{
+		this->keyCode = "INVENTORY";
+	}
+	else
+	{
+		if (this->keyCode == "INVENTORY")
+		{
+			this->keyCode = " ";
+			this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
+		}
+	}
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getSprite()->getPosition().y > 540.f)
 	{
 		this->keyCode = "ACTION";
