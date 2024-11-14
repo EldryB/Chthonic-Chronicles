@@ -72,7 +72,8 @@ void Weapon::use(Fighter* target)
 Armor::Armor(sf::Texture& _texture, std::string _name, int _defense, int _initiative, std::string _description, int _price)
 	: defense(_defense), Equipable(_texture, _name, _initiative, _description, _price)
 {
-
+	lastDescrp = description;
+	this->description += "\ndefense: " + std::to_string(static_cast<int>(this->defense)) + "\nInit: " + std::to_string(this->initiative);
 }
 
 Armor::~Armor()
@@ -89,6 +90,9 @@ void Armor::setAtributes(int _ini, int _defense)
 {
 	this->initiative = _ini;
 	this->defense = _defense;
+
+	lastDescrp = description;
+	this->description += "\ndefense: " + std::to_string(static_cast<int>(this->defense)) + "\nInit: " + std::to_string(this->initiative);
 }
 
 void Armor::use(Fighter* target)

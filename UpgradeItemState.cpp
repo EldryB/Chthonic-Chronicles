@@ -270,6 +270,40 @@ void UpgradeItemState::upgradeItem(Weapon* it)
 		}
 	}
 
+	else if (str == "Blue Sword")
+	{
+		int count = 0;
+
+		for (auto item : *items)
+		{
+			if (item->getName() == "Blue Sword")
+			{
+				++count;
+			}
+		}
+
+		int gold = this->player->getResourceAmoun(ResourceTypes::gold);
+		int silk = this->player->getResourceAmoun(ResourceTypes::silk);
+		int leather = this->player->getResourceAmoun(ResourceTypes::leather);
+
+		bool check = (count >= 3) && (gold - 10 >= 0) && (silk - 2 >= 0) && (leather - 25 >= 0);
+
+		if (check)
+		{
+			this->player->setResourceAmoun(ResourceTypes::gold, gold - 10);
+			this->player->setResourceAmoun(ResourceTypes::silk, silk - 2);
+			this->player->setResourceAmoun(ResourceTypes::leather, leather - 25);
+
+			it->setAtributes(it->getInitiative() + 2, it->getAttackPower() + 3);
+			this->pos.push_back(this->player->eraseItem(it));
+			this->pos.push_back(this->player->eraseItem(it));
+			this->pos.push_back(this->player->eraseItem(it));
+			Weapon* w = it;
+			this->player->addItem(w);
+
+		}
+	}
+
 }
 
 void UpgradeItemState::setDescription(Item* it)
@@ -284,6 +318,26 @@ void UpgradeItemState::setDescription(Item* it)
 	else if (str == "Red Sword")
 	{
 		this->texts["ItemDescription"].setString("Need 2 red sword\n20 iron\n5 silk\n+1 init\n+3 attack");
+	}
+
+	else if (str == "Blue Sword")
+	{
+		this->texts["ItemDescription"].setString("Need 3 blue sword\n10 gold\n2 silk\n25 leather\n+2 init\n+3 attack");
+	}
+
+	else if (str == "Potion")
+	{
+		this->texts["ItemDescription"].setString("Need 3 blue sword\n10 gold\n2 silk\n25 leather\n+2 init\n+3 attack");
+	}
+
+	else if (str == "Rusty Armor")
+	{
+		this->texts["ItemDescription"].setString("Need 3 blue sword\n10 gold\n2 silk\n25 leather\n+2 init\n+3 attack");
+	}
+
+	else if (str == "Thunder Armor")
+	{
+		this->texts["ItemDescription"].setString("Need 3 blue sword\n10 gold\n2 silk\n25 leather\n+2 init\n+3 attack");
 	}
 }
 

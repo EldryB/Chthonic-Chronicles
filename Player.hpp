@@ -2,6 +2,7 @@
 
 #include "Enemy.hpp"
 #include "Jobs.hpp"
+#include "Consumable.hpp"
 
 class Player :
     public Fighter

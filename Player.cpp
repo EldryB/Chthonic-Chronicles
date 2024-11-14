@@ -130,6 +130,17 @@ void Player::updateCollection(const float& _dt)
 
 void Player::addItem(Item* _item)
 {
+	if(Potion* c = dynamic_cast<Potion*>(_item))
+	{
+		for (auto item: *inventory)
+		{
+			if (Potion* p = dynamic_cast<Potion*>(item))
+			{
+				p->addAmount(c->getAmount());
+				return;
+			}
+		}
+	}
 	this->inventory->push_back(_item);
 }
 
