@@ -18,6 +18,8 @@ public:
 
     void takeItem();
 
+    Item* itemColision();
+
 
 private:
 

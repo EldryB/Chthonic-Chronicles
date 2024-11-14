@@ -155,30 +155,32 @@ void StoreState::updateInput(const float& _dt)
 		}
 	}
 
-	int i = 0;
-	for (auto item: this->items)
+	Item* it = this->itemColision();
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getStage() == CurrentStage::StoreStage2 && it)
 	{
-		if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getStage() == CurrentStage::StoreStage2 && item->isPLayerNear(*this->player->getSprite()))
+		this->keyCode = "BUY";
+	}
+	else
+	{
+		if (this->keyCode == "BUY")
 		{
-			this->keyCode = "BUY";
-		}
-		else
-		{
-			if (this->keyCode == "BUY")
+			this->keyCode = " ";
+			if ((this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice() >= 0))
 			{
-				this->keyCode = " ";
-				if ((this->player->getResourceAmoun(ResourceTypes::coin) - item->getPrice() >= 0) && item->isPLayerNear(*this->player->getSprite()))
+				this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice());
+				this->player->addItem(it);
+				for(int i = 0; i < items.size(); ++i)
 				{
-					this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - item->getPrice());
-					this->player->addItem(item);
-					this->items.erase(this->items.begin() + i);
+					if(items[i] == it)
+					{
+						this->items.erase(this->items.begin() + i);
+					}
 				}
+				it = nullptr;
 			}
 		}
-		++i;
 	}
-	
-
 
 }
 
@@ -258,6 +260,22 @@ void StoreState::takeItem()
 	items[2]->setPosition(200 + 1100, 250);
 	items[3]->setPosition(500 + 1100, 250);
 
+}
+
+Item* StoreState::itemColision()
+{
+	for (auto item: this->items)
+	{
+		sf::FloatRect rect1 = this->player->getSprite()->getGlobalBounds();
+		sf::FloatRect rect2 = item->getSprite()->getGlobalBounds();
+
+		if (rect1.intersects(rect2))
+		{
+			return item;
+		}
+	}
+
+	return nullptr;
 }
 
 void StoreState::updateMap(const float& dt)
