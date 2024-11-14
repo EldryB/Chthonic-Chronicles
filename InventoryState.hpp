@@ -1,6 +1,8 @@
 #pragma once
 
 #include "MenuState.hpp"
+#include"Equipable.hpp"
+#include"Consumable.hpp"
 
 class InventoryState :
     public State

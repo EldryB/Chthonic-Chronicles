@@ -2,19 +2,20 @@
 
 void UpgradeItemState::initVariables()
 {
+	this->keyCode = " ";
 }
 
 void UpgradeItemState::initButtons()
 {
 	for (int i = 0; i < this->items->size(); ++i)
 	{
-		this->useButtons.push_back(new Button(100.f + i * 40, 500, *this->items->at(i)->getSprite(), &this->font, ""));
+		this->useButtons.push_back(new Button(100.f + i * 55, 500, *this->items->at(i)->getSprite(), &this->font, ""));
 	}
 }
 
 void UpgradeItemState::initKeybinds()
 {
-	this->keybinds["CLOSE"] = this->supportedKeys->at("E");
+	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
 }
 
 void UpgradeItemState::initTextures()
@@ -62,11 +63,19 @@ void UpgradeItemState::initFonts()
 		this->toolTip.getPosition().x + (this->toolTip.getGlobalBounds().width / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().width / 2.f),
 		this->toolTip.getPosition().y + (this->toolTip.getGlobalBounds().height / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().height / 2.f)
 	);
+
+	this->texts["InfoResources"].setFont(this->font);
+	this->texts["InfoResources"].setString(" ");
+	this->texts["InfoResources"].setCharacterSize(12);
+	this->texts["InfoResources"].setFillColor(sf::Color::White);
+	this->texts["InfoResources"].setPosition(Settings::WINDOW_WIDTH - this->texts["InfoResources"].getGlobalBounds().width - 10.f,
+		Settings::WINDOW_HEIGHT/2 - this->texts["InfoResources"].getGlobalBounds().height - 10.f);
 }
 
 UpgradeItemState::UpgradeItemState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initVariables();
 	this->initTextures();
 	this->initBackground();
 	this->initFonts();
@@ -91,11 +100,11 @@ void UpgradeItemState::updateInput(const float& _dt)
 {
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CLOSE"]))
 	{
-		this->keyCode = "E";
+		this->keyCode = "CLOSE";
 	}
 	else
 	{
-		if (this->keyCode == "E")
+		if (this->keyCode == "CLOSE")
 		{
 			this->keyCode = " ";
 			this->states->pop();
@@ -120,7 +129,7 @@ void UpgradeItemState::updateButtons()
 		{
 			button->setSprite(*this->items->at(i)->getSprite());
 			button->setPosition(100 + i * 40, 500);
-			this->texts["ItemDescription"].setString(this->items->at(i)->getDescription());
+			this->setDescription(this->items->at(i));
 			this->texts["ItemDescription"].setPosition(
 				this->toolTip.getPosition().x + (this->toolTip.getGlobalBounds().width / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().width / 2.f),
 				this->toolTip.getPosition().y + (this->toolTip.getGlobalBounds().height / 2.f) - (this->texts["ItemDescription"].getGlobalBounds().height / 2.f)
@@ -128,7 +137,28 @@ void UpgradeItemState::updateButtons()
 		}
 		else if (button->getButtonState() == ButtonState::Pressed)
 		{
-			//llamo a funcion para gastar recursos
+			if (Weapon* c = dynamic_cast<Weapon*>(this->items->at(i)))
+			{
+				upgradeItem(c);
+
+				for (int j = 0; j < pos.size(); j++)
+				{
+					int k = 0;
+					for (auto& button : this->useButtons)
+					{
+						if(k == pos[j])
+						{
+							delete button;
+							this->useButtons.erase(this->useButtons.begin() + k);
+							--i;
+							this->useButtons.clear();
+							this->initButtons();
+						}
+						++k;
+					}
+				}
+				pos.clear();
+			}
 		}
 		++i;
 	}
@@ -136,9 +166,18 @@ void UpgradeItemState::updateButtons()
 
 void UpgradeItemState::update(const float& _dt)
 {
-	 this->updateMousePositions();
 	this->updateInput(_dt);
+	 this->updateMousePositions();
 	this->updateButtons();
+
+	std::string textStr = "";
+	for (int i = 0; i < static_cast<int>(ResourceTypes::count); ++i)
+	{
+		textStr += this->player->getResourceName(static_cast<ResourceTypes>(i)) + ": " + std::to_string(this->player->getResourceAmoun(static_cast<ResourceTypes>(i))) + "\n";
+	}
+	this->texts["InfoResources"].setString(textStr);
+	this->texts["InfoResources"].setPosition(Settings::WINDOW_WIDTH - this->texts["InfoResources"].getGlobalBounds().width - 10.f,
+		Settings::WINDOW_HEIGHT / 2 - this->texts["InfoResources"].getGlobalBounds().height - 10.f);
 }
 
 void UpgradeItemState::render(sf::RenderTarget* target)
@@ -150,6 +189,14 @@ void UpgradeItemState::render(sf::RenderTarget* target)
 
 	target->draw(this->background);
 	this->renderButtons(target);
+
+	for (auto text : this->texts)
+	{
+		if (text.first != "ItemDescription")
+		{
+			target->draw(text.second);
+		}
+	}
 
 	for (auto& button : this->useButtons)
 	{
@@ -169,14 +216,74 @@ void UpgradeItemState::renderButtons(sf::RenderTarget* target)
 	}
 }
 
-void UpgradeItemState::upgradeItem(Item* it)
+void UpgradeItemState::upgradeItem(Weapon* it)
 {
 	std::string str = it->getName();
 	
 	if (str == "Dagger")
 	{
+		int wood = this->player->getResourceAmoun(ResourceTypes::wood);
+		int cloth = this->player->getResourceAmoun(ResourceTypes::cloth);
+		int stone = this->player->getResourceAmoun(ResourceTypes::stone);
 
+		bool check = (wood - 20 >= 0 ) && (cloth - 2 >= 0) && (stone - 10 >= 0);
+		
+		if(check)
+		{
+			this->player->setResourceAmoun(ResourceTypes::wood, wood - 20);
+			this->player->setResourceAmoun(ResourceTypes::cloth, cloth - 2);
+			this->player->setResourceAmoun(ResourceTypes::stone, stone - 10);
+
+			it->setAtributes(it->getInitiative() + 1, it->getAttackPower() + 2);
+
+		}
 	}
 
+	else if (str == "Red Sword")
+	{
+		int count = 0;
+
+		for (auto item: *items)
+		{
+			if (item->getName() == "Red Sword")
+			{
+				++count;
+			}
+		}
+
+		int iron = this->player->getResourceAmoun(ResourceTypes::iron);
+		int silk = this->player->getResourceAmoun(ResourceTypes::silk);
+
+		bool check = (count >= 2) && (iron - 20 >= 0) && (silk - 5 >= 0);
+
+		if (check)
+		{
+			this->player->setResourceAmoun(ResourceTypes::iron, iron - 20);
+			this->player->setResourceAmoun(ResourceTypes::silk, silk - 5);
+
+			it->setAtributes(it->getInitiative() + 1, it->getAttackPower() + 3);
+			this->pos.push_back(this->player->eraseItem(it));
+			this->pos.push_back(this->player->eraseItem(it));
+			Weapon* w = it;
+			this->player->addItem(w);
+			
+		}
+	}
+
+}
+
+void UpgradeItemState::setDescription(Item* it)
+{
+	std::string str = it->getName();
+
+	if (str == "Dagger")
+	{
+		this->texts["ItemDescription"].setString("Need 20 wood\n2 cloth\n10 stone\n+1 init\n+2 attack");
+	}
+
+	else if (str == "Red Sword")
+	{
+		this->texts["ItemDescription"].setString("Need 2 red sword\n20 iron\n5 silk\n+1 init\n+3 attack");
+	}
 }
 

@@ -48,6 +48,10 @@ Armor* Player::getArmor() const
 {
 	return this->armor;
 }
+std::string Player::getResourceName(ResourceTypes _r)
+{
+	return this->resources->getResourceName(_r);
+}
 
 sf::Time Player::getCollectionClock() const
 {
@@ -126,4 +130,21 @@ void Player::updateCollection(const float& _dt)
 void Player::addItem(Item* _item)
 {
 	this->inventory->push_back(_item);
+}
+
+int Player::eraseItem(Item* _item)
+{
+	int j = inventory->size();
+	for (int i = 0; i < j; ++i)
+	{
+		if (inventory->at(i)->getName() == _item->getName()) 
+		{
+			Item* item = this->inventory->at(j - 1);
+			this->inventory->at(i) = item;
+			this->inventory->pop_back();
+			--j;
+			return i;
+		}
+	}
+	return -1;
 }

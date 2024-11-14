@@ -18,6 +18,7 @@ public:
 protected:
     int initiative;
     bool equipped;
+    std::string lastDescrp;
 };
 
 class Weapon :

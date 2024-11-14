@@ -29,6 +29,8 @@ void Equipable::use(Fighter* target)
 Weapon::Weapon(sf::Texture& _texture, std::string _name, float attack_power, int _initiative, std::string _description, int _price)
 	: attackPower(attack_power), Equipable(_texture, _name, _initiative, _description, _price)
 {
+	lastDescrp = description;
+	this->description += "\nattack: " + std::to_string(static_cast<int>(this->attackPower)) + "\nInit: " + std::to_string(this->initiative);
 
 }
 
@@ -46,6 +48,9 @@ void Weapon::setAtributes(int _ini, float _attack)
 {
 	this->initiative = _ini;
 	this->attackPower = _attack;
+
+	this->description = lastDescrp;
+	this->description += "\nattack: " + std::to_string(static_cast<int>(this->attackPower)) + "\nInit: " + std::to_string(this->initiative);
 }
 
 void Weapon::use(Fighter* target)

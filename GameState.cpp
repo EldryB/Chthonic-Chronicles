@@ -109,6 +109,10 @@ void GameState::initItems()
 
 	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 1, 20.f, "Fresh!", 10));
 	this->items[6]->setIconRect(sf::IntRect(0, 0, 41, 42));
+
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 10));
+	this->items[7]->setIconRect(sf::IntRect(41, 40, 41, 42));
+	this->player->addItem(this->items[7]);
 	
 	for (auto enemy : this->enemies)
 	{
@@ -243,7 +247,8 @@ void GameState::updateInput(const float& _dt)
 {
 	bool isInHouse1 = (this->player->getSprite()->getPosition().x > 244 && this->player->getSprite()->getPosition().x < 272 && this->player->getSprite()->getPosition().y < 248.5f);
 	bool isInHouse2 = (this->player->getSprite()->getPosition().x > 732 && this->player->getSprite()->getPosition().x < 766 && this->player->getSprite()->getPosition().y < 258.5f);
-
+	bool isInHouse3 = (this->player->getSprite()->getPosition().x > 847 && this->player->getSprite()->getPosition().x < 880 && this->player->getSprite()->getPosition().y > 357.5f 
+		&& this->player->getSprite()->getPosition().y < 391);
 	this->timeSinceLastUpdate += _dt;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
@@ -346,13 +351,13 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInHouse3)
 	{
-		this->keyCode = "Q";
+		this->keyCode = "HOUSE3";
 	}
 	else
 	{
-		if (this->keyCode == "Q")
+		if (this->keyCode == "HOUSE3")
 		{
 			this->keyCode = " ";
 			this->states->push(new UpgradeItemState(this->window, this->supportedKeys, this->states, this->player));

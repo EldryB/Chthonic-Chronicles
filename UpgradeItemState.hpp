@@ -2,6 +2,8 @@
 #include "State.hpp"
 #include "Player.hpp"
 #include "MenuState.hpp"
+#include"Equipable.hpp"
+#include"Consumable.hpp"
 
 class UpgradeItemState :
     public State
@@ -22,13 +24,16 @@ public:
 
     void renderButtons(sf::RenderTarget* target = nullptr);
 
-    void upgradeItem(Item* it);
+    void upgradeItem(Weapon* it);
+
+    void setDescription(Item* it);
 
 private:
     std::vector<Button*> useButtons;
     std::vector<Item*>* items = new std::vector<Item*>();
     Player* player;
     sf::Sprite toolTip;
+    std::vector<int> pos;
 
     void initVariables();
 

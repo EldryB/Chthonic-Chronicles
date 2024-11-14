@@ -22,12 +22,15 @@ public:
 
     sf::Time getCollectionClock() const;
 
+    std::string getResourceName(ResourceTypes _r);
 
     void setWeapon(Weapon* _weapon);
 
     void setArmor(Armor* _armor);
 
     void addItem(Item* _item);
+
+    int eraseItem(Item* _item);
 
     void update(const float& _dt);
 
