@@ -64,7 +64,13 @@ void StoreState::initFonts()
 	this->texts["Description"].setFont(this->font);
 	this->texts["Description"].setCharacterSize(12);
 	this->texts["Description"].setFillColor(sf::Color(sf::Color::Black));
-	this->texts["Description"].setPosition(100, 500);
+	this->texts["Description"].setPosition(50, 500);
+
+	this->message.setFont(this->font);
+	this->message.setCharacterSize(12);
+	this->message.setString("Pres E to Buy");
+	this->message.setFillColor(sf::Color(sf::Color::Black));
+	this->message.setPosition(300, 500);
 }
 
 std::string StoreState::getStringStage(CurrentStage _c)
@@ -140,6 +146,19 @@ void StoreState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
+	{
+		this->keyCode = "INVENTORY";
+	}
+	else
+	{
+		if (this->keyCode == "INVENTORY")
+		{
+			this->keyCode = " ";
+			this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
+		}
+	}
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getSprite()->getPosition().y > 540.f)
 	{
 		this->keyCode = "ACTION";
@@ -152,9 +171,36 @@ void StoreState::updateInput(const float& _dt)
 			this->player->setPosition(250.f,248.f);
 			this->player->pushStage(CurrentStage::MainStage);
 			this->states->pop();
+
 		}
 	}
 
+	Item* it = this->itemColision();
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getStage() == CurrentStage::StoreStage2 && it)
+	{
+		this->keyCode = "BUY";
+	}
+	else
+	{
+		if (this->keyCode == "BUY")
+		{
+			this->keyCode = " ";
+			if ((this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice() >= 0))
+			{
+				this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice());
+				this->player->addItem(it);
+				for(int i = 0; i < items.size(); ++i)
+				{
+					if(items[i] == it)
+					{
+						this->items.erase(this->items.begin() + i);
+					}
+				}
+				it = nullptr;
+			}
+		}
+	}
 
 }
 
@@ -177,6 +223,7 @@ void StoreState::update(const float& _dt)
 	{
 		textstr += item->getName() + "\n";
 	}
+	textstr +=  "Coins: " + std::to_string(this->player->getResourceAmoun(ResourceTypes::coin));
 	this->texts["Description"].setString(textstr);
 }
 
@@ -201,6 +248,12 @@ void StoreState::render(sf::RenderTarget* target)
 		{
 			item->render(target);
 		}
+	}
+
+	Item* it = this->itemColision();
+	if (it)
+	{
+		target->draw(this->message);
 	}
 }
 
@@ -233,6 +286,22 @@ void StoreState::takeItem()
 	items[2]->setPosition(200 + 1100, 250);
 	items[3]->setPosition(500 + 1100, 250);
 
+}
+
+Item* StoreState::itemColision()
+{
+	for (auto item: this->items)
+	{
+		sf::FloatRect rect1 = this->player->getSprite()->getGlobalBounds();
+		sf::FloatRect rect2 = item->getSprite()->getGlobalBounds();
+
+		if (rect1.intersects(rect2))
+		{
+			return item;
+		}
+	}
+
+	return nullptr;
 }
 
 void StoreState::updateMap(const float& dt)

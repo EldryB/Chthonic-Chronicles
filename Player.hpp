@@ -29,6 +29,10 @@ public:
 
     void update(const float& _dt);
 
+    int getResourceAmoun(ResourceTypes _r);
+
+    void setResourceAmoun(ResourceTypes _r, int amount);
+
 protected:
     Resources* resources;
     Jobs* jobs;

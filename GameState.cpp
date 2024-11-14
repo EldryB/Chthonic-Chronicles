@@ -98,9 +98,22 @@ void GameState::initItems()
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 5.f, 5, "Heavy armor!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Rusty Armor", 5.f, 5, "Heavy armor!", 10));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
+
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Thunder Armor", 8.f, 5, "THUNDER!", 10));
+	this->items[5]->setIconRect(sf::IntRect(265, 0, 26, 41));
+	this->player->addItem(this->items[5]);
+
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 1, 20.f, "Fresh!", 10));
+	this->items[6]->setIconRect(sf::IntRect(0, 0, 41, 42));
+	
+	for (auto enemy : this->enemies)
+	{
+		enemy->addItem(this->items[0]);
+		enemy->addItem(this->items[6]);
+	}
 }
 
 
@@ -283,7 +296,7 @@ void GameState::updateInput(const float& _dt)
 		if (this->keyCode == "Q")
 		{
 			this->keyCode = " ";
-			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
+			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "MenuState.hpp"
 #include "Enemy.hpp"
+#include "InventoryState.hpp"
 
 class StoreState :
     public State
@@ -18,6 +19,8 @@ public:
 
     void takeItem();
 
+    Item* itemColision();
+
 
 private:
 
@@ -25,6 +28,7 @@ private:
     Player* player;
     bool isBackgroundMoving;
     std::string check;
+    sf::Text message;
 
     void initVariables();
 

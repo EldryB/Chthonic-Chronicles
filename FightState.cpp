@@ -14,9 +14,9 @@ void FightState::initKeybinds()
 {
 	this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
 	this->keybinds["ACTION"] = this->supportedKeys->at("E");
-	this->keybinds["CONTROLS"] = this->supportedKeys->at("C");
-	this->keybinds["Q"] = this->supportedKeys->at("Q");
-	this->keybinds["Z"] = this->supportedKeys->at("Z");
+	this->keybinds["MOVE_LEFT"] = this->supportedKeys->at("Left");
+	this->keybinds["MOVE_RIGHT"] = this->supportedKeys->at("Right");
+	this->keybinds["SELECT"] = this->supportedKeys->at("Enter");
 }	
 
 void FightState::initFonts()
@@ -80,6 +80,12 @@ void FightState::initButtons()
 	this->buttons["INVENTORY"] = new Button(320.f, 470.f, this->textures["AttackMenuButtonIdle"], &this->font, "INVENTORY");
 }
 
+void FightState::initDice()
+{
+	this->dice = new Dice(this->textures["DICE_SHEET"], 20);
+	this->dice->setPosition(18.f, 500.f);
+}
+
 void FightState::initFighters(Player* _p, Enemy* _enemy)
 {
 	this->player = _p;
@@ -98,16 +104,13 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 	: State(_window, _supportedKeys, _states)
 {	
 	this->initTextures();
-
-	this->dice = new Dice(this->textures["DICE_SHEET"], 20);
-	this->dice->setPosition(100.f, 400.f);
-
 	this->initFighters(_p, _enemy);
 	this->initVariables();
 	this->initBackground();
 	this->initKeybinds();
 	this->initFonts();
 	this->initButtons();
+	this->initDice();
 	this->lastPosition = _lastPos;
 	
 	sf::RectangleShape hpBar1;
@@ -126,8 +129,8 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 
 	this->hpBar.push_back(hpBar2);
 
-	fighters.push_back(player);
-	fighters.push_back(enemy);
+	this->fighters.push_back(player);
+	this->fighters.push_back(enemy);
 
 	this->currentTurn = 0;
 	this->turnCount = 0;
@@ -135,42 +138,74 @@ FightState::FightState(sf::RenderWindow* _window, std::unordered_map<std::string
 
 FightState::~FightState()
 {
+	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+	{
+		delete it->second;
+	}
+
 	delete this->dice;
 	this->textures.clear();
 }
 
 void FightState::updateInput(const float& _dt)
 {
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_LEFT"]))
 	{
-		this->keyCode = "Q";
+		this->keyCode = "MOVE_LEFT";
 	}
 	else
 	{
-		if (this->keyCode == "Q")
+		if (this->keyCode == "MOVE_LEFT")
 		{
 			this->keyCode = " ";
-			this->player->setHp(this->player->getHp() - 50.f);
-			if (this->player->getHp() < 0)
+			if (this->selectedButtonIndex > 0)
 			{
-				this->player->setHp(0);
+				--this->selectedButtonIndex;
 			}
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Z")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds["MOVE_RIGHT"]))
 	{
-		this->keyCode = "Z";
+		this->keyCode = "MOVE_RIGHT";
 	}
 	else
 	{
-		if (this->keyCode == "Z")
+		if (this->keyCode == "MOVE_RIGHT")
 		{
 			this->keyCode = " ";
-			this->enemy->setHp(this->enemy->getHp() - 50.f);
-			if (this->enemy->getHp() < 0)
+			if (this->selectedButtonIndex < this->buttons.size() - 1)
 			{
-				this->enemy->setHp(0);
+				++this->selectedButtonIndex;
+			}
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds["SELECT"]))
+	{
+		this->keyCode = "SELECT";
+	}
+	else
+	{
+		if (this->keyCode == "SELECT")
+		{
+			this->keyCode = " ";
+			auto it = std::next(this->buttons.begin(), this->selectedButtonIndex);
+			if (it != this->buttons.end())
+			{
+				if (it->first == "ATTACK")
+				{
+					this->dice->roll();
+					this->enemy->takeDamage(this->player->getAttackPower() + (this->player->getAttackPower() * (this->dice->getFace() / 100)));
+
+					this->playerTurn = false;
+					this->turnQueue.pop();
+					count = 0;
+				}
+				else if (it->first == "INVENTORY")
+				{
+					this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player, this->check));
+				}
 			}
 		}
 	}
@@ -178,6 +213,7 @@ void FightState::updateInput(const float& _dt)
 
 void FightState::updateButtons()
 {
+	int index = 0;
 	for (auto& it : this->buttons)
 	{
 		it.second->update(this->mousePosView);
@@ -188,17 +224,19 @@ void FightState::updateButtons()
 			it.second->setTextFillColor(sf::Color(21, 26, 38));
 		}
 
-		if (it.second->getButtonState() == ButtonState::Hover)
+		if (it.second->getButtonState() == ButtonState::Hover || index == this->selectedButtonIndex)
 		{
 			it.second->setTexture(this->textures["AttackMenuButtonHover"]);
 			it.second->setTextFillColor(sf::Color(96, 60, 3));
 		}
+
+		++index;
 	}
 
 	if (this->buttons["ATTACK"]->getButtonState() == ButtonState::Pressed && this->playerTurn)
 	{
 		this->dice->roll();
-		this->enemy->takeDamage(this->player->getAttackPower());
+		this->enemy->takeDamage(this->player->getAttackPower() + (this->player->getAttackPower() * (this->dice->getFace() / 100)));
 
 		this->playerTurn = false;
 		this->turnQueue.pop();
@@ -215,13 +253,13 @@ void FightState::update(const float& _dt)
 {
 	this->player->setLookingDirection(LookingDirection::Right);
 	count += this->clock.restart().asSeconds();
-
-	this->updateMousePositions();
-	this->updateInput(_dt);
+	
 	this->player->update(_dt);
 	this->enemy->update(_dt);
 	if (this->playerTurn)
 	{
+		this->updateMousePositions();
+		this->updateInput(_dt);
 		this->updateButtons();
 		this->dice->update(_dt);
 	}
@@ -253,6 +291,13 @@ void FightState::update(const float& _dt)
 
 	if (!this->enemy->isAlive())
 	{
+		Dice dropItemProbability(100);
+		if (dropItemProbability.getFace() <= 20)
+		{
+			std::string stringText = this->player->getName() + " gets " + this->enemy->dropItem()->getName();
+			this->texts["TextBox"].setString(stringText);
+			this->player->addItem(this->enemy->dropItem());
+		}
 		this->player->setPosition(lastPosition.x, lastPosition.y);
 		this->states->pop();
 	}
@@ -264,7 +309,7 @@ void FightState::update(const float& _dt)
 	{
 		currentTurn++;
 		auto currentFighter = turnQueue.front();
-		std::string stringText = currentFighter->getName() + " empieza su turno ";
+		std::string stringText = currentFighter->getName() + "'s turn begins. ";
 		this->texts["TextBox"].setString(stringText);
 
 		if (Player* p = dynamic_cast<Player*>(currentFighter))

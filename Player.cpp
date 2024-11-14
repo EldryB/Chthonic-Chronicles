@@ -97,6 +97,16 @@ void Player::update(const float& _dt)
 	}
 }
 
+int Player::getResourceAmoun(ResourceTypes _r)
+{
+	return this->resources->getResourceAmount(_r);
+}
+
+void Player::setResourceAmoun(ResourceTypes _r, int amount)
+{
+	this->resources->setResourceAmount(_r, amount);
+}
+
 void Player::addItem(Item* _item)
 {
 	this->inventory->push_back(_item);

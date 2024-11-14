@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Fighter.hpp"
 
 class Item

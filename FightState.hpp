@@ -58,5 +58,7 @@ private:
     void initFonts();
 
     void initButtons();
+
+    void initDice();
 };
 

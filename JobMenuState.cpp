@@ -120,8 +120,8 @@ void JobMenuState::initButtons()
     }
 }
 
-JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Jobs& jobs, Resources& resources, Fighter* _p)
-    : jobs(jobs), resources(resources) ,State(_window, _supportedKeys, _states)
+JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
+    : jobs(_p->getJobs()), resources(_p->getResources()) ,State(_window, _supportedKeys, _states)
 {
     this->initVariables();
     this->initTextures();
@@ -168,7 +168,7 @@ void JobMenuState::initJobList()
     {
         sf::Text jobText;
         jobText.setFont(font);
-        jobText.setString(jobs.getJobName(static_cast<JobTypes>(i)));
+        jobText.setString(jobs->getJobName(static_cast<JobTypes>(i)));
         jobText.setCharacterSize(20);
         jobText.setFillColor(sf::Color(206, 185, 141));
         jobText.setPosition(100.f, 70.f + i * 40);
@@ -176,7 +176,7 @@ void JobMenuState::initJobList()
 
         sf::Text amountText;
         amountText.setFont(font);
-        amountText.setString(std::to_string(jobs.getJobAmount(static_cast<JobTypes>(i))));
+        amountText.setString(std::to_string(jobs->getJobAmount(static_cast<JobTypes>(i))));
         amountText.setCharacterSize(20);
         amountText.setFillColor(sf::Color(206, 185, 141));
         amountText.setPosition(450.f, 70.f + i * 40);
@@ -192,7 +192,7 @@ void JobMenuState::initResourceList()
     {
         sf::Text resourceText;
         resourceText.setFont(font);
-        resourceText.setString(resources.getResourceName(static_cast<ResourceTypes>(i)));
+        resourceText.setString(resources->getResourceName(static_cast<ResourceTypes>(i)));
         resourceText.setCharacterSize(20);
         resourceText.setFillColor(sf::Color(206, 185, 141));
         resourceText.setPosition(800.f, 70.f + i * 40);
@@ -200,7 +200,7 @@ void JobMenuState::initResourceList()
 
         sf::Text amountText;
         amountText.setFont(font);
-        amountText.setString(std::to_string(resources.getResourceAmount(static_cast<ResourceTypes>(i))));
+        amountText.setString(std::to_string(resources->getResourceAmount(static_cast<ResourceTypes>(i))));
         amountText.setCharacterSize(20);
         amountText.setFillColor(sf::Color(206, 185, 141));
         amountText.setPosition(950.f, 70.f + i * 40);
@@ -340,16 +340,16 @@ void JobMenuState::updateButtons()
         {
             if (this->availableVillagers > 0)
             {
-                this->jobs.assignVillagers(static_cast<JobTypes>(i));
+                this->jobs->assignVillagers(static_cast<JobTypes>(i));
                 this->availableVillagers--;
                 this->initJobList();
             }
         }
         else if (this->substractButtons[i]->getButtonState() == ButtonState::Pressed)
         {
-            if (this->jobs.getJobAmount(static_cast<JobTypes>(i)) > 0)
+            if (this->jobs->getJobAmount(static_cast<JobTypes>(i)) > 0)
             {
-                this->jobs.removeVillagers(static_cast<JobTypes>(i));
+                this->jobs->removeVillagers(static_cast<JobTypes>(i));
                 this->availableVillagers++;
                 this->initJobList();
             }
@@ -361,7 +361,7 @@ void JobMenuState::update(const float& _dt)
 {
     if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
     {
-        this->jobs.collectResourcesAutomatically(resources);
+        this->jobs->collectResourcesAutomatically(*resources);
         this->collectionClock.restart();
         this->initResourceList();
     }

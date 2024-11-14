@@ -11,6 +11,8 @@ public:
     Enemy(float _x, float _y, sf::Texture& texture_sheet, std::string _name, float _hp, float attack_power, int _defense, int _initiative);
     virtual ~Enemy();
 
+    void addItem(Item* _item);
+
     Item* dropItem();
 
     virtual void update(const float& _dt);

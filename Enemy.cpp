@@ -13,9 +13,14 @@ Enemy::~Enemy()
 
 }
 
+void Enemy::addItem(Item* _item)
+{
+	this->items.push_back(_item);
+}
+
 Item* Enemy::dropItem()
 {
-	Dice dice = Dice(2);
+	Dice dice = Dice(this->items.size());
 	int index = dice.getFace();
 
 	return this->items[index - 1];
