@@ -171,6 +171,7 @@ void StoreState::updateInput(const float& _dt)
 			this->player->setPosition(250.f,248.f);
 			this->player->pushStage(CurrentStage::MainStage);
 			this->states->pop();
+
 		}
 	}
 
