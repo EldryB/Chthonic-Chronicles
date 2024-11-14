@@ -82,6 +82,7 @@ void GameState::initFighters()
 
 void GameState::initItems()
 {
+	//NO CAMBIAR EL NOMBRE A LOS ITEMS
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 10));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
@@ -342,6 +343,19 @@ void GameState::updateInput(const float& _dt)
 		{
 			this->keyCode = " ";
 			this->states->push(new StoreState(this->window, this->supportedKeys, this->states, this->player, this->items));
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	{
+		this->keyCode = "Q";
+	}
+	else
+	{
+		if (this->keyCode == "Q")
+		{
+			this->keyCode = " ";
+			this->states->push(new UpgradeItemState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
 }

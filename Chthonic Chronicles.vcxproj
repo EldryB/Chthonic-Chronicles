@@ -160,6 +160,7 @@
     <ClInclude Include="Settings.hpp" />
     <ClInclude Include="State.hpp" />
     <ClInclude Include="StoreState.hpp" />
+    <ClInclude Include="UpgradeItemState.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StoreState.cpp" />
+    <ClCompile Include="UpgradeItemState.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

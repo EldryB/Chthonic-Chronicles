@@ -4,6 +4,7 @@
 #include "JobMenuState.hpp"
 #include "Dice.hpp"
 #include "StoreState.hpp"
+#include "UpgradeItemState.hpp"
 
 class GameState :
     public State
