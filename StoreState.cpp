@@ -177,6 +177,7 @@ void StoreState::updateInput(const float& _dt)
 						this->items.erase(this->items.begin() + i);
 					}
 				}
+
 				it = nullptr;
 			}
 		}
