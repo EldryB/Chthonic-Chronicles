@@ -291,6 +291,11 @@ void FightState::update(const float& _dt)
 
 	if (!this->enemy->isAlive())
 	{
+		Dice dropItemProbability(100);
+		if (dropItemProbability.getFace() <= 20)
+		{
+			this->player->addItem(this->enemy->dropItem());
+		}
 		this->player->setPosition(lastPosition.x, lastPosition.y);
 		this->states->pop();
 	}

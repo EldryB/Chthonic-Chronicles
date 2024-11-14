@@ -74,14 +74,10 @@ void GameState::initTextures()
 void GameState::initFighters()
 {
 	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 200.f, 15, 7);
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 500.f, 200.f, 7, 7));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 500.f, 200.f, 7, 7));
 }
 
 void GameState::initItems()
@@ -105,6 +101,19 @@ void GameState::initItems()
 	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
+
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
+	this->items[5]->setIconRect(sf::IntRect(265, 0, 26, 41));
+	this->player->addItem(this->items[5]);
+
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 1, 20.f, "Fresh!", 10));
+	this->items[6]->setIconRect(sf::IntRect(0, 0, 41, 42));
+	
+	for (auto enemy : this->enemies)
+	{
+		enemy->addItem(this->items[0]);
+		enemy->addItem(this->items[6]);
+	}
 }
 
 
