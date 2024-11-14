@@ -329,6 +329,7 @@ void MovementComponent::setMainStageLimits(sf::Sprite* spr, float& lastx, float&
 		else if (getXPos(spr) > 280 && getXPos(spr) <= 380 && ((getYPos(spr) > 252 && getYPos(spr) < 306) || (getYPos(spr) < 194) || getYPos(spr) > 408))
 		{
 			spr->setPosition(lastx, lasty);
+
 		}
 
 		else if (getXPos(spr) > 230 && getXPos(spr) <= 280 && ((getYPos(spr) < 194) || getYPos(spr) > 426))
