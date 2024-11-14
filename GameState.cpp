@@ -128,6 +128,8 @@ void GameState::initBackground()
 	this->houses[0].setPosition(187.f,140.f);
 	this->houses.push_back(sf::Sprite(this->textures["House2"]));
 	this->houses[1].setPosition(706.f, 174.f);
+	this->houses.push_back(sf::Sprite(this->textures["House2"]));
+	this->houses[2].setPosition(825.f, 310.f);
 
 }
 
@@ -239,7 +241,7 @@ GameState::~GameState()
 void GameState::updateInput(const float& _dt)
 {
 	bool isInHouse1 = (this->player->getSprite()->getPosition().x > 244 && this->player->getSprite()->getPosition().x < 272 && this->player->getSprite()->getPosition().y < 248.5f);
-	bool isInHouse2;
+	bool isInHouse2 = (this->player->getSprite()->getPosition().x > 732 && this->player->getSprite()->getPosition().x < 766 && this->player->getSprite()->getPosition().y < 258.5f);
 
 	this->timeSinceLastUpdate += _dt;
 
@@ -287,20 +289,20 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && isInHouse2)
 	{
-		this->keyCode = "Q";
+		this->keyCode = "HOUSE2";
 	}
 	else
 	{
-		if (this->keyCode == "Q")
+		if (this->keyCode == "HOUSE2")
 		{
 			this->keyCode = " ";
 			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")) )
 	{
 		this->keyCode = "INVENTORY";
 	}
