@@ -49,6 +49,11 @@ int Fighter::getInitiative() const
 void Fighter::setHp(float _hp)
 {
 	this->hp = _hp;
+
+	if (this->hp > this->hpMax)
+	{
+		this->hp = hpMax;
+	}
 }
 
 void Fighter::setHpMax(float _hpMax)

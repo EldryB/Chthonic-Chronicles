@@ -292,7 +292,7 @@ void FightState::update(const float& _dt)
 	if (!this->enemy->isAlive())
 	{
 		Dice dropItemProbability(100);
-		if (dropItemProbability.getFace() <= 20)
+		if (dropItemProbability.getFace() <= 30)
 		{
 			std::string stringText = this->player->getName() + " gets " + this->enemy->dropItem()->getName();
 			this->texts["TextBox"].setString(stringText);

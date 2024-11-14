@@ -152,7 +152,8 @@ void LostFightState::updateInput(const float& _dt)
 				}
 				else if (it->first == "RETRY")
 				{
-					this->player->setHp(100.f);
+					//back to 20% hp
+					this->player->setHp(player->getHpMax() * .2);
 					this->states->pop();
 				}
 			}

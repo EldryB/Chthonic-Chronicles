@@ -59,8 +59,4 @@ void Potion::use(Fighter* target)
 {
 	this->substractAmount(1);
 	target->setHp(target->getHp() + this->getHp());
-	if (target->getHp() > target->getHpMax())
-	{
-		target->setHp(target->getHpMax());
-	}
 }
