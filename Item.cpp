@@ -86,12 +86,3 @@ bool Item::isEquipped() const
 {
     return false;
 }
-
-bool Item::isPLayerNear(sf::Sprite _p)
-{
-    sf::FloatRect rect1 = _p.getGlobalBounds();
-    sf::FloatRect rect2 = this->sprite->getGlobalBounds();
-
-    // Compara si los rectángulos colisionan
-    return rect1.intersects(rect2);
-}

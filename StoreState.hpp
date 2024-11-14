@@ -27,6 +27,7 @@ private:
     Player* player;
     bool isBackgroundMoving;
     std::string check;
+    sf::Text message;
 
     void initVariables();
 

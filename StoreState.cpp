@@ -65,6 +65,12 @@ void StoreState::initFonts()
 	this->texts["Description"].setCharacterSize(12);
 	this->texts["Description"].setFillColor(sf::Color(sf::Color::Black));
 	this->texts["Description"].setPosition(100, 500);
+
+	this->message.setFont(this->font);
+	this->message.setCharacterSize(12);
+	this->message.setString("Pres E to Buy");
+	this->message.setFillColor(sf::Color(sf::Color::Black));
+	this->message.setPosition(50, 70);
 }
 
 std::string StoreState::getStringStage(CurrentStage _c)
@@ -177,7 +183,6 @@ void StoreState::updateInput(const float& _dt)
 						this->items.erase(this->items.begin() + i);
 					}
 				}
-
 				it = nullptr;
 			}
 		}
@@ -229,6 +234,12 @@ void StoreState::render(sf::RenderTarget* target)
 		{
 			item->render(target);
 		}
+	}
+
+	Item* it = this->itemColision();
+	if (it)
+	{
+		target->draw(this->message);
 	}
 }
 
