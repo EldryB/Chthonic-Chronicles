@@ -294,6 +294,8 @@ void FightState::update(const float& _dt)
 		Dice dropItemProbability(100);
 		if (dropItemProbability.getFace() <= 20)
 		{
+			std::string stringText = this->player->getName() + " gets " + this->enemy->dropItem()->getName();
+			this->texts["TextBox"].setString(stringText);
 			this->player->addItem(this->enemy->dropItem());
 		}
 		this->player->setPosition(lastPosition.x, lastPosition.y);
@@ -307,7 +309,7 @@ void FightState::update(const float& _dt)
 	{
 		currentTurn++;
 		auto currentFighter = turnQueue.front();
-		std::string stringText = currentFighter->getName() + " empieza su turno ";
+		std::string stringText = currentFighter->getName() + "'s turn begins. ";
 		this->texts["TextBox"].setString(stringText);
 
 		if (Player* p = dynamic_cast<Player*>(currentFighter))

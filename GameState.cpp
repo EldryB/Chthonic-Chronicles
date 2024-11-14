@@ -98,11 +98,11 @@ void GameState::initItems()
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Rusty Armor", 70.f, 5, "Heavy armor!", 10));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Thunder Armor", 85.f, 5, "THUNDER!", 10));
 	this->items[5]->setIconRect(sf::IntRect(265, 0, 26, 41));
 	this->player->addItem(this->items[5]);
 

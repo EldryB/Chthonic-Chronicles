@@ -64,13 +64,13 @@ void StoreState::initFonts()
 	this->texts["Description"].setFont(this->font);
 	this->texts["Description"].setCharacterSize(12);
 	this->texts["Description"].setFillColor(sf::Color(sf::Color::Black));
-	this->texts["Description"].setPosition(100, 500);
+	this->texts["Description"].setPosition(50, 500);
 
 	this->message.setFont(this->font);
 	this->message.setCharacterSize(12);
 	this->message.setString("Pres E to Buy");
 	this->message.setFillColor(sf::Color(sf::Color::Black));
-	this->message.setPosition(50, 70);
+	this->message.setPosition(300, 500);
 }
 
 std::string StoreState::getStringStage(CurrentStage _c)
