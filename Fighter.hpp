@@ -13,6 +13,8 @@ public:
 
     float getHp() const;
 
+    float getHpMax() const;
+
     float getAttackPower() const; 
 
     int getDefense() const;
@@ -20,6 +22,8 @@ public:
     int getInitiative() const;
 
     void setHp(float _hp);
+
+    void setHpMax(float _hpMax);
 
     void setAttackPower(float attack_power);
 
@@ -38,6 +42,7 @@ public:
 
 protected:
     float hp;
+    float hpMax;
     float attackPower;
     int defense;
     int initiative;

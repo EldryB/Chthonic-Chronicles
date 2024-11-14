@@ -4,6 +4,7 @@ void Fighter::initVariables(std::string& _name, float& _hp, float& _attackPower,
 {
 	this->name = _name;
 	this->hp = _hp;
+	this->hpMax = _hp;
 	this->attackPower = _attackPower;
 	this->defense = _defense;
 	this->initiative = _initiative;
@@ -25,6 +26,11 @@ float Fighter::getHp() const
 	return this->hp;
 }
 
+float Fighter::getHpMax() const
+{
+	return this->hpMax;
+}
+
 float Fighter::getAttackPower() const
 {
 	return this->attackPower;
@@ -43,6 +49,11 @@ int Fighter::getInitiative() const
 void Fighter::setHp(float _hp)
 {
 	this->hp = _hp;
+}
+
+void Fighter::setHpMax(float _hpMax)
+{
+	this->hpMax = _hpMax;
 }
 
 void Fighter::setAttackPower(float attack_power)
@@ -75,7 +86,8 @@ void Fighter::attack(Fighter* target)
 
 void Fighter::takeDamage(float _attackPower)
 {
-	float takeDamage = _attackPower * (100.f / (100.f + this->defense));
+	float def= 100.f + this->defense;
+	float takeDamage = _attackPower * (100.f / def);
 	this->hp -= takeDamage;
 
 	if (this->hp < 0)
@@ -86,7 +98,7 @@ void Fighter::takeDamage(float _attackPower)
 
 bool Fighter::isAlive() const
 {
-	return this->hp > 0;
+	return this->hp >= 1;
 }
 
 void Fighter::update(const float& _dt)

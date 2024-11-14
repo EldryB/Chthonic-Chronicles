@@ -40,9 +40,9 @@ void Consumable::use(Fighter* target)
 }
 
 Potion::Potion(sf::Texture& _texture, std::string _name, int _amount, float _hp, std::string _description, int _price)
-	: hp(), Consumable(_texture, _name, _amount, _description, _price)
+	: Consumable(_texture, _name, _amount, _description, _price)
 {
-
+	hp =_hp;
 }
 
 Potion::~Potion()
@@ -59,4 +59,8 @@ void Potion::use(Fighter* target)
 {
 	this->substractAmount(1);
 	target->setHp(target->getHp() + this->getHp());
+	if (target->getHp() > target->getHpMax())
+	{
+		target->setHp(target->getHpMax());
+	}
 }

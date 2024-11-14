@@ -73,28 +73,24 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 1000.f, 400.f, 15, 7);
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
-	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Enemy1", 500.f, 20.f, 7, 7));
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 5.f, 16, 5);
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
 }
 
 void GameState::initItems()
 {
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 50.f, 3, "Amazing dagger!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 10));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 100.f, -2, "IncREDible sword!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 10));
 	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
 	this->player->addItem(this->items[1]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 90.f, 0, "InBaLUEble sword!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 8.f, 0, "InBaLUEble sword!", 10));
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
@@ -102,7 +98,7 @@ void GameState::initItems()
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 70.f, 5, "Heavy armor!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Armor", 5.f, 5, "Heavy armor!", 10));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
 }
