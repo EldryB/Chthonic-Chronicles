@@ -344,6 +344,19 @@ void GameState::updateInput(const float& _dt)
 			this->states->push(new StoreState(this->window, this->supportedKeys, this->states, this->player, this->items));
 		}
 	}
+
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("Q")))
+	{
+		this->keyCode = "Q";
+	}
+	else
+	{
+		if (this->keyCode == "Q")
+		{
+			this->keyCode = " ";
+			this->states->push(new UpgradeItemState(this->window, this->supportedKeys, this->states, this->player));
+		}
+	}
 }
 
 void GameState::updateInput2(const float& _dt)

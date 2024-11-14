@@ -29,6 +29,8 @@ public:
 
     float getAttackPower() const;
 
+    void setAtributes(int _ini, float _attack);
+
     void use(Fighter* target);
 
 private:
@@ -43,6 +45,8 @@ public:
     virtual ~Armor();
 
     int getDefense() const;
+
+    void setAtributes(int _ini, int _defense);
 
     void use(Fighter* target);
 

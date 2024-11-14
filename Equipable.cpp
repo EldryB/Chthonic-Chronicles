@@ -42,6 +42,12 @@ float Weapon::getAttackPower() const
 	return this->attackPower;
 }
 
+void Weapon::setAtributes(int _ini, float _attack)
+{
+	this->initiative = _ini;
+	this->attackPower = _attack;
+}
+
 void Weapon::use(Fighter* target)
 {
 	if(!this->equipped)
@@ -72,6 +78,12 @@ Armor::~Armor()
 int Armor::getDefense() const
 {
 	return this->defense;
+}
+
+void Armor::setAtributes(int _ini, int _defense)
+{
+	this->initiative = _ini;
+	this->defense = _defense;
 }
 
 void Armor::use(Fighter* target)
