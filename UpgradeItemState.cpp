@@ -171,7 +171,12 @@ void UpgradeItemState::renderButtons(sf::RenderTarget* target)
 
 void UpgradeItemState::upgradeItem(Item* it)
 {
+	std::string str = it->getName();
+	
+	if (str == "Dagger")
+	{
 
+	}
 
 }
 

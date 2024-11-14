@@ -82,6 +82,7 @@ void GameState::initFighters()
 
 void GameState::initItems()
 {
+	//NO CAMBIAR EL NOMBRE A LOS ITEMS
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 10));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
