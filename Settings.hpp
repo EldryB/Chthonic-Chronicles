@@ -28,7 +28,6 @@ enum class CurrentStage
 	Lvl1R6,
 	Lvl1R7,
 	Lvl1R8,
-	Lvl1R9,
 	StoreStage,
 	StoreStage2
 };

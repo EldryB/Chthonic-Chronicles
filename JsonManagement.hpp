@@ -1,7 +1,6 @@
 #pragma once
 
 #include "nlohmann/json.hpp"
-#include "Fighter.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include <fstream>
@@ -10,13 +9,13 @@ class JsonManagement
 {
 public:
 
-	void toJson(nlohmann::json& _j, Fighter* _fighter);
+	void toJson(nlohmann::json& _j, Player* _fighter);
 
-	void fromJson(nlohmann::json& j, Fighter* _fighter);
+	void fromJson(nlohmann::json& j, Player* _fighter);
 
-	void savePlayerToFile(Fighter* _fighter, const std::string& filename);
+	void savePlayerToFile(Player* _fighter, const std::string& filename);
 
-	void loadPlayerFromFile(const std::string& filename, Fighter* _fighter);
+	void loadPlayerFromFile(const std::string& filename, Player* _fighter);
 
 
 

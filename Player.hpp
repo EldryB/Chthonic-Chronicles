@@ -41,11 +41,18 @@ public:
 
     void updateCollection(const float& _dt);
 
+    void addVillagers(int num);
+
+    int getVillagers();
+
+    void setAttributes(std::string _name,float posx, float posy, float _hp, float _attack, int _init, int _defense, int _villagers);
+
 protected:
     Resources* resources;
     Jobs* jobs;
     Armor* armor;
     Weapon* weapon;
+    int villagers;
 
     sf::Clock collectionClock;
 

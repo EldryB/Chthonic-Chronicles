@@ -132,6 +132,8 @@ JobMenuState::JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::st
     this->initJobList();
     this->initResourceList();
     this->player = _p;
+
+    this->availableVillagers = player->getVillagers();
 }
 
 JobMenuState::~JobMenuState()
@@ -288,9 +290,23 @@ void JobMenuState::updateButtons()
         }
     }
 
+    if (this->buttons["UPGRADE"]->getButtonState() == ButtonState::Hover)
+    {
+        this->texts["Tooltip"].setString("5 villagers\nneed 100 coins");
+        this->texts["Tooltip"].setPosition
+        (
+            this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - (this->texts["Tooltip"].getGlobalBounds().width / 2.f),
+            this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.f) - (this->texts["Tooltip"].getGlobalBounds().height / 2.f)
+        );
+    }
+
     if (this->buttons["UPGRADE"]->getButtonState() == ButtonState::Pressed)
     {
-        this->availableVillagers += 5;
+        if(this->player->getResourceAmoun(ResourceTypes::coin) - 100 >=0)
+        {
+            this->player->addVillagers(5);
+            this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - 100);
+        }
     }
 
     for (size_t i = 0; i < this->addButtons.size(); ++i)
@@ -368,6 +384,8 @@ void JobMenuState::update(const float& _dt)
     this->updateMousePositions();
     this->updateInput(_dt);
     this->updateButtons();
+
+    availableVillagers = this->player->getVillagers();
 }
 
 void JobMenuState::renderButtons(sf::RenderTarget* target)
@@ -406,7 +424,7 @@ void JobMenuState::render(sf::RenderTarget* target)
 
     for (size_t i = 0; i < addButtons.size(); i++)
     {
-        if (this->collectButtons[i]->getButtonState() == ButtonState::Hover)
+        if (this->collectButtons[i]->getButtonState() == ButtonState::Hover || this->buttons["UPGRADE"]->getButtonState() == ButtonState::Hover)
         {
             target->draw(this->backgroundTooltip);
             target->draw(this->texts["Tooltip"]);

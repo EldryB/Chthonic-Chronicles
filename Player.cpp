@@ -17,6 +17,8 @@ Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name
 	this->animationComponent->addAnimation("WALK_UP", 10.f, 13, 0, 16, 0, 46, 46);
 	this->animationComponent->addAnimation("IDLE_DOWN", 40.f, 17, 0, 18, 0, 46, 46);
 	this->animationComponent->addAnimation("WALK_DOWN", 10.f, 19, 0, 22, 0, 46, 46);
+
+	this->villagers = 5;
 }
 
 Player::~Player()
@@ -126,6 +128,27 @@ void Player::updateCollection(const float& _dt)
 		this->jobs->collectResourcesAutomatically(*resources);
 		this->collectionClock.restart();
 	}
+}
+
+void Player::addVillagers(int num)
+{
+	this->villagers += num;
+}
+
+int Player::getVillagers()
+{
+	return this->villagers;
+}
+
+void Player::setAttributes(std::string _name, float posx, float posy, float _hp, float _attack, int _init, int _defense, int _villagers)
+{
+	this->sprite->setPosition(posx,posy);
+	this->hp = _hp;
+	this->attackPower = _attack;
+	this->initiative = _init;
+	this->defense = _defense;
+	this->villagers = _villagers;
+	this->name = _name;
 }
 
 void Player::addItem(Item* _item)

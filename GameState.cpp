@@ -69,51 +69,12 @@ void GameState::initTextures()
 	{
 		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
 	}
-
-	if (!this->textures["Room1"].loadFromFile("assets/textures/Backgrounds/lvl1/room1.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room2"].loadFromFile("assets/textures/Backgrounds/lvl1/room2.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room3"].loadFromFile("assets/textures/Backgrounds/lvl1/room3.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room4"].loadFromFile("assets/textures/Backgrounds/lvl1/room4.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room5"].loadFromFile("assets/textures/Backgrounds/lvl1/room5.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room6"].loadFromFile("assets/textures/Backgrounds/lvl1/room6.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room7"].loadFromFile("assets/textures/Backgrounds/lvl1/room7.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
-
-	if (!this->textures["Room8"].loadFromFile("assets/textures/Backgrounds/lvl1/room8.png"))
-	{
-		throw "ERROR::MENU_STATE::COULD_NOT_LOAD_ITEMS_TEXTURE!";
-	}
 }
 
 void GameState::initFighters()
 {
-	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 5.f, 16, 5);
+
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 100.f, 16, 5);
 	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
@@ -277,8 +238,6 @@ std::string GameState::getStringStage(CurrentStage _c)
 
 	case CurrentStage::Lvl1R8:return "Lvl1R8";
 
-	case CurrentStage::Lvl1R9:return "Lvl1R9";
-
 	default: return " ";
 	}
 }
@@ -286,10 +245,11 @@ std::string GameState::getStringStage(CurrentStage _c)
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initTextures();
+	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 100.f, 16, 5);
 	this->initFighters();
 	this->initItems();
 	this->initVariables();
-	this->initTextures();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
@@ -300,16 +260,22 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
 	: State(_window, _supportedKeys, _states)
 {
+	this->initTextures();
 	this->initFighters();
 	this->initVariables();
-	this->initTextures();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 
 	this->resources = _p->getResources();
 	this->jobs = _p->getJobs();
-	this->player->setAttributes(_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getName(), _p->getHp(), _p->getAttackPower());
+
+	for (int i = 0; i < static_cast<int>(ResourceTypes::count); i++)
+	{
+		player->setResourceAmoun(static_cast<ResourceTypes>(i), _p->getResourceAmoun(static_cast<ResourceTypes>(i)));
+	}
+
+	this->player->setAttributes(_p->getName(),_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getHp(), _p->getAttackPower(), _p->getInitiative(), _p->getDefense(), _p->getVillagers());
 }
 
 
@@ -522,7 +488,7 @@ void GameState::update(const float& _dt)
 {
 	isInLvl1 = (this->player->getStage() == CurrentStage::Lvl1R1) || (this->player->getStage() == CurrentStage::Lvl1R2) || (this->player->getStage() == CurrentStage::Lvl1R3) ||
 		(this->player->getStage() == CurrentStage::Lvl1R4) || (this->player->getStage() == CurrentStage::Lvl1R5) || (this->player->getStage() == CurrentStage::Lvl1R6) ||
-		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8 || (this->player->getStage() == CurrentStage::Lvl1R9));
+		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8);
 
 	this->updateMousePositions();
 	if(this->player->getStage() == CurrentStage::MainStage)
@@ -592,7 +558,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(125 * _dt, 0);
-		this->player->moveS(120.f, 0.f, _dt);
+		this->player->moveS(110.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R2);
 		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
@@ -611,7 +577,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(-125 * _dt, 0);
-		this->player->moveS(-120.f, 0.f, _dt);
+		this->player->moveS(-110.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R1);
 		if (this->backgrounds.top().getPosition().x < -2044.8599f)
 		{
@@ -630,7 +596,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, 150 * _dt);
-		this->player->moveS(0, 120.f, _dt);
+		this->player->moveS(0, 110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
 		if (this->backgrounds.top().getPosition().y > -667.5717f)
 		{
@@ -650,7 +616,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, -150 * _dt);
-		this->player->moveS(0, -120.f, _dt);
+		this->player->moveS(0, -110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R2);
 		if (this->backgrounds.top().getPosition().y < -1214.1099f)
 		{
@@ -669,7 +635,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(-125 * _dt, 0);
-		this->player->moveS(-120.f, 0, _dt);
+		this->player->moveS(-110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R4);
 		if (this->backgrounds.top().getPosition().x < -2042.2817f)
 		{
@@ -688,7 +654,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(125 * _dt, 0);
-		this->player->moveS(120.f, 0, _dt);
+		this->player->moveS(110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
 		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
@@ -708,7 +674,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, 250 * _dt);
-		this->player->moveS(0, 120.f, _dt);
+		this->player->moveS(0, 110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
 		if (this->backgrounds.top().getPosition().y > -31.7096f)
 		{
@@ -729,7 +695,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, -250 * _dt);
-		this->player->moveS(0, -120.f, _dt);
+		this->player->moveS(0, -110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R3);
 		if (this->backgrounds.top().getPosition().y < -667.5717f)
 		{
@@ -748,7 +714,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(-125 * _dt, 0);
-		this->player->moveS(-120.f, 0, _dt);
+		this->player->moveS(-110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R6);
 		if (this->backgrounds.top().getPosition().x < -2042.2817f)
 		{
@@ -767,7 +733,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(125 * _dt, 0);
-		this->player->moveS(120.f, 0, _dt);
+		this->player->moveS(110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
 		if (this->backgrounds.top().getPosition().x > -1114.9040f)
 		{
@@ -786,10 +752,11 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(145 * _dt, 0);
-		this->player->moveS(120.f, 0, _dt);
+		this->player->moveS(110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R7);
-		if (this->player->getSprite()->getPosition().x > 940)
+		if (this->backgrounds.top().getPosition().x > -39.2039f)
 		{
+			this->backgrounds.top().setPosition(-39.2039f, this->backgrounds.top().getPosition().y);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -804,7 +771,7 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(-145 * _dt, 0);
-		this->player->moveS(-120.f, 0, _dt);
+		this->player->moveS(-110.f, 0, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R5);
 		if (this->backgrounds.top().getPosition().x < -1114.9040f)
 		{
@@ -824,10 +791,11 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, -150 * _dt);
-		this->player->moveS(0, -120.f, _dt);
+		this->player->moveS(0, -110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R8);
-		if (this->player->getSprite()->getPosition().y < 10)
+		if (this->backgrounds.top().getPosition().y < -644.4125f)
 		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -644.4125f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}
@@ -842,47 +810,11 @@ void GameState::updateMap(const float& dtt)
 	{
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, 150 * _dt);
-		this->player->moveS(0, 120.f, _dt);
+		this->player->moveS(0, 110.f, _dt);
 		this->player->pushStage(CurrentStage::Lvl1R7);
-		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5)
+		if (this->backgrounds.top().getPosition().y > -31.7096f)
 		{
-			this->isBackgroundMoving = false;
-			check = " ";
-		}
-	}
-
-	if (this->player->getStage() == CurrentStage::Lvl1R8 &&
-		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5
-		&& sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
-	{
-		check = "L1R8D";
-	}
-	if (check == "L1R8D")
-	{
-		this->isBackgroundMoving = true;
-		this->backgrounds.top().move(0, -170 * _dt);
-		this->player->moveS(0, -120.f, _dt);
-		this->player->pushStage(CurrentStage::Lvl1R9);
-		if (this->player->getSprite()->getPosition().y < 10)
-		{
-			this->isBackgroundMoving = false;
-			check = " ";
-		}
-	}
-
-	if (this->player->getStage() == CurrentStage::Lvl1R9 && this->player->getSprite()->getPosition().y < 10 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP"))
-		&& !isBackgroundMoving)
-	{
-		check = "L1R9U";
-	}
-	if (check == "L1R9U")
-	{
-		this->isBackgroundMoving = true;
-		this->backgrounds.top().move(0, 170 * _dt);
-		this->player->moveS(0, 120.f, _dt);
-		this->player->pushStage(CurrentStage::Lvl1R8);
-		if (this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT + 5)
-		{
+			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -31.7096f);
 			this->isBackgroundMoving = false;
 			check = " ";
 		}

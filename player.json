@@ -1,7 +1,20 @@
 {
+    "Bread": 10,
+    "Cloth": 0,
+    "Coin": 0,
+    "Gold": 0,
+    "Iron": 0,
+    "Leather": 0,
+    "Silk": 0,
+    "Stone": 0,
+    "Wheat": 12,
+    "Wood": 0,
     "damage": 100.0,
-    "hp": 1000.0,
+    "defense": 16,
+    "hp": 15.0,
+    "initiative": 5,
     "name": "Player",
-    "positionX": 857.8646240234375,
-    "positionY": 323.0122375488281
+    "positionX": 750.7626953125,
+    "positionY": 256.00128173828125,
+    "villagers": 5
 }

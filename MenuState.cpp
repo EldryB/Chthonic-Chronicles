@@ -68,7 +68,7 @@ void MenuState::initButtons()
 		this->textures["MenuButtonIdle"], &this->font, "RETURN");
 }
 
-MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p)
+MenuState::MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p)
 	: State(_window, _supportedKeys, _states)
 {
 	this->initVariables();
@@ -172,7 +172,7 @@ void MenuState::updateInput(const float& _dt)
 				else if (it->first == "SAVE_AND_QUIT")
 				{
 					this->states->pop();
-					//this->dataManagement.savePlayerToFile(player, "player.json");
+					this->dataManagement.savePlayerToFile(player, "player.json");
 					this->states->pop();
 				}
 			}

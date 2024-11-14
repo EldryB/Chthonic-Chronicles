@@ -98,8 +98,6 @@ std::string StoreState::getStringStage(CurrentStage _c)
 
 	case CurrentStage::Lvl1R8:return "Lvl1R8";
 
-	case CurrentStage::Lvl1R9:return "Lvl1R9";
-
 	default: return " ";
 	}
 }

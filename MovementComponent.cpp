@@ -143,7 +143,7 @@ void MovementComponent::update(const float& _dt)
 	this->sprite.move(this->velocity * _dt);
 	bool isInLvl1 = isInLvl1 = (this->stages == CurrentStage::Lvl1R1) || (this->stages == CurrentStage::Lvl1R2) || (this->stages == CurrentStage::Lvl1R3) ||
 		(this->stages == CurrentStage::Lvl1R4) || (this->stages == CurrentStage::Lvl1R5) || (this->stages == CurrentStage::Lvl1R6) ||
-		(this->stages == CurrentStage::Lvl1R7) || (this->stages == CurrentStage::Lvl1R8 || (this->stages == CurrentStage::Lvl1R9));
+		(this->stages == CurrentStage::Lvl1R7) || (this->stages == CurrentStage::Lvl1R8);
 
 	sf::Sprite* spr = &this->sprite;
 	if (this->stages == CurrentStage::MainStage)

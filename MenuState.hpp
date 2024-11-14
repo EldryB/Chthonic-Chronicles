@@ -10,7 +10,7 @@ class MenuState :
     public State
 {
 public:
-    MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Fighter* _p);
+    MenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
     
     virtual ~MenuState();
 
@@ -26,7 +26,7 @@ public:
 
 private:
     std::unordered_map<std::string, Button*> buttons;
-    Fighter* player;
+    Player* player;
     JsonManagement dataManagement;
     int selectedButtonIndex;
 
