@@ -22,6 +22,7 @@ Player::Player(float _x, float _y, sf::Texture& texture_sheet, std::string _name
 Player::~Player()
 {
 
+
 }
 
 std::vector<Item*>* Player::getInventory() const
