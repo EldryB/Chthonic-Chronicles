@@ -409,8 +409,8 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice(3000);
-	Dice dice2(3000);
+	Dice dice(10000);
+	Dice dice2(10000);
 	
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
@@ -425,27 +425,27 @@ void GameState::updateInput2(const float& _dt)
 	{
 		this->player->move(1.f, 0.f, _dt);
 
-		if (dice.getFace() == 50)
+		if (dice.getFace() == dice2.getFace())
 		{
-			//this->createCombat();
+			this->createCombat();
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
 	{
 		this->player->move(0.f, -1.f, _dt);
 
-		if (dice.getFace() == 50)
+		if (dice.getFace() == dice2.getFace())
 		{
-			//this->createCombat();
+			this->createCombat();
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
 	{
 		this->player->move(0.f, 1.f, _dt);
 
-		if (dice.getFace() == 50)
+		if (dice.getFace() == dice2.getFace())
 		{
-			//this->createCombat();
+			this->createCombat();
 		}
 	}
 
