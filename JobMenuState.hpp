@@ -34,8 +34,6 @@
         std::vector<sf::Text> resourceAmount;
         sf::Sprite backgroundTooltip;
 
-        sf::Clock collectionClock;
-
         int availableVillagers = 5;
 
         void initVariables();

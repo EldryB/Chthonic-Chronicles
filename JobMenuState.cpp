@@ -359,15 +359,11 @@ void JobMenuState::updateButtons()
 
 void JobMenuState::update(const float& _dt)
 {
-    if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
-    {
-        this->jobs->collectResourcesAutomatically(*resources);
-        this->collectionClock.restart();
-        this->initResourceList();
-    }
+    this->player->update(_dt);
+    this->initResourceList();
 
     this->texts["AvailableVillagers"].setString("Available Villagers: " + std::to_string(this->availableVillagers));
-    this->texts["CollectTimer"].setString("Collect in: " + std::to_string(10 - static_cast<int>(this->collectionClock.getElapsedTime().asSeconds())));
+    this->texts["CollectTimer"].setString("Collect in: " + std::to_string(10 - static_cast<int>(this->player->getCollectionClock().asSeconds())));
 
     this->updateMousePositions();
     this->updateInput(_dt);

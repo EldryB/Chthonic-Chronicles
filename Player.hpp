@@ -20,6 +20,8 @@ public:
 
     Armor* getArmor() const;
 
+    sf::Time getCollectionClock() const;
+
 
     void setWeapon(Weapon* _weapon);
 
@@ -33,11 +35,15 @@ public:
 
     void setResourceAmoun(ResourceTypes _r, int amount);
 
+    void updateCollection(const float& _dt);
+
 protected:
     Resources* resources;
     Jobs* jobs;
     Armor* armor;
     Weapon* weapon;
+
+    sf::Clock collectionClock;
 
     std::vector<Item*>* inventory = new std::vector<Item*>();
 };

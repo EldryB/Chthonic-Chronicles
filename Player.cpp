@@ -49,6 +49,11 @@ Armor* Player::getArmor() const
 	return this->armor;
 }
 
+sf::Time Player::getCollectionClock() const
+{
+	return this->collectionClock.getElapsedTime();
+}
+
 void Player::setWeapon(Weapon* _weapon)
 {
 	this->weapon = _weapon;
@@ -61,6 +66,8 @@ void Player::setArmor(Armor* _armor)
 
 void Player::update(const float& _dt)
 {
+	this->updateCollection(_dt);
+
 	this->movementComponent->update(_dt);
 
 	if (this->movementComponent->isIdle(LookingDirection::Left))
@@ -105,6 +112,15 @@ int Player::getResourceAmoun(ResourceTypes _r)
 void Player::setResourceAmoun(ResourceTypes _r, int amount)
 {
 	this->resources->setResourceAmount(_r, amount);
+}
+
+void Player::updateCollection(const float& _dt)
+{
+	if (this->collectionClock.getElapsedTime().asSeconds() >= 10.f)
+	{
+		this->jobs->collectResourcesAutomatically(*resources);
+		this->collectionClock.restart();
+	}
 }
 
 void Player::addItem(Item* _item)
