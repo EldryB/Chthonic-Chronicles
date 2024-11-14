@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Fighter.hpp"
 
 class Item
@@ -27,6 +26,10 @@ public:
 	void render(sf::RenderTarget* target);
 
 	virtual bool isEquipped() const;
+
+	bool isPLayerNear(sf::Sprite _p);
+
+	//void buyItem();
 
 protected:
 	sf::Sprite* sprite = new sf::Sprite();

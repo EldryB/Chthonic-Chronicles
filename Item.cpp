@@ -86,3 +86,17 @@ bool Item::isEquipped() const
 {
     return false;
 }
+
+bool Item::isPLayerNear(sf::Sprite _p)
+{
+    float num1 = (_p.getPosition().x + _p.getGlobalBounds().width / 2);
+    float num2 = this->sprite->getPosition().x + this->sprite->getGlobalBounds().width / 2;
+    float num3 = (_p.getPosition().y + _p.getGlobalBounds().height / 2);
+    float num4 = this->sprite->getPosition().y + this->sprite->getGlobalBounds().height / 2;
+
+   bool check = ((num1 - num2) < 5 && (num3 - num4) < 5) ||
+        ((num2 - num1) < 5 && (num3 - num4) < 5) ||
+        ((num1 - num2) < 5 && (num4 - num3) < 5) ||
+        ((num2 - num1) < 5 && (num4 - num3) < 5);
+    return check;
+}

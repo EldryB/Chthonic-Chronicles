@@ -7,7 +7,7 @@
         public State
     {
     public:
-        JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Jobs& jobs, Resources& resources, Fighter* _p);
+        JobMenuState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
 
         virtual ~JobMenuState();
     
@@ -26,9 +26,9 @@
         std::vector<Button*> substractButtons;
         std::vector<Button*> collectButtons;
         std::unordered_map<std::string, Button*> buttons;
-        Jobs& jobs;
-        Resources& resources;
-        Fighter* player;
+        Jobs* jobs;
+        Resources* resources;
+        Player* player;
 
         std::vector<sf::Text> jobAmount;
         std::vector<sf::Text> resourceAmount;

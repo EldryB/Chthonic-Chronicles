@@ -287,7 +287,7 @@ void GameState::updateInput(const float& _dt)
 		if (this->keyCode == "Q")
 		{
 			this->keyCode = " ";
-			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, *jobs, *resources, this->player));
+			this->states->push(new JobMenuState(this->window, this->supportedKeys, this->states, this->player));
 		}
 	}
 

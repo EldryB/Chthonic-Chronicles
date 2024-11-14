@@ -155,6 +155,30 @@ void StoreState::updateInput(const float& _dt)
 		}
 	}
 
+	int i = 0;
+	for (auto item: this->items)
+	{
+		if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getStage() == CurrentStage::StoreStage2 && item->isPLayerNear(*this->player->getSprite()))
+		{
+			this->keyCode = "BUY";
+		}
+		else
+		{
+			if (this->keyCode == "BUY")
+			{
+				this->keyCode = " ";
+				if ((this->player->getResourceAmoun(ResourceTypes::coin) - item->getPrice() >= 0) && item->isPLayerNear(*this->player->getSprite()))
+				{
+					this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - item->getPrice());
+					this->player->addItem(item);
+					this->items.erase(this->items.begin() + i);
+				}
+			}
+		}
+		++i;
+	}
+	
+
 
 }
 
@@ -177,6 +201,7 @@ void StoreState::update(const float& _dt)
 	{
 		textstr += item->getName() + "\n";
 	}
+	textstr +=  "Coins: " + std::to_string(this->player->getResourceAmoun(ResourceTypes::coin));
 	this->texts["Description"].setString(textstr);
 }
 
