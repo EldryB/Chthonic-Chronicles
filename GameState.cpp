@@ -7,6 +7,8 @@ void GameState::initVariables()
 	this->resources = new Resources();
 	this->jobs = new Jobs();
 	check = " ";
+	this->enemyVisibleTime = 0.5f;
+	showEnemy = false;
 	isBackgroundMoving = false;
 }
 
@@ -73,7 +75,6 @@ void GameState::initTextures()
 
 void GameState::initFighters()
 {
-
 	this->player = new Player(250.f, 370.f, this->textures["PLAYER_SHEET"], "Player", 15.f, 6.f, 16, 5);
 	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
@@ -94,11 +95,9 @@ void GameState::initItems()
 
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 150));
 	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
-	this->player->addItem(this->items[1]);
 
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 8.f, 0, "InBaLUEble sword!", 120));
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
-	this->player->addItem(this->items[2]);
 
 	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!", 30));
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
@@ -106,18 +105,15 @@ void GameState::initItems()
 
 	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Rusty Armor", 5.f, 5, "Heavy armor!", 60));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
-	this->player->addItem(this->items[4]);
 
 	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Thunder Armor", 8.f, 5, "THUNDER!", 170));
 	this->items[5]->setIconRect(sf::IntRect(265, 0, 26, 41));
-	this->player->addItem(this->items[5]);
 
 	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 1, 20.f, "Fresh!", 10));
 	this->items[6]->setIconRect(sf::IntRect(0, 0, 41, 42));
 
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 10));
 	this->items[7]->setIconRect(sf::IntRect(41, 40, 41, 42));
-	//this->player->addItem(this->items[7]);
 
 	for (auto enemy : this->enemies)
 	{
@@ -167,11 +163,6 @@ void GameState::initFonts()
 	this->texts["EnterMessage"].setFillColor(sf::Color(206, 185, 141));
 	this->texts["EnterMessage"].setPosition(30.f, 600.f);
 
-	this->texts["PlayerPosition"].setFont(this->font);
-	this->texts["PlayerPosition"].setCharacterSize(20);
-	this->texts["PlayerPosition"].setFillColor(sf::Color(206, 185, 141));
-	this->texts["PlayerPosition"].setPosition(30.f, 30.f);
-
 	this->texts["CurrentStage"].setFont(this->font);
 	this->texts["CurrentStage"].setCharacterSize(24);
 	this->texts["CurrentStage"].setFillColor(sf::Color(206, 185, 141));
@@ -184,12 +175,32 @@ void GameState::createCombat()
 	{
 		if (enemy->isAlive())
 		{
+			this->showEnemy = true;
+
 			sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
-			this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, enemy, lastPos));
+			switch (this->player->getLookingDirection())
+			{
+			case LookingDirection::Left:
+				enemy->setPosition(lastPos.x + 46.f, lastPos.y);
+				break;
+			case LookingDirection::Right:
+				enemy->setPosition(lastPos.x - 46.f, lastPos.y);
+				break;
+			case LookingDirection::Up:
+				enemy->setPosition(lastPos.x, lastPos.y - 46.f);
+				break;
+			case LookingDirection::Down:
+				enemy->setPosition(lastPos.x, lastPos.y + 46.f);
+				break;
+			default:
+				break;
+			}
+
+			this->enemyToShow = enemy; 
+			this->enemyVisibleTimer.restart();
 			return;
 		}
 	}
-
 }
 
 std::string GameState::getStringStage(CurrentStage _c)
@@ -270,7 +281,6 @@ void GameState::updateInput(const float& _dt)
 	bool isInHouse2 = (this->player->getSprite()->getPosition().x > 732 && this->player->getSprite()->getPosition().x < 766 && this->player->getSprite()->getPosition().y < 258.5f);
 	bool isInHouse3 = (this->player->getSprite()->getPosition().x > 847 && this->player->getSprite()->getPosition().x < 880 && this->player->getSprite()->getPosition().y > 357.5f
 		&& this->player->getSprite()->getPosition().y < 391);
-	this->timeSinceLastUpdate += _dt;
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")))
 	{
@@ -397,8 +407,8 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice(1100);
-	Dice dice2(1100);
+	Dice dice(500);
+	Dice dice2(500);
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
@@ -437,11 +447,11 @@ void GameState::updateInput2(const float& _dt)
 		}
 	}
 
-	if (this->player->getSprite()->getPosition().x < 500 && this->player->getStage() == CurrentStage::Lvl1R1 && this->enemies[this->enemies.size() - 1]->isAlive())
-	{
-		sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
-		this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, this->enemies[this->enemies.size() - 1], lastPos));
-	}
+	//if (this->player->getSprite()->getPosition().x < 500 && this->player->getStage() == CurrentStage::Lvl1R1 && this->enemies[this->enemies.size() - 1]->isAlive())
+	//{
+	//	sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+	//	this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, this->enemies[this->enemies.size() - 1], lastPos));
+	//}
 
 	if (this->player->getSprite()->getPosition().x > 800 && sf::Keyboard::isKeyPressed(this->keybinds.at("ACTION")) && this->backgrounds.top().getPosition().x <= -2020)
 	{
@@ -479,31 +489,31 @@ void GameState::update(const float& _dt)
 		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8);
 
 	this->updateMousePositions();
+
 	if (this->player->getStage() == CurrentStage::MainStage)
 	{
 		this->updateInput(_dt);
-
 	}
 	else if (isInLvl1)
 	{
 		this->updateInput2(_dt);
+		if (this->showEnemy)
+		{
+			if (this->enemyVisibleTimer.getElapsedTime().asSeconds() >= this->enemyVisibleTime)
+			{
+				sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+				this->enemyToShow->setPosition(704.8f, 394.97f);
+				this->states->push(new FightState(this->window, this->supportedKeys, this->states, this->player, this->enemyToShow, lastPos));
+				this->showEnemy = false;
+				return;
+			}
+		}
 	}
+
 
 	this->player->update(_dt);
-
-
-	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
-	this->texts["PlayerPosition"].setString(textString);
-
-	if (isInLvl1)
-	{
-		std::string textString = "Position: X = " + std::to_string(this->backgrounds.top().getPosition().x) + ", Y = " + std::to_string(this->backgrounds.top().getPosition().y);
-		this->texts["Message"].setString(textString);
-	}
-
-	updateMap(_dt);
+	this->updateMap(_dt);
 	this->texts["CurrentStage"].setString(this->getStringStage(this->player->getStage()));
-
 }
 
 void GameState::render(sf::RenderTarget* target)
@@ -517,19 +527,23 @@ void GameState::render(sf::RenderTarget* target)
 
 	if (this->player->getStage() == CurrentStage::MainStage)
 	{
-		for (auto item : this->houses)
+		for (auto house : this->houses)
 		{
-			target->draw(item);
+			target->draw(house);
 		}
 	}
 
 	this->player->render(target);
 
+	if (this->showEnemy && this->enemyToShow)
+	{
+		this->enemyToShow->render(target);
+	}
+
 	for (auto text : this->texts)
 	{
 		target->draw(text.second);
 	}
-
 }
 
 void GameState::updateMap(const float& dtt)

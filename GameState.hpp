@@ -32,15 +32,17 @@ private:
     std::vector<Item*> items;
     Jobs* jobs;
     Resources* resources;
-    int currentFrame;
-    float timeSinceLastUpdate;
-    float timeBetweenUpdates;
     std::vector<sf::Sprite> houses;
     std::vector<sf::Sprite> rooms;
-
     std::stack<sf::Sprite> backgrounds;
     std::string check;
+
+    Enemy* enemyToShow;
+    float enemyVisibleTime;
+    sf::Clock enemyVisibleTimer;
+    
     bool isInLvl1;
+    bool showEnemy;
     bool isBackgroundMoving;
 
     void initVariables();
