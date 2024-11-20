@@ -114,7 +114,7 @@ StoreState::StoreState(sf::RenderWindow* _window, std::unordered_map<std::string
 	initFonts();
 	this->player = _p;
 	this->player->pushStage(CurrentStage::StoreStage);
-	this->player->setPosition(230.f,547.f);
+	this->player->setPosition(230.f, 547.f);
 	this->items = _items;
 	this->takeItem();
 }
@@ -166,7 +166,7 @@ void StoreState::updateInput(const float& _dt)
 		if (this->keyCode == "ACTION")
 		{
 			this->keyCode = " ";
-			this->player->setPosition(250.f,248.f);
+			this->player->setPosition(250.f, 248.f);
 			this->player->pushStage(CurrentStage::MainStage);
 			this->states->pop();
 
@@ -174,28 +174,36 @@ void StoreState::updateInput(const float& _dt)
 	}
 
 	Item* it = this->itemColision();
-
+	if (it)
+	{
+		this->message.setString("Press E to buy\nPrice: " + std::to_string(it->getPrice()));
+	}
 	if (sf::Keyboard::isKeyPressed(this->keybinds["ACTION"]) && this->player->getStage() == CurrentStage::StoreStage2 && it)
 	{
 		this->keyCode = "BUY";
+
 	}
 	else
 	{
-		if (this->keyCode == "BUY")
+		if (it)
 		{
-			this->keyCode = " ";
-			if ((this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice() >= 0))
+			if (this->keyCode == "BUY")
 			{
-				this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice());
-				this->player->addItem(it);
-				for(int i = 0; i < items.size(); ++i)
+				this->keyCode = " ";
+
+				if ((this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice() >= 0))
 				{
-					if(items[i] == it)
+					this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - it->getPrice());
+					this->player->addItem(it);
+					for (int i = 0; i < items.size(); ++i)
 					{
-						this->items.erase(this->items.begin() + i);
+						if (items[i] == it)
+						{
+							this->items.erase(this->items.begin() + i);
+						}
 					}
+					it = nullptr;
 				}
-				it = nullptr;
 			}
 		}
 	}
@@ -212,16 +220,16 @@ void StoreState::update(const float& _dt)
 
 	std::string textString2 = "Position: X = " + std::to_string(this->background.getPosition().x) + ", Y = " + std::to_string(this->background.getPosition().y);
 	this->texts["Message"].setString(textString2);
-	
+
 	this->texts["CurrentStage"].setString(this->getStringStage(this->player->getStage()));
 
 	this->updateMap(_dt);
-	std::string textstr{" "};
-	for (auto item: this->items)
+	std::string textstr{ " " };
+	for (auto item : this->items)
 	{
 		textstr += item->getName() + "\n";
 	}
-	textstr +=  "Coins: " + std::to_string(this->player->getResourceAmoun(ResourceTypes::coin));
+	textstr += "Coins: " + std::to_string(this->player->getResourceAmoun(ResourceTypes::coin));
 	this->texts["Description"].setString(textstr);
 }
 
@@ -242,7 +250,7 @@ void StoreState::render(sf::RenderTarget* target)
 
 	if (this->player->getStage() == CurrentStage::StoreStage2)
 	{
-		for (auto item: this->items)
+		for (auto item : this->items)
 		{
 			item->render(target);
 		}
@@ -279,7 +287,7 @@ void StoreState::takeItem()
 	items = itemList;
 
 
-	items[0]->setPosition(200 + 1100,150);
+	items[0]->setPosition(200 + 1100, 150);
 	items[1]->setPosition(500 + 1100, 150);
 	items[2]->setPosition(200 + 1100, 250);
 	items[3]->setPosition(500 + 1100, 250);
@@ -288,7 +296,7 @@ void StoreState::takeItem()
 
 Item* StoreState::itemColision()
 {
-	for (auto item: this->items)
+	for (auto item : this->items)
 	{
 		sf::FloatRect rect1 = this->player->getSprite()->getGlobalBounds();
 		sf::FloatRect rect2 = item->getSprite()->getGlobalBounds();
@@ -316,12 +324,12 @@ void StoreState::updateMap(const float& dt)
 		this->background.move(-125 * _dt, 0);
 		this->player->moveS(-110.f, 0.f, _dt);
 		this->player->pushStage(CurrentStage::StoreStage2);
-		
-		for (auto item: this->items)
+
+		for (auto item : this->items)
 		{
 			item->move(-130.f, 0.f, _dt);
 		}
-		
+
 		if (this->background.getPosition().x < -970.f)
 		{
 			this->background.setPosition(-970.f, this->background.getPosition().y);
@@ -355,5 +363,6 @@ void StoreState::updateMap(const float& dt)
 		}
 	}
 }
+
 
 
