@@ -13,9 +13,9 @@ public:
     GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states);
 
     GameState(sf::RenderWindow* _window, std::unordered_map<std::string, sf::Keyboard::Key>* _supportedKeys, std::stack<State*>* _states, Player* _p);
-    
+
     virtual ~GameState();
-    
+
     void updateInput(const float& _dt);
 
     void updateInput2(const float& _dt);

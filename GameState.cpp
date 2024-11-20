@@ -88,27 +88,27 @@ void GameState::initFighters()
 void GameState::initItems()
 {
 	//NO CAMBIAR EL NOMBRE A LOS ITEMS
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 80));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 150));
 	this->items[1]->setIconRect(sf::IntRect(41, 40, 41, 42));
 	this->player->addItem(this->items[1]);
 
-	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 8.f, 0, "InBaLUEble sword!", 10));
+	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Blue Sword", 8.f, 0, "InBaLUEble sword!", 120));
 	this->items[2]->setIconRect(sf::IntRect(82, 40, 41, 42));
 	this->player->addItem(this->items[2]);
 
-	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!" , 10));
+	this->items.push_back(new Potion(this->textures["POTION_SHEET"], "Potion", 3, 20.f, "Fresh!", 30));
 	this->items[3]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[3]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Rusty Armor", 5.f, 5, "Heavy armor!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Rusty Armor", 5.f, 5, "Heavy armor!", 60));
 	this->items[4]->setIconRect(sf::IntRect(43, 0, 24, 41));
 	this->player->addItem(this->items[4]);
 
-	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Thunder Armor", 8.f, 5, "THUNDER!", 10));
+	this->items.push_back(new Armor(this->textures["ARMORS_SHEET"], "Thunder Armor", 8.f, 5, "THUNDER!", 170));
 	this->items[5]->setIconRect(sf::IntRect(265, 0, 26, 41));
 	this->player->addItem(this->items[5]);
 
@@ -117,8 +117,8 @@ void GameState::initItems()
 
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Red Sword", 6.f, -2, "IncREDible sword!", 10));
 	this->items[7]->setIconRect(sf::IntRect(41, 40, 41, 42));
-	this->player->addItem(this->items[7]);
-	
+	//this->player->addItem(this->items[7]);
+
 	for (auto enemy : this->enemies)
 	{
 		enemy->addItem(this->items[0]);
@@ -135,7 +135,7 @@ void GameState::initBackground()
 	this->backgrounds.push(back);
 
 	this->houses.push_back(sf::Sprite(this->textures["House1"]));
-	this->houses[0].setPosition(187.f,140.f);
+	this->houses[0].setPosition(187.f, 140.f);
 	this->houses.push_back(sf::Sprite(this->textures["House2"]));
 	this->houses[1].setPosition(706.f, 174.f);
 	this->houses.push_back(sf::Sprite(this->textures["House2"]));
@@ -143,9 +143,9 @@ void GameState::initBackground()
 
 }
 
-void GameState::initRooms() 
+void GameState::initRooms()
 {
-	
+
 }
 
 void GameState::initFonts()
@@ -159,22 +159,28 @@ void GameState::initFonts()
 	this->texts["Message"].setString("Press 'C' to show controls");
 	this->texts["Message"].setCharacterSize(18);
 	this->texts["Message"].setFillColor(sf::Color(206, 185, 141));
-	this->texts["Message"].setPosition((Settings::WINDOW_WIDTH/2), (Settings::WINDOW_HEIGHT - this->texts["Message"].getGlobalBounds().height));
+	this->texts["Message"].setPosition((Settings::WINDOW_WIDTH / 2), (Settings::WINDOW_HEIGHT - this->texts["Message"].getGlobalBounds().height));
+
+	this->texts["EnterMessage"].setFont(this->font);
+	this->texts["EnterMessage"].setString(" ");
+	this->texts["EnterMessage"].setCharacterSize(18);
+	this->texts["EnterMessage"].setFillColor(sf::Color(206, 185, 141));
+	this->texts["EnterMessage"].setPosition(30.f, 600.f);
 
 	this->texts["PlayerPosition"].setFont(this->font);
 	this->texts["PlayerPosition"].setCharacterSize(20);
 	this->texts["PlayerPosition"].setFillColor(sf::Color(206, 185, 141));
-	this->texts["PlayerPosition"].setPosition(30, 30);
+	this->texts["PlayerPosition"].setPosition(30.f, 30.f);
 
 	this->texts["CurrentStage"].setFont(this->font);
 	this->texts["CurrentStage"].setCharacterSize(24);
 	this->texts["CurrentStage"].setFillColor(sf::Color(206, 185, 141));
-	this->texts["CurrentStage"].setPosition(700, 30);
+	this->texts["CurrentStage"].setPosition(700.f, 30.f);
 }
 
 void GameState::createCombat()
 {
-	for (auto enemy: enemies)
+	for (auto enemy : enemies)
 	{
 		if (enemy->isAlive())
 		{
@@ -183,7 +189,7 @@ void GameState::createCombat()
 			return;
 		}
 	}
-	
+
 }
 
 std::string GameState::getStringStage(CurrentStage _c)
@@ -238,6 +244,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
+	this->initItems();
 
 	this->resources = _p->getResources();
 	this->jobs = _p->getJobs();
@@ -247,7 +254,7 @@ GameState::GameState(sf::RenderWindow* _window, std::unordered_map<std::string, 
 		player->setResourceAmoun(static_cast<ResourceTypes>(i), _p->getResourceAmoun(static_cast<ResourceTypes>(i)));
 	}
 
-	this->player->setAttributes(_p->getName(),_p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getHp(), _p->getAttackPower(), _p->getInitiative(), _p->getDefense(), _p->getVillagers());
+	this->player->setAttributes(_p->getName(), _p->getSprite()->getPosition().x, _p->getSprite()->getPosition().y, _p->getHp(), _p->getAttackPower(), _p->getInitiative(), _p->getDefense(), _p->getVillagers());
 }
 
 
@@ -261,7 +268,7 @@ void GameState::updateInput(const float& _dt)
 {
 	bool isInHouse1 = (this->player->getSprite()->getPosition().x > 244 && this->player->getSprite()->getPosition().x < 272 && this->player->getSprite()->getPosition().y < 248.5f);
 	bool isInHouse2 = (this->player->getSprite()->getPosition().x > 732 && this->player->getSprite()->getPosition().x < 766 && this->player->getSprite()->getPosition().y < 258.5f);
-	bool isInHouse3 = (this->player->getSprite()->getPosition().x > 847 && this->player->getSprite()->getPosition().x < 880 && this->player->getSprite()->getPosition().y > 357.5f 
+	bool isInHouse3 = (this->player->getSprite()->getPosition().x > 847 && this->player->getSprite()->getPosition().x < 880 && this->player->getSprite()->getPosition().y > 357.5f
 		&& this->player->getSprite()->getPosition().y < 391);
 	this->timeSinceLastUpdate += _dt;
 
@@ -282,6 +289,15 @@ void GameState::updateInput(const float& _dt)
 		this->player->move(0.f, 1.f, _dt);
 	}
 
+	if (isInHouse1 || isInHouse2 || isInHouse3)
+	{
+		std::string textString = "Press 'E' to enter";
+		this->texts["EnterMessage"].setString(textString);
+	}
+	else
+	{
+		this->texts["EnterMessage"].setString(" ");
+	}
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds["CONTROLS"]))
 	{
@@ -322,7 +338,7 @@ void GameState::updateInput(const float& _dt)
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")) )
+	if (sf::Keyboard::isKeyPressed(this->keybinds.at("INVENTORY")))
 	{
 		this->keyCode = "INVENTORY";
 	}
@@ -344,7 +360,7 @@ void GameState::updateInput(const float& _dt)
 		if (this->keyCode == "ACTION2")
 		{
 			this->keyCode = " ";
-			this->player->setPosition(Settings::WINDOW_WIDTH - this->player->getSprite()->getGlobalBounds().width, Settings::WINDOW_HEIGHT/2);
+			this->player->setPosition(Settings::WINDOW_WIDTH - this->player->getSprite()->getGlobalBounds().width, Settings::WINDOW_HEIGHT / 2);
 			this->player->pushStage(CurrentStage::Lvl1R1);
 			sf::Sprite spr{ this->textures["Lvl1"] };
 			spr.setPosition(-2044.86f, -1214.11f);
@@ -383,7 +399,7 @@ void GameState::updateInput2(const float& _dt)
 {
 	Dice dice(1100);
 	Dice dice2(1100);
-	
+
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
 		this->player->move(-1.f, 0.f, _dt);
@@ -463,7 +479,7 @@ void GameState::update(const float& _dt)
 		(this->player->getStage() == CurrentStage::Lvl1R7) || (this->player->getStage() == CurrentStage::Lvl1R8);
 
 	this->updateMousePositions();
-	if(this->player->getStage() == CurrentStage::MainStage)
+	if (this->player->getStage() == CurrentStage::MainStage)
 	{
 		this->updateInput(_dt);
 
@@ -475,11 +491,11 @@ void GameState::update(const float& _dt)
 
 	this->player->update(_dt);
 
-	
+
 	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
 	this->texts["PlayerPosition"].setString(textString);
-	
-	if(isInLvl1)
+
+	if (isInLvl1)
 	{
 		std::string textString = "Position: X = " + std::to_string(this->backgrounds.top().getPosition().x) + ", Y = " + std::to_string(this->backgrounds.top().getPosition().y);
 		this->texts["Message"].setString(textString);
@@ -498,7 +514,7 @@ void GameState::render(sf::RenderTarget* target)
 	}
 
 	target->draw(this->backgrounds.top());
-	
+
 	if (this->player->getStage() == CurrentStage::MainStage)
 	{
 		for (auto item : this->houses)
@@ -513,12 +529,12 @@ void GameState::render(sf::RenderTarget* target)
 	{
 		target->draw(text.second);
 	}
-	
+
 }
 
 void GameState::updateMap(const float& dtt)
 {
-	float _dt = dtt*3;
+	float _dt = dtt * 3;
 
 
 	if (this->player->getStage() == CurrentStage::Lvl1R1 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT"))
@@ -617,7 +633,7 @@ void GameState::updateMap(const float& dtt)
 		}
 	}
 
-	if (this->player->getStage() == CurrentStage::Lvl1R4 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT"))&& 
+	if (this->player->getStage() == CurrentStage::Lvl1R4 && this->player->getSprite()->getPosition().x < 50 && sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) &&
 		!isBackgroundMoving)
 	{
 		check = "L1R4L";
@@ -636,7 +652,7 @@ void GameState::updateMap(const float& dtt)
 		}
 	}
 
-	if (this->player->getStage() == CurrentStage::Lvl1R3 && 
+	if (this->player->getStage() == CurrentStage::Lvl1R3 &&
 		(this->player->getSprite()->getPosition().x > 185 && this->player->getSprite()->getPosition().x < 328) && this->player->getSprite()->getPosition().y < 145 &&
 		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_UP")) && !isBackgroundMoving)
 	{
@@ -657,7 +673,7 @@ void GameState::updateMap(const float& dtt)
 	}
 
 	if (this->player->getStage() == CurrentStage::Lvl1R5 &&
-		(this->player->getSprite()->getPosition().x > 174 && this->player->getSprite()->getPosition().x < 328) && 
+		(this->player->getSprite()->getPosition().x > 174 && this->player->getSprite()->getPosition().x < 328) &&
 		this->player->getSprite()->getPosition().y > Settings::VIRTUAL_HEIGHT - this->player->getSprite()->getGlobalBounds().height &&
 		sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_DOWN")) && !isBackgroundMoving)
 	{
