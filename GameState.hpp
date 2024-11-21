@@ -29,6 +29,7 @@ public:
 private:
     Player* player;
     std::vector<Enemy*> enemies;
+    Enemy* boss;
     std::vector<Item*> items;
     Jobs* jobs;
     Resources* resources;
@@ -36,6 +37,7 @@ private:
     std::vector<sf::Sprite> rooms;
     std::stack<sf::Sprite> backgrounds;
     std::string check;
+    bool IsInBoosRoom;
 
     Enemy* enemyToShow;
     float enemyVisibleTime;

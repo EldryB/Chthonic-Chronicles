@@ -10,6 +10,7 @@ void GameState::initVariables()
 	this->enemyVisibleTime = 0.5f;
 	showEnemy = false;
 	isBackgroundMoving = false;
+	IsInBoosRoom = false;
 }
 
 void GameState::initKeybinds()
@@ -92,6 +93,7 @@ void GameState::initFighters()
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
 	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
+	this->boss = new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 120.f, 25.f, 25, 10);
 }
 
 void GameState::initItems()
@@ -178,6 +180,36 @@ void GameState::initFonts()
 
 void GameState::createCombat()
 {
+	if (this->IsInBoosRoom)
+	{
+		if (this->boss->isAlive())
+		{
+			this->showEnemy = true;
+
+			sf::Vector2f lastPos(this->player->getSprite()->getPosition().x, this->player->getSprite()->getPosition().y);
+			switch (this->player->getLookingDirection())
+			{
+			case LookingDirection::Left:
+				boss->setPosition(lastPos.x + 46.f, lastPos.y);
+				break;
+			case LookingDirection::Right:
+				boss->setPosition(lastPos.x - 46.f, lastPos.y);
+				break;
+			case LookingDirection::Up:
+				boss->setPosition(lastPos.x, lastPos.y - 46.f);
+				break;
+			case LookingDirection::Down:
+				boss->setPosition(lastPos.x, lastPos.y + 46.f);
+				break;
+			default:
+				break;
+			}
+
+			this->enemyToShow = boss;
+			this->enemyVisibleTimer.restart();
+			return;
+		}
+	}
 	for (auto enemy : enemies)
 	{
 		if (enemy->isAlive())
@@ -414,8 +446,8 @@ void GameState::updateInput(const float& _dt)
 
 void GameState::updateInput2(const float& _dt)
 {
-	Dice dice(500);
-	Dice dice2(500);
+	Dice dice(5000);
+	Dice dice2(5000);
 
 	if (sf::Keyboard::isKeyPressed(this->keybinds.at("MOVE_LEFT")) && !isBackgroundMoving)
 	{
@@ -486,6 +518,13 @@ void GameState::updateInput2(const float& _dt)
 			this->keyCode = " ";
 			this->states->push(new InventoryState(this->window, this->supportedKeys, this->states, this->player));
 		}
+	}
+
+	if (this->player->getSprite()->getPosition().y > Settings::WINDOW_HEIGHT/2 && this->player->getStage() == CurrentStage::Lvl1R8)
+	{
+		this->IsInBoosRoom = true;
+		this->createCombat();
+		this->IsInBoosRoom = false;
 	}
 }
 
@@ -801,9 +840,9 @@ void GameState::updateMap(const float& dtt)
 		this->isBackgroundMoving = true;
 		this->backgrounds.top().move(0, -150 * _dt);
 		this->player->moveS(0, -110.f, _dt);
-		this->player->pushStage(CurrentStage::Lvl1R8);
 		if (this->backgrounds.top().getPosition().y < -644.4125f)
 		{
+			this->player->pushStage(CurrentStage::Lvl1R8);
 			this->backgrounds.top().setPosition(this->backgrounds.top().getPosition().x, -644.4125f);
 			this->isBackgroundMoving = false;
 			check = " ";

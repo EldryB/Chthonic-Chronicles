@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include <SFML/Audio.hpp>
 
 void Game::initWindow()
 {
@@ -98,10 +99,24 @@ void Game::render()
 
 void Game::run()
 {
+    sf::Music music;
+    if (!music.openFromFile("assets/music.ogg"))
+    {
+        std::cerr << "Error al cargar el archivo de música." << std::endl;
+        return;
+    }
+    music.setVolume(50);  // Volumen (0-100)
+    music.setLoop(true);
+    music.play();
+
     while (this->window->isOpen())
     {
         this->updateDt();
         this->update();
         this->render();
+        if (music.getStatus() == sf::Music::Playing)
+        {
+            //sf::sleep(sf::milliseconds(100)); // Evitar que el programa consuma demasiados recursos
+        }
     }
 }
