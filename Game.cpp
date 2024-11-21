@@ -116,6 +116,7 @@ void Game::run()
         this->render();
         if (music.getStatus() == sf::Music::Playing)
         {
+
             //sf::sleep(sf::milliseconds(100)); // Evitar que el programa consuma demasiados recursos
         }
     }
