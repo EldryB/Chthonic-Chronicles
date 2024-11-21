@@ -84,11 +84,18 @@ void GameState::initFighters()
 	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
 	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
 	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
+	this->enemies.push_back(new Skeleton(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Skeleton", 20.f, 6.f, 13, 2));
+	this->enemies.push_back(new Slime(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Slime", 13.f, 4.f, 12, 4));
+	this->enemies.push_back(new Rat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Rat", 10.f, 3.f, 7, 6));
+	this->enemies.push_back(new Bat(704.8f, 394.97f, this->textures["ENEMIES_IDLE_SHEET"], "Bat", 18.f, 2.f, 14, 7));
 }
 
 void GameState::initItems()
 {
-	//NO CAMBIAR EL NOMBRE A LOS ITEMS
 	this->items.push_back(new Weapon(this->textures["ITEMS_SHEET"], "Dagger", 4.f, 3, "Amazing dagger!", 80));
 	this->items[0]->setIconRect(sf::IntRect(0, 0, 41, 42));
 	this->player->addItem(this->items[0]);

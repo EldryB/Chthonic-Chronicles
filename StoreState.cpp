@@ -44,18 +44,6 @@ void StoreState::initFonts()
 	{
 		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_FONT";
 	}
-
-	this->texts["Message"].setFont(this->font);
-	this->texts["Message"].setCharacterSize(18);
-	this->texts["Message"].setFillColor(sf::Color(sf::Color::Black));
-	this->texts["Message"].setString("String");
-	this->texts["Message"].setPosition((Settings::WINDOW_WIDTH / 2), (Settings::WINDOW_HEIGHT - this->texts["Message"].getGlobalBounds().height));
-
-	this->texts["PlayerPosition"].setFont(this->font);
-	this->texts["PlayerPosition"].setCharacterSize(20);
-	this->texts["PlayerPosition"].setFillColor(sf::Color(sf::Color::Black));
-	this->texts["PlayerPosition"].setPosition(30, 30);
-
 	this->texts["CurrentStage"].setFont(this->font);
 	this->texts["CurrentStage"].setCharacterSize(24);
 	this->texts["CurrentStage"].setFillColor(sf::Color(sf::Color::Black));
@@ -214,12 +202,6 @@ void StoreState::update(const float& _dt)
 {
 	updateInput(_dt);
 	this->player->update(_dt);
-
-	std::string textString = "Position: X = " + std::to_string(this->player->getSprite()->getPosition().x) + ", Y = " + std::to_string(this->player->getSprite()->getPosition().y);
-	this->texts["PlayerPosition"].setString(textString);
-
-	std::string textString2 = "Position: X = " + std::to_string(this->background.getPosition().x) + ", Y = " + std::to_string(this->background.getPosition().y);
-	this->texts["Message"].setString(textString2);
 
 	this->texts["CurrentStage"].setString(this->getStringStage(this->player->getStage()));
 
