@@ -4,6 +4,8 @@ void JobMenuState::initVariables()
 {
     this->currentState = CurrentState::JobMenu;
     this->keyCode = " ";
+    //COIN
+    this->count = 0;
 }
 
 void JobMenuState::initTextures()
@@ -111,6 +113,8 @@ void JobMenuState::initKeybinds()
 void JobMenuState::initButtons()
 {
     this->buttons["UPGRADE"] = new Button(100.f, 450.f, this->textures["MenuButtonIdle"], &this->font, "UPGRADE         ");
+    //COIN
+    this->buttons["COIN"] = new Button((Settings::WINDOW_WIDTH / 2) - 100, 450.f, this->textures["MenuButtonIdle"], &this->font, "+1 COIN         ");
 
     for (int i = 0; i < static_cast<int>(JobTypes::count); ++i)
     {
@@ -302,12 +306,33 @@ void JobMenuState::updateButtons()
 
     if (this->buttons["UPGRADE"]->getButtonState() == ButtonState::Pressed)
     {
-        if(this->player->getResourceAmoun(ResourceTypes::coin) - 100 >=0)
+        if (this->player->getResourceAmoun(ResourceTypes::coin) - 100 >= 0)
         {
             this->player->addVillagers(5);
             this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) - 100);
         }
     }
+
+    //COIN
+    if (this->buttons["COIN"]->getButtonState() == ButtonState::Hover)
+    {
+        this->texts["Tooltip"].setString("add 1 coin");
+        this->texts["Tooltip"].setPosition
+        (
+            this->backgroundTooltip.getPosition().x + (this->backgroundTooltip.getGlobalBounds().width / 2.f) - (this->texts["Tooltip"].getGlobalBounds().width / 2.f),
+            this->backgroundTooltip.getPosition().y + (this->backgroundTooltip.getGlobalBounds().height / 2.f) - (this->texts["Tooltip"].getGlobalBounds().height / 2.f)
+        );
+    }
+
+    if (this->buttons["COIN"]->getButtonState() == ButtonState::Pressed)
+    {
+        //if (count > 1.f)
+        //{
+            this->player->setResourceAmoun(ResourceTypes::coin, this->player->getResourceAmoun(ResourceTypes::coin) + 1);
+            count = 0;
+        //}
+    }
+    //COIN END
 
     for (size_t i = 0; i < this->addButtons.size(); ++i)
     {
@@ -386,6 +411,9 @@ void JobMenuState::update(const float& _dt)
     this->updateButtons();
 
     availableVillagers = this->player->getVillagers();
+
+    //COIN
+    count += this->clock.restart().asSeconds();
 }
 
 void JobMenuState::renderButtons(sf::RenderTarget* target)

@@ -34,6 +34,9 @@
         std::vector<sf::Text> resourceAmount;
         sf::Sprite backgroundTooltip;
 
+        sf::Clock clock;
+        float count;
+
         int availableVillagers;
 
         void initVariables();
