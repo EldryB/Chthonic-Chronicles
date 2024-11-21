@@ -16,6 +16,8 @@ public:
 
     int getSides() const;
 
+    int getFinalFace() const;
+
     void setPosition(float _x, float _y);
 
     void setTexture(const sf::Texture& _texture);

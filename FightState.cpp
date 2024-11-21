@@ -243,7 +243,11 @@ void FightState::updateButtons()
 	{
 		std::string stringText;
 
-		if (this->dice->getFace() > 6)
+		//test
+		this->dice->roll();
+		std::cout << this->dice->getFinalFace() << std::endl;
+
+		if (this->dice->getFinalFace() > 6)
 		{
 			stringText = this->player->getName() + " attacks " + this->enemy->getName();
 
@@ -280,8 +284,9 @@ void FightState::update(const float& _dt)
 		this->updateMousePositions();
 		this->updateInput(_dt);
 		this->updateButtons();
-		this->dice->update(_dt);
 	}
+
+	this->dice->update(_dt);
 
 	if (this->check->at(0) == 'N')
 	{
@@ -326,37 +331,43 @@ void FightState::update(const float& _dt)
 	updateTurnQueue(turnCount);
 	if (!turnQueue.empty())
 	{
-		currentTurn++;
-		auto currentFighter = turnQueue.front();
-		std::string stringText = currentFighter->getName() + "'s turn begins. ";
-		this->texts["TextBox"].setString(stringText);
-
-		if (Player* p = dynamic_cast<Player*>(currentFighter))
+		if (!this->dice->isRolling())
 		{
-			this->playerTurn = true;
-		}
+			currentTurn++;
+			auto currentFighter = turnQueue.front();
+			std::string stringText = currentFighter->getName() + "'s turn begins. ";
+			this->texts["TextBox"].setString(stringText);
 
-		if (!this->playerTurn)
-		{
-			if (count > 3.f)
+			if (Player* p = dynamic_cast<Player*>(currentFighter))
 			{
-				if (this->dice->getFace() > 6)
+				this->playerTurn = true;
+			}
+
+			if (!this->playerTurn)
+			{
+				if (count > 3.f)
 				{
-					stringText = this->enemy->getName() + " attacks " + this->player->getName();
+					this->dice->roll();
 
-					this->player->takeDamage(this->enemy->getAttackPower());
+					if (this->dice->getFinalFace() > 6)
+					{
+						stringText = this->enemy->getName() + " attacks " + this->player->getName();
+
+						this->player->takeDamage(this->enemy->getAttackPower());
+					}
+					else
+					{
+						stringText = this->enemy->getName() + " fails the attack.";
+					}
+
+					this->texts["AttackText"].setString(stringText);
+					this->texts["AttackText"].setPosition(650.f, 364.97f);
+
+					turnQueue.pop();
 				}
-				else
-				{
-					stringText = this->enemy->getName() + " fails the attack.";
-				}
-
-				this->texts["AttackText"].setString(stringText);
-				this->texts["AttackText"].setPosition(650.f, 364.97f);
-
-				turnQueue.pop();
 			}
 		}
+		
 	}
 	
 	std::string text2 = "AttackPower: " + std::to_string(static_cast<int>(this->player->getAttackPower())) + "\n" + "Defense: " + std::to_string(this->player->getDefense())
@@ -388,9 +399,9 @@ void FightState::render(sf::RenderTarget* target)
 	if(playerTurn)
 	{
 		this->renderButtons(target);
-		//this->dice->render(target);
 	}
 
+	this->dice->render(target);
 	this->player->render(target);
 
 	this->enemy->render(target);

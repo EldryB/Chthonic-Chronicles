@@ -57,6 +57,11 @@ int Dice::getSides() const
     return this->sides;
 }
 
+int Dice::getFinalFace() const
+{
+    return this->finalFace;
+}
+
 void Dice::setPosition(float _x, float _y)
 {
     this->sprite->setPosition(_x, _y);
@@ -97,22 +102,22 @@ bool Dice::isRolling() const
 
 void Dice::update(const float& _dt)
 {
-    if (!rolling)
-    {
-        return;
-    }
+    if (!rolling) return;
 
     this->elapsedTime += _dt;
 
-    if (this->elapsedTime >= this->animationTime)
+    if (this->elapsedTime <= this->animationTime)
     {
-        this->rolling = false;
+        int randomFace = this->getFace();
+        this->animationComponent->play("FACE" + std::to_string(randomFace), _dt);
+    }
+    else if (this->elapsedTime <= this->animationTime + 2.0f)
+    {
         this->setSpriteFace(this->finalFace);
     }
     else
     {
-        int randomFace = this->getFace();
-        this->animationComponent->play("FACE" + std::to_string(randomFace), _dt);
+        this->rolling = false;
     }
 }
 
